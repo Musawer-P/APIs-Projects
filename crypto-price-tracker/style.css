@@ -1,0 +1,106 @@
+body{
+  
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+color: white;
+}
+h1{
+    margin-left: 50px;
+    color: #203a43;
+    background-color: white;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 10px;
+    font-weight: 100;
+}
+.main{
+    margin-left: 50px;
+}
+#search{
+    background-color: #ffffff00;
+    color: white;
+    border: none;
+    padding: 10px 0px;
+    border-bottom: 1px solid white;
+    outline :none;
+    width: 90%;
+}
+.display{
+ background: rgba(255, 255, 255, 0); /* transparent white */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+   height: auto;
+     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+
+    width: 90%;
+    padding: 0px;
+    margin-top: 30px;
+    border: 1px solid #203a43;
+    border-radius: 5px;
+
+}
+
+.h-crypto{
+    background-color: #112831;
+    padding: 1px;
+    text-align: center;
+
+}
+#currency{
+font-size: 1.5rem;
+}
+.rate{
+text-align: center;
+font-size: 1.5rem;
+
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #cacaca;
+}
+.price-change{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-size: 1.5rem;
+    color: rgb(96, 255, 96);
+    font-weight: 10;
+}
+
+.chart
+{
+    width: 100%;
+}
+#myChart{
+    width: 100%;
+    margin-top: 10px;
+
+}
+canvas{
+    width: 100% !important;
+  height: auto !important;
+
+}
+
+
+
+@media (max-width: 1024px) and (min-width: 768px) {
+   .display{
+        width: 90%;
+    }
+    #search{
+        width: 90%;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .display{
+        width: 90%;
+    }
+    #search{
+        width: 90%;
+    }
+}

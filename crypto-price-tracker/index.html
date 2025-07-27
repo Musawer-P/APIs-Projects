@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Crypto Price Tracker</title>
+</head>
+
+<body>
+    <h1>Crypto Price Tracker</h1>
+    <div class="main">
+        <input type="text" id="search" placeholder="Search Coin...">
+        <div class="display">
+            <div class="h-crypto">
+                <p id="currency">Bitcoin</p>
+            </div>
+            <div class="row">
+                <div class="rate">
+                    <p id="rate">1 BTC</p>
+                </div>
+
+                <div class="rate">
+                    <p id="rate">1,17,000 USD</p>
+                </div>
+            </div>
+
+            <div class="chart">
+                <canvas id="myChart"></canvas>
+
+            </div>
+
+            <div class="price-change">
+                <p>2% Today</p>
+
+            </div>
+        </div>
+
+        <div class="price-chart">
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
