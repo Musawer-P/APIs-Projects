@@ -1,0 +1,78 @@
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+h1 {
+    font-size: 3rem;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.search-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.search-text {
+    padding: 20px;
+    width: 80%;
+    outline: none;
+    font-size: 1rem;
+}
+
+.main-section {
+    display: flex;
+    gap: 20px;
+
+}
+
+.poster-img {
+    display: block;
+    width: 70%;
+
+
+
+}
+
+.book-pic {
+    border: 1px solid black;
+    height: fit-content;
+}
+
+.row-p{
+    display: flex;
+    justify-content: space-between;
+}
+.book-desc{
+    width: 70%;
+}
+@media (max-width: 600px) {
+
+    .main-section{
+        display: block !important;
+    }
+
+    .book-desc{
+        width: 100% !important;
+        margin: 0 auto;
+    }
+    .poster-img {
+        width: 50%;
+    }
+}
+
+
+@media (min-width: 601px){
+    .poster-img {
+        width: 100%;
+    }
+}
