@@ -1,0 +1,36 @@
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+h1{
+    background-color: rgb(27, 27, 27);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: fit-content;
+}
+.heading{
+    display: flex;
+    height: fit-content;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+.row{
+    display: flex;
+    width: 75%;
+}
+#search,#country{
+padding: 10px;
+border: 1px solid rgb(230, 230, 230);
+outline: none;
+width: 100%;
+}
+
+.country-card{
+     padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+}

@@ -44,34 +44,67 @@ h1 {
 }
 
 .book-pic {
+    background: #fff;
+
     border: 1px solid black;
     height: fit-content;
+    border-radius: 5px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
 }
 
-.row-p{
+.row-p {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(206, 206, 206, 0.384);
 }
-.book-desc{
+
+#p-h {
+    font-weight: bold;
+}
+
+#p-p{
+    background-color: rgb(240, 240, 240);
+    color: rgb(32, 32, 32);
+    padding: 5px;
+    border-radius: 5px;
+}
+.book-desc {
+    color: rgb(32, 32, 32);
+    background: #fff;
+    padding: 10px;
     width: 70%;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
 }
+
 @media (max-width: 600px) {
 
-    .main-section{
+    .main-section {
         display: block !important;
     }
 
-    .book-desc{
+    .book-desc {
         width: 100% !important;
         margin: 0 auto;
     }
+
+    .book-pic {
+        width: 60%;
+        margin: 0 auto;
+    }
+
     .poster-img {
-        width: 50%;
+        width: 100%;
     }
 }
 
 
-@media (min-width: 601px){
+@media (min-width: 601px) {
     .poster-img {
         width: 100%;
     }
