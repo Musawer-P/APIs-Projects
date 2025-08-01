@@ -1,0 +1,103 @@
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header{
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 10px;
+background-color: rgb(252, 173, 100);
+margin: 0 auto;
+width: 60%;
+padding: 5px 10px;
+box-sizing: border-box;
+border-bottom-left-radius:20px;
+border-bottom-right-radius:20px;
+}
+
+h1{
+  font-size: clamp(1rem, 2.5vw, 2rem);
+    color: rgb(252, 173, 100);
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+}
+
+#search{
+    padding: 10px;
+    outline: none;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    width: 65%;
+    font-size: 1rem;
+}
+#search::placeholder{
+    color: white;
+}
+.search-icon{
+    color: white;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.main{
+margin: 0 auto;
+width: 60%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+padding: 10px;
+border-radius: 5px;
+margin-top: 100px;
+border: 1px solid rgb(252, 173, 100);
+}
+h2{
+    font-weight: 100;
+    font-size: 2rem;
+}
+.desc{
+line-height: 1.5;
+font-size: 1.2rem;
+}
+
+.time-calories{
+display: flex;
+justify-content: space-between;
+}
+
+#time,#calories{
+background-color: rgb(252, 173, 100);
+color: white;
+padding: 10px;
+border-radius: 5px;
+}
+
+@media (max-width: 600px){
+    .header{
+        width: 80%;
+    }
+    .main{
+        width: 80%;
+    }
+    h1{
+        width: 50%!important;
+    }
+   
+}
+
+@media (max-width: 1024px) {
+      .header{
+        width: 80%;
+    }
+    .main{
+        width: 80%;
+    }
+    
+}
