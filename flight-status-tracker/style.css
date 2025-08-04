@@ -6,26 +6,90 @@
 }
 
 body {
-  background-color: #f4f4f4;
-  display: flex;
+  background-image:  url('stars.png');
+background: linear-gradient(145deg, #504ec4 0%, #6b63dc 40%, #8c8cf1 70%, #d5d9ff 100%);
+   backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(10px);
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 50px;
+
 }
 
 .container {
-  background-color: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 400px;
+background: rgba(255, 255, 255, 0.2); /* semi-transparent white */
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+padding: 30px;
+border-radius: 12px;
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+width: 100%;
+max-width: 100%;
+
 }
 
-h2 {
-  text-align: center;
+h2{
+  color: white;
   margin-bottom: 20px;
-  color: #333;
+}
+
+.inputs{
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+#airport,#company,#flight-number{
+  background-color: #33333300;
+  border: none;
+  border-bottom: 1px solid white;
+  border-radius: 0px;
+  outline: none;
+  color: white;
+}
+
+#airport::placeholder, #company::placeholder, #flight-number::placeholder{
+  color: rgba(255, 255, 255, 0.349);
+}
+
+.dearrive{
+  display: flex;
+  gap: 10px;
+}
+.btn{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+#button{
+  background-color: #504ec400;
+  color: white;
+  text-align: end;
+  width: fit-content;
+
+}
+i{
+  color: white;
+}
+.label{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+label{
+  color: white;
+  padding: 5px;
+  width: fit-content;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.322);
+  font-weight: 100;
+}
+#departure-time,#arrival-time{
+  background-color: #33333333;
+  color: rgba(255, 255, 255, 0.89);
+  outline: none;
 }
 
 input {

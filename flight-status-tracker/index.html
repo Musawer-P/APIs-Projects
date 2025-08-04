@@ -4,19 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href = "style.css" rel = "stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Flight Tracker App</title>
 </head>
 <body>
     
   <div class="container">
-    <h2>✈️ Flight Status Tracker</h2>
+    <h2>Flight Status Tracker</h2>
+    <div class = "inputs">
+    <input type="text" id="airport" placeholder="Airport Name" />
+    <input type="text" id="company" placeholder="Company Name" />
+    <input type="text" id="flight-number" placeholder="Flight Number (e.g. LH123)" />
+  </div> 
+    <div class = "dearrive">
+      <div class = "label">
+      <label>Departure       </label>
 
-    <input type="text" id="flightInput" placeholder="Enter Flight Number (e.g. LH123)" />
-    <button onclick="getFlightStatus()">Check Status</button>
+       <input type="datetime-local" id="departure-time"/>
+       </div>
+             <div class = "label">
+             <label>Arrival  </label>
 
-    <div id="result" class="result-box"></div>
+  <input type="datetime-local" id="arrival-time"/>
   </div>
+</div>
 
+<div class = "btn">
+  <button id = "button" onclick="getFlightStatus()">Check Status</button>
+  <i class="fas fa-arrow-right"></i>
+</div>
+</div>
+
+  <div id="result" class="result-box"></div>
     <script src = "script.js">
     </script>
 </body>
