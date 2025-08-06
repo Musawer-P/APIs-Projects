@@ -1,0 +1,128 @@
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(ellipse at top, #0a0a0a, #050505 80%);
+      color: #ffffff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: #00ffcc;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+
+    .tracker-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+    }
+
+    .search {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #111;
+      color: #0f0;
+      font-size: 1rem;
+      border: 1px solid #0f0;
+    }
+
+    .search button {
+      background-color: #00ffcc;
+      border: none;
+      padding: 12px 20px;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .search button:hover {
+      background-color: #00ddaa;
+    }
+
+    .map-placeholder {
+      background: linear-gradient(145deg, #101010, #1a1a1a);
+      height: 300px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1.1rem;
+    }
+
+    .bus-info {
+      border-top: 1px solid #333;
+      padding-top: 10px;
+    }
+
+    .bus-card {
+      background-color: #111;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid #00ffcc;
+      border-radius: 6px;
+    }
+
+    .bus-card p {
+      margin: 4px 0;
+      font-size: 0.95rem;
+    }
+
+
+    .map-placeholder.loading::after {
+  content: '⏳ Loading...';
+  color: #0f0;
+  font-size: 1rem;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .search {
+        flex-direction: column;
+      }
+
+      .map-placeholder {
+        height: 200px;
+      }
+    }
+
+    
