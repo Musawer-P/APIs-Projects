@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class = "heading">
+      <div class = "row">
         <h1>Country Exploler</h1>
-        <div class = "row">
         <input type = "text" id = "search" placeholder="Search...">
 <select name="country" id="country">
   <option value="">-- Select a Country --</option>
@@ -207,19 +207,43 @@
     </div>
 
     <div class = "main">
-            <div class="country-card" id="countryCard">
-    <img id="flag" class="flag" src="" alt="Country Flag"/>
-    <div class="info"><span class="label">Name:</span> <span id="name"></span></div>
-    <div class="info"><span class="label">Capital:</span> <span id="capital"></span></div>
-    <div class="info"><span class="label">Population:</span> <span id="population"></span></div>
-    <div class="info"><span class="label">Region:</span> <span id="region"></span></div>
-    <div class="info"><span class="label">Subregion:</span> <span id="subregion"></span></div>
-    <div class="info"><span class="label">Area:</span> <span id="area"></span> km²</div>
-    <div class="info"><span class="label">Timezones:</span> <span id="timezones"></span></div>
-    <div class="info"><span class="label">Languages:</span> <span id="languages"></span></div>
-    <div class="info"><span class="label">Currencies:</span> <span id="currencies"></span></div>
-    <div class="info"><span class="label">Map:</span> <a id="mapLink" href="#" target="_blank">Open in Google Maps</a></div>
-  </div>
+      <div class = "part-1">
+           <div class = "first-section">
+            <div class = "flag">
+              <img src  = "images/flag.jpg"/>
+            </div>
+            <div class = "population">
+              <p>9,000,000</p>
+            </div>
+           </div>
+           <div class = "second-section">
+            <div class = "name">
+              <h2>Saudi Arabia</h2>
+            </div>
+            <div class = "capital">
+              <h3>Jeddah</h3>
+            </div>
+           </div>
+           </div>
+
+           <div class = "part-2">
+              <div class = "feet">
+                <p>2,000,000 km(square)</p>
+              </div>
+           </div>
+
+           <div class = "part-3">
+            <div class = "currency">
+              <p>REL</p>
+            </div>
+            <div class = "time">
+              <p>4+30</p>
+            </div>
+            <div class = "language">
+              <p>Arabic</p>
+            </div>
+           </div>
+
     </div>
     <script src = "script.js">
     </script>
