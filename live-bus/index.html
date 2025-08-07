@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🛰️ Bus Tracker</title>
+  <title>Bus Tracker</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <link href = "style.css" rel = "stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="style.css" rel="stylesheet">
 </head>
+
 <body>
 
   <header>
-    <h1>🛰️ LIVE BUS TRACKER</h1>
+    <h1>LIVE BUS TRACKER.</h1>
   </header>
 
-  <div class="tracker-box">
-    <div class="search">
-      <input type="text" placeholder="Enter Bus Number or Route...">
-      <button>Track</button>
+  <div class="main">
+    <div class="search-div">
+      <input type="text" id="search" placeholder="Enter Bus Number or Route...">
+      <div class = "btn-div">
+      <button type="button" id="search-btn">Search</button>
+        <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+    <div class="map">
+      map will appear here
     </div>
 
-    <div class="map-placeholder">
-      [ Map will appear here ]
-    </div>
 
     <div class="bus-info">
       <div class="bus-card">
@@ -30,17 +36,17 @@
         <p><strong>Speed:</strong> 45 km/h</p>
         <p><strong>ETA:</strong> 4 minutes</p>
       </div>
-
-      <div class="bus-card">
-        <p><strong>Bus #:</strong> 27B</p>
-        <p><strong>Status:</strong> Leaving Terminal</p>
-        <p><strong>Speed:</strong> 38 km/h</p>
-        <p><strong>ETA:</strong> 9 minutes</p>
+       <div class="bus-card">
+        <p><strong>Bus #:</strong> 12A</p>
+        <p><strong>Status:</strong> Approaching Downtown</p>
+        <p><strong>Speed:</strong> 45 km/h</p>
+        <p><strong>ETA:</strong> 4 minutes</p>
       </div>
     </div>
   </div>
-<script src = "script.js">
-    
-</script>
+  <script src="script.js">
+
+  </script>
 </body>
+
 </html>

@@ -1,128 +1,107 @@
  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
 
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(ellipse at top, #0a0a0a, #050505 80%);
-      color: #ffffff;
-      min-height: 100vh;
-      padding: 20px;
-    }
+ body {
+   font-family: 'Orbitron', sans-serif;
+   background: linear-gradient(145deg, #d8d8d8 0%, #106596 40%, #8c8cf1 70%, #d5d9ff 100%);
+   backdrop-filter: blur(100px);
+   -webkit-backdrop-filter: blur(10px);
+   color: #ffffff;
+   padding: 20px;
+   justify-content: center;
+   align-items: center;
+   height: fit-content;
+   padding: 50px;
+ }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+ h1{
 
-    header h1 {
-      font-size: 2.2rem;
-      color: #00ffcc;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px #00ffcc;
-    }
+  margin-bottom: 30px;
 
-    .tracker-box {
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
-    }
-
-    .search {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .search input {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #111;
-      color: #0f0;
-      font-size: 1rem;
-      border: 1px solid #0f0;
-    }
-
-    .search button {
-      background-color: #00ffcc;
-      border: none;
-      padding: 12px 20px;
-      color: #000;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .search button:hover {
-      background-color: #00ddaa;
-    }
-
-    .map-placeholder {
-      background: linear-gradient(145deg, #101010, #1a1a1a);
-      height: 300px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      font-size: 1.1rem;
-    }
-
-    .bus-info {
-      border-top: 1px solid #333;
-      padding-top: 10px;
-    }
-
-    .bus-card {
-      background-color: #111;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-left: 4px solid #00ffcc;
-      border-radius: 6px;
-    }
-
-    .bus-card p {
-      margin: 4px 0;
-      font-size: 0.95rem;
-    }
-
-
-    .map-placeholder.loading::after {
-  content: '⏳ Loading...';
-  color: #0f0;
-  font-size: 1rem;
-  animation: blink 1s infinite;
+  }
+.search-div{
+  display: flex;
 }
+ #search {
+     background-color: #10659698;
 
-@keyframes blink {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
+   padding: 10px;
+   width: 80%;
+   outline: none;
+   font-size: 1.1rem;
+   border: 1px solid rgb(236, 236, 236);
+   border-radius: 5px;
+   color: white;
+ }
+
+ #search::placeholder{
+  color: rgba(255, 255, 255, 0.527);
+ }
+
+ #search-btn {
+   font-size: 1.1rem;
+
+   padding: 10px;
+   border: none;
+   color: white;
+   background-color: #00ffcc00;
+   cursor: pointer;
+ }
+#search-btn:hover{
+color: rgb(236, 236, 236);
 }
+ .btn-div:hover{
+color: rgb(236, 236, 236);
+ }
+ .map {
+   width: 88%;
+   background-color: #10659644;
+   border: 1px solid #106596;
+   height: 250px;
+   border-radius: 5px;
+   margin-top: 10px;
+   padding: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 
+ }
 
+ .bus-info {
+  width: 88%;
+  display: flex;
+   padding-top: 10px;
+   gap:10px;
+ }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5rem;
-      }
+ .bus-card {
+   background-color: #1065969a;
+   border: 1px solid #106596;
+   width: 88%;
+   padding: 15px;
+   margin-bottom: 10px;
+   border-left: 4px solid #0a5da0;
+   border-radius: 6px;
+ }
 
-      .search {
-        flex-direction: column;
-      }
+ .bus-card p {
+   margin: 4px 0;
+   font-size: 0.95rem;
+ }
 
-      .map-placeholder {
-        height: 200px;
-      }
-    }
+@media only screen and (max-width: 768px) {
 
-    
+  .map{
+    width: 98%;
+  }
+  .bus-info{
+    width: 98%;
+  }
+   .bus-card{
+    width: 100%;
+   }
+  
+}
