@@ -1,0 +1,33 @@
+html, body {
+    margin: 0;
+    padding: 10px;
+}
+
+body {
+    background: #bdc3c7;  
+    background: -webkit-linear-gradient(to top, #2c3e50, #bdc3c7);  
+    background: linear-gradient(to top, #2c3e50, #bdc3c7);
+    
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Oxygen", sans-serif;
+}
+
+button {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: red;
+    border: 1px solid darkred;
+    cursor: pointer;
+    outline: none;
+}
+
+.fun {
+    background: #fc4a1a; 
+    background: -webkit-linear-gradient(to left, #f7b733, #fc4a1a); 
+    background: linear-gradient(to left, #f7b733, #fc4a1a); 
+}

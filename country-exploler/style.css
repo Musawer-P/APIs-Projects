@@ -1,76 +1,165 @@
-body{
+body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-h1{
-    background-color: rgb(27, 27, 27);
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a, #5986e7);
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
     color: white;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-    width: 100%;
-}
-.heading{
-    display: flex;
-    height: fit-content;
-    align-items: center;
-    width: 100%;
-    justify-content: space-around;
-}
-.row{
-    display: flex;
-    align-items: center;
-    width: 80%;
-    margin-top: 20px;
-    height: 20px;
-}
-#search,#country{
-padding: 10px;
-border: 1px solid rgb(230, 230, 230);
-outline: none;
-width: 100%;
+    font-family: sans-serif;
 }
 
-.country-card{
-     padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 600px;
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
-.main{
+.main-row{
+display: flex;
+justify-content: center;
+gap: 20px;
+width: 100%;
+  align-items: center;       
+  height: 100vh; 
+}
+
+.first-part{
+    width: 55%;
+}
+
+h1 {
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 3rem;
+    width: fit-content;
+    text-align: start;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 auto;
+    gap: 5px;
+    width: 100%;
+
+}
+
+#search,
+#country {
+    padding: 10px;
+    outline: none;
+    border: 1px solid;
+    border-color: rgb(55, 125, 185);
+    width: 100%;
+
+}
+#search{
+    padding: 11px;
+}
+.btn{
+    margin-top: 10px;
+        display: flex;
+    justify-content: start;
+    align-items: center;
+}
+#submit{
+    padding: 10px;
+    border: none;
+    background-color: #0f172a00;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+
+}
+.country-card {
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.main {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    width: 40%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    width: fit-content;
     margin: 0 auto;
-     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1),
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1),
         0 4px 8px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.3s ease;
 }
-.part-1{
+
+.part-1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
 }
-.part-2{
-    display: flex;
-    gap:30px;
-    justify-content: center;
+#name{
+    font-size: 1.3rem;
+}
+#capital{
+    font-weight: 100;
+        font-size: 0.9rem;
+}
+img {
+    width: 100px;
+}
 
+.part-2 {
+    border-top: 1px solid rgba(255, 255, 255, 0.61);
+    padding-top: 15px;
+    left: auto;
 }
 
 
-.part-3{
+
+.part-3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.61);
+    padding-top: 10px;
 
 }
 
+label {
+    font-size: 0.8rem;
+}
 
-.currency,.time,.language{
-    background-color: rgba(0, 0, 0, 0.884);
-    color: white;
-    padding: 0px 20px;
-    border-radius: 10px
+#currency,
+#time,
+#language {
+
+    border: 1px solid rgba(255, 255, 255, 0.548);
+    text-align: center;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+
+    h1{
+        font-size: 2.5rem;
+    }
+    
+    .first-part{
+        padding-left: 10px;
+    }
+.second-part{
+    padding-right: 10px;
+}
 }

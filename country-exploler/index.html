@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href = "style.css" rel = "stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <title>Country Exploler</title>
 </head>
 <body>
+
+  <div class = "main-row">
+<div class = "first-part">
+  <div class = "h1">
+    <h1>Country Exploler</h1>
+  </div>
     <div class = "heading">
-      <div class = "row">
-        <h1>Country Exploler</h1>
         <input type = "text" id = "search" placeholder="Search...">
-<select name="country" id="country">
+        <select name="country" id="country">
   <option value="">-- Select a Country --</option>
   <option value="Afghanistan">Afghanistan</option>
   <option value="Albania">Albania</option>
@@ -202,49 +208,58 @@
   <option value="Zambia">Zambia</option>
   <option value="Zimbabwe">Zimbabwe</option>
 </select>
+</div>
+<div class = "btn">
+  <button type = "button" id = "submit">Search</button>
+    <i class="fas fa-arrow-right"></i>
+</div>
+</div>
 
-    </div>
-    </div>
-
+<div class = "second-part">
     <div class = "main">
       <div class = "part-1">
            <div class = "first-section">
             <div class = "flag">
-              <img src  = "images/flag.jpg"/>
-            </div>
-            <div class = "population">
-              <p>9,000,000</p>
+              <img src  = "images/saudi.png"/>
             </div>
            </div>
            <div class = "second-section">
             <div class = "name">
-              <h2>Saudi Arabia</h2>
+              <h2 id = "name">Saudi Arabia</h2>
             </div>
             <div class = "capital">
-              <h3>Jeddah</h3>
+              <h3 id = "capital">Jeddah</h3>
             </div>
            </div>
            </div>
 
            <div class = "part-2">
-              <div class = "feet">
-                <p>2,000,000 km(square)</p>
+                           <div class = "population">
+                <strong>Population</strong><p>35.3 million (2024)</p>
               </div>
+
+              <div class = "area">
+                <strong>Area :</strong><p> 2,000,000 km(square)</p>
+              </div>
+              
            </div>
+
 
            <div class = "part-3">
             <div class = "currency">
-              <p>REL</p>
+               <label>Currency</label><p id = "currency">SAR</p>
             </div>
             <div class = "time">
-              <p>4+30</p>
+             <label>Time Zone</label> <p id = "time">UTC +3</p>
             </div>
             <div class = "language">
-              <p>Arabic</p>
+             <label>Language</label> <p id = "language">Arabic</p>
             </div>
            </div>
 
     </div>
+    </div>
+  </div>
     <script src = "script.js">
     </script>
 </body>
