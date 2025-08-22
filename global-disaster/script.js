@@ -62,3 +62,31 @@ const fireIcon = L.icon({
 //Load all data
 loadEarthquakes();
 loadWildfires();
+
+
+
+//Digital Time Capsule Feature
+
+
+function saveCapsule(message, unlockDate) {
+  const capsule = { message, unlockDate };
+  localStorage.setItem("timeCapsule", JSON.stringify(capsule));
+}
+
+function openCapsule() {
+  const capsule = JSON.parse(localStorage.getItem("timeCapsule"));
+  if (!capsule) return alert("No capsule found!");
+
+  const now = new Date();
+  const unlock = new Date(capsule.unlockDate);
+
+  if (now >= unlock) {
+    alert("💌 Your message: " + capsule.message);
+  } else {
+    alert("⏳ Capsule is locked until " + unlock.toDateString());
+  }
+}
+
+// Example usage
+saveCapsule("Stay strong and keep coding 💻", "2025-12-31");
+openCapsule();
