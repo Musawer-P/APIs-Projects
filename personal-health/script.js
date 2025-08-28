@@ -50,6 +50,58 @@ body: JSON.stringify({ query: food })
 });
 if(!res.ok) throw new Error('Nutritionix error');
 const data = await res.json();
+
+
+// Mood and stresss calendar heatmap
+
+  const calendar = document.getElementById("calendar");
+    const moodSelect = document.getElementById("mood");
+    const saveBtn = document.getElementById("saveMood");
+    const tip = document.getElementById("tip");
+
+    const today = new Date();
+    const daysInMonth = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
+    const moods = JSON.parse(localStorage.getItem("moods")) || {};
+
+    // Render Calendar
+    function renderCalendar() {
+      calendar.innerHTML = "";
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement("div");
+        dayDiv.classList.add("day");
+        dayDiv.textContent = day;
+        if (moods[day]) {
+          dayDiv.classList.add(moods[day]);
+        }
+        calendar.appendChild(dayDiv);
+      }
+    }
+
+    // Save mood for today
+    saveBtn.addEventListener("click", () => {
+      const mood = moodSelect.value;
+      const day = today.getDate();
+      moods[day] = mood;
+      localStorage.setItem("moods", JSON.stringify(moods));
+      renderCalendar();
+      checkStress();
+    });
+
+    // Suggest if stressed too often
+    function checkStress() {
+      const stressCount = Object.values(moods).filter(m => m === "stressed").length;
+      if (stressCount >= 3) {
+        tip.textContent = "💡 Tip: You’ve been stressed a lot. Try 5 minutes of deep breathing or a short walk.";
+      } else {
+        tip.textContent = "";
+      }
+    }
+
+    renderCalendar();
+    checkStress();
+
+
+
 // Map to our format
 const items = (data.foods||[]).map(f => ({
 name: f.food_name,
