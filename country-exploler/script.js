@@ -29,3 +29,29 @@
 
       card.style.display = 'block';
     });
+
+    // Neighboring country review 
+
+    const neighborsDiv = document.getElementById("neighbors");
+neighborsDiv.innerHTML = "";
+
+if (c.borders) {
+  c.borders.forEach(async code => {
+    const res2 = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+    const data2 = await res2.json();
+    const neighbor = document.createElement("button");
+    neighbor.textContent = data2[0].name.common;
+    neighbor.onclick = () => { input.value = neighbor.textContent; input.dispatchEvent(new Event("change")); };
+    neighborsDiv.appendChild(neighbor);
+  });
+}
+
+
+// Weater of capital city 
+
+if (c.capital) {
+  const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${c.capital[0]}&appid=YOUR_API_KEY&units=metric`);
+  const weatherData = await weatherRes.json();
+  document.getElementById("weather").textContent = 
+    `🌡️ ${weatherData.main.temp}°C, ${weatherData.weather[0].description}`;
+}
