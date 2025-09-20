@@ -17,6 +17,8 @@ function getMockBusData(busNumber) {
   };
 }
 
+let refreshInterval; // store interval reference
+
 function trackBus() {
   const input = document.getElementById('busInput');
   const info = document.getElementById('busInfo');
@@ -29,11 +31,12 @@ function trackBus() {
   if (busNumber === '') {
     info.innerHTML = `<p style="color: red;">Please enter a bus number or route.</p>`;
     map.textContent = '[ Map will appear here ]';
+    clearInterval(refreshInterval);
     return;
   }
 
-  // Simulate loading delay
-  setTimeout(() => {
+  // Function to refresh data
+  function updateBusData() {
     const busData = getMockBusData(busNumber);
 
     map.textContent = `Tracking Bus ${busData.number} on the map...`;
@@ -44,7 +47,16 @@ function trackBus() {
         <p><strong>Status:</strong> ${busData.status}</p>
         <p><strong>Speed:</strong> ${busData.speed} km/h</p>
         <p><strong>ETA:</strong> ${busData.eta} minutes</p>
+        <p style="color: green;"><em>Last updated: ${new Date().toLocaleTimeString()}</em></p>
       </div>
     `;
-  }, 1000); 
+  }
+
+  // Simulate first load
+  setTimeout(() => {
+    updateBusData();
+    // Auto-refresh every 5 seconds
+    clearInterval(refreshInterval);
+    refreshInterval = setInterval(updateBusData, 5000);
+  }, 1000);
 }
