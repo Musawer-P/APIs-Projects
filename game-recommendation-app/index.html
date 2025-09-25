@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href = "style.css" rel = "stylesheet">
+  <title>Game Recommendation Hub</title>
+  
+</head>
+<body>
+  <header>
+    <h1>🎮 Game Recommendation Hub</h1>
+    <p>Discover games by genre, sort them, or let us surprise you with a random pick!</p>
+  </header>
+
+  <!-- Controls -->
+  <div class="controls">
+    <input type="text" id="genreInput" placeholder="Enter a game genre (e.g. action)">
+    <button id="searchBtn">Search</button>
+    <select id="sortSelect">
+      <option value="">Sort by...</option>
+      <option value="rating">Rating</option>
+      <option value="released">Release Date</option>
+    </select>
+    <button id="randomBtn">🎲 Random Game</button>
+  </div>
+
+  <!-- Results -->
+  <div id="gameResults">
+    <!-- Game cards will be injected here -->
+  </div>
+
+<script src="script.js">
+    
+</script>
+</body>
+</html>
