@@ -71,3 +71,35 @@
     saveFav.addEventListener('click', addFavorite);
     showFavs.addEventListener('click', showFavorites);
     clearFavs.addEventListener('click', ()=>{favorites=[];favoritesList.innerHTML='';});
+
+
+
+
+      const quoteEl = document.getElementById("quote");
+    const authorEl = document.getElementById("author");
+    const newQuoteBtn = document.getElementById("newQuote");
+    const copyBtn = document.getElementById("copyQuote");
+
+    async function getQuote() {
+      try {
+        const res = await fetch("https://api.quotable.io/random");
+        const data = await res.json();
+        quoteEl.textContent = `"${data.content}"`;
+        authorEl.textContent = `- ${data.author}`;
+      } catch (error) {
+        quoteEl.textContent = "Oops! Couldn't load a quote.";
+        authorEl.textContent = "";
+      }
+    }
+
+    // Copy quote to clipboard
+    copyBtn.addEventListener("click", () => {
+      const text = `${quoteEl.textContent} ${authorEl.textContent}`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Quote copied to clipboard!");
+      });
+    });
+
+    // Load first quote + button action
+    newQuoteBtn.addEventListener("click", getQuote);
+    getQuote();
