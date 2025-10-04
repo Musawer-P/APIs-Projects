@@ -1,0 +1,30 @@
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+.header{
+    height: auto;
+    width: 100%;
+    background-color: rgb(74, 116, 230);
+}
+#header-h2{
+    color: white;
+    padding: 10px;
+    margin: 0px;
+    font-size: 30px;
+}
+.body{
+    display: flex;
+    justify-content: space-between;
+}
+form{
+}
+
+.footer{
+      height: auto;
+    width: 100%;
+    background-color: rgb(74, 116, 230);
+    display: flex;
+}
