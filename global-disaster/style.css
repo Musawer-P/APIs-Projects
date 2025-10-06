@@ -1,25 +1,30 @@
-body{
+body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: 0px;
     padding: 0px;
 }
 
-.header{
+.header {
     height: auto;
     width: 100%;
     background-color: rgb(74, 116, 230);
-   
+
 }
-#header-h2{
+
+#header-h2 {
     color: white;
     padding: 10px;
     margin: 0px;
     font-size: 30px;
 }
-.body{
+
+.body {
     display: flex;
+    width: 100%;
 }
-.info{
+
+.info {
+    width: 30%;
     margin: 20px;
     border: 1px solid rgb(233, 233, 233);
     border-radius: 5px;
@@ -27,112 +32,143 @@ body{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-#disaster-info{
+#disaster-info {
     color: rgb(43, 43, 43);
 }
-#disaster-result{
+
+#disaster-result {
     color: rgb(43, 43, 43);
 }
-#disaster-news{
-        color: rgb(43, 43, 43);
+
+#disaster-news {
+    color: rgb(43, 43, 43);
 
 }
-form{
+
+form {}
+
+#disaster-name,
+#affected-country,
+#status,
+#date-time {
+    outline: none;
+    padding: 8px;
+    border: 1px solid rgb(231, 231, 231);
+    width: 100%;
 }
 
-#disaster-name , #affected-country , #status ,#date-time{
-outline: none;
-padding: 8px;
-border: 1px solid rgb(231, 231, 231);
+#disaster-name {
+    width: 100%;
 }
 
-#disaster-name{
-width: 95.3%;
+.disaster {
+    display: flex;
 }
-.row1{
-   margin-top: 10px;
+
+.row1 {
+    display: flex;
+
+    margin-top: 10px;
 }
-#date-time{
-margin-top:10px;
-width: 95.3%;
+
+.row2 {
+    display: flex;
+}
+
+#date-time {
+    margin-top: 10px;
+    width: 100%;
 
 }
-#btn{
+
+#btn {
     color: white;
     background-color: rgb(74, 116, 230);
     padding: 10px;
     width: 100%;
     border: none;
     margin-top: 40px;
-        border-radius: 5px;
-        cursor: pointer;
+    border-radius: 5px;
+    cursor: pointer;
 
 }
-.result{
+
+.result {
+    width: 20%;
     margin: 20px;
     border: 1px solid rgb(233, 233, 233);
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.result-row0{
+
+.result-row0 {
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
 
 }
-.result-row{
+
+.result-row {
     display: flex;
     justify-content: space-between;
-  align-items: center;
+    align-items: center;
     text-align: center;
 }
 
-.result-row2{
+.result-row2 {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-      align-items: center;
+    align-items: center;
     text-align: center;
 }
-#status-p{
+
+#status-p {
     color: rgb(219, 26, 26);
     padding: 5px;
 
     font-weight: lighter;
 }
-#country-name , #disaster-name-p{
-    background-color: black;
+
+#country-name,
+#disaster-name-p {
+    background-color: rgba(0, 0, 0, 0.726);
     color: white;
     padding: 5px;
     border-radius: 5px;
 }
-#date , #quantity{
+
+#date,
+#quantity {
     font-weight: bold;
 }
 
-.news{
-  margin: 20px;
+.news {
+    width: 50%;
+    margin: 20px;
     border: 1px solid rgb(233, 233, 233);
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.news-row{
+
+.news-row {
     display: flex;
+    justify-content: space-between;
 
 }
 
-#news-p{
-     background-color: black;
+#news-p {
+    background-color: rgba(0, 0, 0, 0.726);
     color: white;
     padding: 5px;
     border-radius: 5px;
 }
 
-.footer{
-      height: auto;
+.footer {
+    height: auto;
     width: 100%;
     background-color: rgb(74, 116, 230);
     display: flex;
