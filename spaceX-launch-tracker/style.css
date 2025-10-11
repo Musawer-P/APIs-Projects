@@ -254,3 +254,53 @@ margin-top: 50px;
     display: flex;
     justify-content: space-between;
 }
+.mission-detail-1{
+    padding: 20px 10px;
+    border: 1px solid white;
+    border-radius: 8px;
+    width: fit-content;
+    background-color: white;
+    color: black;
+
+}
+.m-row{
+    display: flex;
+flex-direction: row;
+justify-content: space-between;
+gap: 50px;
+align-items: center;
+}
+.m-row-1{
+    display: flex;
+    gap: 10px;
+}
+
+#mission-btn{
+    padding: 12px 50px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.mission-btn{
+    text-align: end;
+}
+
+#m-name-p{
+    border-bottom: 1px solid rgb(77, 77, 77);
+    padding-bottom: 10px;
+}
+.mission-details-modal{
+    display: flex;
+    gap: 20px;
+    margin-top: 80px;
+}
+
+#mission-h1{
+    font-size: 30px;
+font-weight: lighter;
+text-align: center;
+margin-top: 50px;
+}
