@@ -10,7 +10,7 @@ body{
 #first-h2{
     font-size: 70px;
     font-weight: 100;
-    margin-top: 150px;
+    margin-top: 100px;
     margin-bottom: 20px;
 }
 #p-1{
@@ -25,11 +25,11 @@ body{
     color: black;
     border: none;
     cursor: pointer;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 }
 
 .gap{
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.644);
     height: 1px;
     width: 100%;
     display: flex;
