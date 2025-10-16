@@ -113,3 +113,154 @@
     })();
 
  
+
+    const modal = document.getElementById("Modal");
+    const modal2 = document.getElementById("Modal2");
+    const modal3 = document.getElementById("Modal3");
+    const modal4 = document.getElementById("Modal4");
+    const btn = document.getElementById("openModal");
+    const btn2 = document.getElementById("openModal2");
+    const btn3 = document.getElementById("openModal3");
+    const btn4 = document.getElementById("openModal4");
+    const closeBtn = document.querySelector(".close");
+    const closeBtn2 = document.querySelector(".close2");
+    const closeBtn3 = document.querySelector(".close3");
+    const closeBtn4 = document.querySelector(".close4");
+
+    btn.onclick = () => {
+      modal.style.display = "block";
+      
+    }
+    btn2.onclick = () => {
+      modal2.style.display = "block";
+      
+    } ;btn3.onclick = () => {
+      modal3.style.display = "block";
+      
+    } ;btn4.onclick = () => {
+      modal4.style.display = "block";
+      
+    }
+
+    closeBtn.onclick = () => {
+      modal.style.display = "none";
+    }
+  
+    
+    closeBtn2.onclick = () => {
+      modal2.style.display = "none";
+    }
+
+    
+    closeBtn3.onclick = () => {
+      modal3.style.display = "none";
+    }
+    
+    closeBtn4.onclick = () => {
+      modal4.style.display = "none";
+    }
+    window.onclick = (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    window.onclick = (event) => {
+      if (event.target === modal2) {
+        modal2.style.display = "none";
+      }
+    }
+
+    window.onclick = (event) => {
+      if (event.target === modal3) {
+        modal3.style.display = "none";
+      }
+    }
+
+    window.onclick = (event) => {
+      if (event.target === modal3) {
+        modal3.style.display = "none";
+      }
+    }
+
+
+
+
+    // Image enlarge logic
+const images = document.querySelectorAll(".image-gallery img");
+const images2 = document.querySelectorAll(".image-gallery2 img");
+const images3 = document.querySelectorAll(".image-gallery3 img");
+const images4 = document.querySelectorAll(".image-gallery4 img");
+
+const imgViewer = document.getElementById("imgViewer");
+const imgViewer2 = document.getElementById("imgViewer2");
+const imgViewer3 = document.getElementById("imgViewer3");
+const imgViewer4 = document.getElementById("imgViewer4");
+
+const viewerImg = document.getElementById("viewerImg");
+const viewerImg2 = document.getElementById("viewerImg2");
+const viewerImg3 = document.getElementById("viewerImg3");
+const viewerImg4 = document.getElementById("viewerImg4");
+
+const closeImg = document.getElementById("closeImg");
+const closeImg2 = document.getElementById("closeImg2");
+const closeImg3 = document.getElementById("closeImg3");
+const closeImg4 = document.getElementById("closeImg4");
+
+
+images.forEach(img => {
+img.addEventListener("click", () => {
+viewerImg.src = img.src;
+imgViewer.style.display = "flex";
+});
+});
+
+
+
+images2.forEach(img => {
+  img.addEventListener("click", () => {
+  viewerImg2.src = img.src;
+  imgViewer2.style.display = "flex";
+  });
+  });
+
+  
+  
+images3.forEach(img => {
+  img.addEventListener("click", () => {
+  viewerImg3.src = img.src;
+  imgViewer3.style.display = "flex";
+  });
+  });
+
+  
+  
+images4.forEach(img => {
+  img.addEventListener("click", () => {
+  viewerImg4.src = img.src;
+  imgViewer4.style.display = "flex";
+  });
+  });
+  
+closeImg.onclick = () => imgViewer.style.display = "none";
+window.onclick = (e) => {
+if (e.target === imgViewer) imgViewer.style.display = "none";
+};
+
+ 
+closeImg2.onclick = () => imgViewer2.style.display = "none";
+window.onclick = (e) => {
+if (e.target === imgViewer2) imgViewer2.style.display = "none";
+};
+
+ 
+closeImg3.onclick = () => imgViewer3.style.display = "none";
+window.onclick = (e) => {
+if (e.target === imgViewer3) imgViewer3.style.display = "none";
+};
+
+ 
+closeImg4.onclick = () => imgViewer4.style.display = "none";
+window.onclick = (e) => {
+if (e.target === imgViewer4) imgViewer4.style.display = "none";
+};
