@@ -290,7 +290,7 @@ align-items: center;
     gap: 10px;
 }
 
-#mission-btn{
+#mission-btn-modal ,#mission-btn-modal2 ,#mission-btn-modal3 ,#mission-btn-modal4{
     padding: 12px 50px;
     border: none;
     border-radius: 2px;
@@ -388,7 +388,10 @@ color: black;
 
 
 /* Modal container */
-.modal {
+
+
+
+  .modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -404,7 +407,7 @@ color: black;
   .modal-content {
     background-color: #161616;
     margin: 8% auto;
-    padding: 0px 10px;
+    padding: 10px 20px;
     border-radius: 12px;
     width: 80%;
     max-width: 700px;
@@ -488,3 +491,94 @@ color: black;
     color: red;
   }
   
+
+  /*Mission Details*/
+
+
+  .Missionclose ,.Missionclose2 , .Missionclose3 , .Missionclose4 {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 28px;
+    font-weight: lighter;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .Missionclose:hover ,.Missionclose2:hover, .Missionclose3:hover, .Missionclose4:hover {
+    color: red;
+  }
+
+  /* Images inside modal */
+  .Missionimage-gallery , .Missionimage-gallery2 , .Missionimage-gallery3 , .Missionimage-gallery4 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+
+  .Missionimage-gallery img , .Missionimage-gallery2 img , .Missionimage-gallery3 img , .Missionimage-gallery4 img {
+    width: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s;
+  }
+
+  .Missionimage-gallery img:hover , .Missionimage-gallery2 img:hover , .Missionimage-gallery3 img:hover , .Missionimage-gallery4 img:hover {
+    transform: scale(1.05);
+  }
+
+  #gallery-h3{
+    font-size: 30px;
+    padding: 10px;
+  }
+
+
+
+  /* Enlarged image viewer */
+.Missionimg-viewer ,.Missionimg-viewer2 ,.Missionimg-viewer3 ,.Missionimg-viewer4 {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  .Missionimg-viewer img ,.Missionimg-viewer2 img ,.Missionimg-viewer3 img ,.Missionimg-viewer4 img {
+    width: 50%;
+    max-width: 30%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.089);
+  }
+  
+  .Missionimg-viewer span ,  .Missionimg-viewer2 span ,  .Missionimg-viewer3 span ,  .Missionimg-viewer4 span {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 35px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .Missionimg-viewer span:hover ,  .Missionimg-viewer2 span:hover ,  .Missionimg-viewer3 span:hover ,  .Missionimg-viewer4 span:hover {
+    color: red;
+  }
+  
+
+
+.m-modal-row{
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+
+#m-desc{
+    line-height: 1.7;
+}
