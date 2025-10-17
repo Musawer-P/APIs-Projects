@@ -112,7 +112,8 @@
       setInterval(()=>{ loadNextLaunch(); loadLatestLaunch(); }, 60_000);
     })();
 
- 
+
+
 
     const modal = document.getElementById("Modal");
     const modal2 = document.getElementById("Modal2");
@@ -127,7 +128,7 @@
     const closeBtn3 = document.querySelector(".close3");
     const closeBtn4 = document.querySelector(".close4");
 
-    btn.onclick = () => {
+btn.onclick = () => {
       modal.style.display = "block";
       
     }
@@ -178,11 +179,10 @@
     }
 
     window.onclick = (event) => {
-      if (event.target === modal3) {
-        modal3.style.display = "none";
+      if (event.target === modal4) {
+        modal4.style.display = "none";
       }
     }
-
 
 
 
@@ -206,6 +206,7 @@ const closeImg = document.getElementById("closeImg");
 const closeImg2 = document.getElementById("closeImg2");
 const closeImg3 = document.getElementById("closeImg3");
 const closeImg4 = document.getElementById("closeImg4");
+
 
 
 images.forEach(img => {
@@ -264,3 +265,168 @@ closeImg4.onclick = () => imgViewer4.style.display = "none";
 window.onclick = (e) => {
 if (e.target === imgViewer4) imgViewer4.style.display = "none";
 };
+
+
+
+
+ //Mission Details
+
+ const Missionmodal = document.getElementById("MissionModal");
+    const Missionmodal2 = document.getElementById("MissionModal2");
+    const Missionmodal3 = document.getElementById("MissionModal3");
+    const Missionmodal4 = document.getElementById("MissionModal4");
+    const Missionbtn = document.getElementById("mission-btn-modal");
+    const Missionbtn2 = document.getElementById("mission-btn-modal2");
+    const Missionbtn3 = document.getElementById("mission-btn-modal3");
+    const Missionbtn4 = document.getElementById("mission-btn-modal4");
+    const MissioncloseBtn = document.querySelector(".Missionclose");
+    const MissioncloseBtn2 = document.querySelector(".Missionclose2");
+    const MissioncloseBtn3 = document.querySelector(".Missionclose3");
+    const MissioncloseBtn4 = document.querySelector(".Missionclose4");
+
+    
+
+//Mission Details 
+
+
+    Missionbtn.onclick = () => {
+      Missionmodal.style.display = "block";
+      
+    }
+    Missionbtn2.onclick = () => {
+      Missionmodal2.style.display = "block";
+      
+    } ;Missionbtn3.onclick = () => {
+      Missionmodal3.style.display = "block";
+      
+    } ;Missionbtn4.onclick = () => {
+      Missionmodal4.style.display = "block";
+      
+    }
+
+    MissioncloseBtn.onclick = () => {
+      Missionmodal.style.display = "none";
+    }
+  
+    
+    MissioncloseBtn2.onclick = () => {
+      Missionmodal2.style.display = "none";
+    }
+
+    
+    MissioncloseBtn3.onclick = () => {
+      Missionmodal3.style.display = "none";
+    }
+    
+    MissioncloseBtn4.onclick = () => {
+      Missionmodal4.style.display = "none";
+    }
+    window.onclick = (event) => {
+      if (event.target === Missionmodal) {
+        Missionmodal.style.display = "none";
+      }
+    }
+
+    window.onclick = (event) => {
+      if (event.target === Missionmodal2) {
+        Missionmodal2.style.display = "none";
+      }
+    }
+
+    window.onclick = (event) => {
+      if (event.target === Missionmodal3) {
+        Missionmodal3.style.display = "none";
+      }
+    }
+
+    window.onclick = (event) => {
+      if (event.target === Missionmodal4) {
+        Missionmodal4.style.display = "none";
+      }
+    }
+
+
+
+//Mission Details
+
+
+const Missionimages = document.querySelectorAll(".Missionimage-gallery img");
+const Missionimages2 = document.querySelectorAll(".Missionimage-gallery2 img");
+const Missionimages3 = document.querySelectorAll(".Missionimage-gallery3 img");
+const Missionimages4 = document.querySelectorAll(".Missionimage-gallery4 img");
+
+const MissionimgViewer = document.getElementById("MissionimgViewer");
+const MissionimgViewer2 = document.getElementById("MissionimgViewer2");
+const MissionimgViewer3 = document.getElementById("MissionimgViewer3");
+const MissionimgViewer4 = document.getElementById("MissionimgViewer4");
+
+const MissionviewerImg = document.getElementById("MissionviewerImg");
+const MissionviewerImg2 = document.getElementById("MissionviewerImg2");
+const MissionviewerImg3 = document.getElementById("MissionviewerImg3");
+const MissionviewerImg4 = document.getElementById("MissionviewerImg4");
+
+const MissioncloseImg = document.getElementById("MissioncloseImg");
+const MissioncloseImg2 = document.getElementById("MissioncloseImg2");
+const MissioncloseImg3 = document.getElementById("MissioncloseImg3");
+const MissioncloseImg4 = document.getElementById("MissioncloseImg4");
+
+//Mission Details
+
+Missionimages.forEach(img => {
+img.addEventListener("click", () => {
+MissionviewerImg.src = img.src;
+MissionimgViewer.style.display = "flex";
+});
+});
+
+
+
+Missionimages2.forEach(img => {
+  img.addEventListener("click", () => {
+  MissionviewerImg2.src = img.src;
+  MissionimgViewer2.style.display = "flex";
+  });
+  });
+
+  
+  
+Missionimages3.forEach(img => {
+  img.addEventListener("click", () => {
+  MissionviewerImg3.src = img.src;
+  MissionimgViewer3.style.display = "flex";
+  });
+  });
+
+  
+  
+Missionimages4.forEach(img => {
+  img.addEventListener("click", () => {
+  MissionviewerImg4.src = img.src;
+  MissionimgViewer4.style.display = "flex";
+  });
+  });
+  
+MissioncloseImg.onclick = () => MissionimgViewer.style.display = "none";
+window.onclick = (e) => {
+if (e.target === MissionimgViewer) MissionimgViewer.style.display = "none";
+};
+
+ 
+MissioncloseImg2.onclick = () => MissionimgViewer2.style.display = "none";
+window.onclick = (e) => {
+if (e.target === MissionimgViewer2) MissionimgViewer2.style.display = "none";
+};
+
+ 
+MissioncloseImg3.onclick = () => MissionimgViewer3.style.display = "none";
+window.onclick = (e) => {
+if (e.target === MissionimgViewer3) MissionimgViewer3.style.display = "none";
+};
+
+ 
+MissioncloseImg4.onclick = () => MissionimgViewer4.style.display = "none";
+window.onclick = (e) => {
+if (e.target === MissionimgViewer4) MissionimgViewer4.style.display = "none";
+};
+
+
