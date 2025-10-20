@@ -1,3 +1,29 @@
+  
+  
+const modal = document.getElementById("Modal");
+const btn = document.getElementById("showFavs");
+const closeBtn = document.querySelector(".close");
+
+btn.onclick = () => {
+  modal.style.display = "block";
+};
+
+closeBtn.onclick = () => {
+  modal.style.display = "none";
+};
+
+window.onclick = (event) => {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+  
+  
+  
+  
+  
+  
   const moodInput = document.getElementById('moodInput');
     const inspireBtn = document.getElementById('inspireBtn');
     const quoteText = document.getElementById('quoteText');
@@ -88,3 +114,6 @@
 
     // Load one quote on start
     generateInspiration();
+
+
+
