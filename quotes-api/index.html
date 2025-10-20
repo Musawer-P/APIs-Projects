@@ -1,22 +1,69 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="style.css" rel="stylesheet">
   <title>Simple Inspiration Hub</title>
 </head>
+
 <body>
-  <h1>Simple Inspiration Hub</h1>
-  <input id="moodInput" type="text" placeholder="Enter mood or topic" />
-  <button id="inspireBtn">Inspire Me</button>
-  <button id="saveFav">Save Favorite</button>
-  <button id="showFavs">Show Favorites</button>
-  <button id="clearFavs">Clear Favorites</button>
-  <p id="quoteText">Press "Inspire Me" to get a quote...</p>
-  <p id="quoteAuthor"></p>
-  <p id="wikiFact"></p>
-  <img id="bgImage" src="" alt="background" style="max-width:100%;height:auto;"/>
-  <div id="favoritesList"></div>
-<script src = "script.js"></script>
+  <div class="main">
+    <div class="header">
+      <h1>Simple Inspiration Hub</h1>
+      <button id="showFavs">Show Favorites</button>
+    </div>
+    <div class="form">
+      <div class="h2-form">
+        <h2 id="h2-form">Enter your mood</h2>
+      </div>
+      <div class="input-btn">
+        <input id="moodInput" type="text" placeholder="Enter mood or topic" />
+        <button id="inspireBtn">Inspire Me</button>
+      </div>
+    </div>
+    <div class="result">
+      <div class="row">
+        <p id="quote">The future belongs to those who believe in the beauty of their dreams.</p>
+        <p id="quote-author">Eleanor Roosevelt</p>
+        <div class="btn">
+          <button type="button" id="save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- Modal -->
+<div id="Modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3 id="gallery-h3">Favorites</h3>
+
+    <div class="main-fav-row">
+      <div class="fav-row">
+        <p id="fav-quotes">The future belongs to those who believe in the beauty of their dreams.</p>
+        <p id="fav-quotes-author">Eleanor Roosevelt</p>
+      </div>
+      <div class="fav-row">
+        <p id="fav-quotes">It does not matter how slowly you go as long as you do not stop.</p>
+        <p id="fav-quotes-author">Confucius</p>
+      </div>
+      <div class="fav-row">
+        <p id="fav-quotes">Be the change that you wish to see in the world.</p>
+        <p id="fav-quotes-author">Mahatma Gandhi</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <script src="script.js"></script>
 </body>
+
 </html>
