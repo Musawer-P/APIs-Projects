@@ -1,0 +1,146 @@
+body{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+background: url('images/background1.jpg') no-repeat center center fixed;
+  background-size: cover;
+
+  
+}
+
+#h1{
+    color: rgba(0, 0, 0, 0.726);
+    padding-left: 19px;
+    padding-top: 20px;
+}
+.row{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#name, #age, #weight, #height, #gender{
+    width: 50%;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid rgb(190, 190, 190);
+    margin-bottom: 10px;
+    outline: none;
+}
+#gender{
+    width: 50%;
+}
+#info-btn{
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.788);
+    color: white;
+    border: none;
+    height: 40px;
+    cursor: pointer;
+
+}
+#cal-p{
+margin-bottom: 0px;
+font-weight: bold;
+}
+
+#cal-result-p{
+margin-bottom: 0px;
+ background-color: rgba(255, 101, 12, 0.116);
+    padding: 3px;
+    border-radius: 5px;
+    color: black;
+
+}
+.info-container,.api-search,.health-tracker{
+    padding: 10px;
+     background: rgba(255, 101, 12, 0.116); /* slight white tint */
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+width: 100%;
+}
+.health-tracker{
+    color: white;
+}
+
+#search{
+    padding: 10px 0px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    background-color: rgba(240, 248, 255, 0);
+    outline: none;
+}
+.search-btn{
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
+#search-btn{
+    padding: 10px;
+    background-color: rgba(98, 108, 116, 0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: black;
+    cursor: pointer;
+    
+}
+.api-search-row,.health-tracker-row,.info-row{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.api-search-row,.health-tracker-row{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.397);
+
+}
+#title{
+    font-weight: bold;
+}
+#text{
+    background-color: rgba(255, 101, 12, 0.116);
+    padding: 3px;
+    border-radius: 5px;
+    color: white;
+}
+#info-h1, #api-search-h1 ,#health-tracker-h1{
+    font-size: 25px;
+    font-weight: lighter;
+}
+
+.footer{
+    padding-left:20px
+}
+#footer-p-name {
+    font-size: 35px;
+    margin-bottom: 0px;
+    color:white;
+}
+
+
+#footer-p-created {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color:white;
+
+}
+
+/* ===== Tablet (768px and below) ===== */
+@media (max-width: 1100px) {
+    
+     .row{
+display: flex;
+  flex-wrap: wrap; /* allows items to move to the next line */
+    }
+.health-tracker:nth-child(3) {
+  flex-basis: 100%; /* takes the whole row */
+}
+}
+
+
+
+/* ===== Mobile (480px and below) ===== */
+@media (max-width: 590px) {}

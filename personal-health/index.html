@@ -7,8 +7,94 @@
     <title>Personal Health</title>
 </head>
 <body>
+    <div class = "header">
+        <h1 id = "h1">Personal Health</h1>
+    </div>
+    <div class = "row">
+        <div class = "info-container">
+            <h1 id = "info-h1">Personal Info</h1>
+            <div class = "info-row">
+                <input type = "text" id = "name" placeholder = "Name">
+                <input type = "text" id = "age" placeholder = "Age">
+            </div>
+             <div class = "info-row">
+                <input type = "text" id = "height" placeholder = "Height">
+                <input type = "text" id = "weight" placeholder = "Weight">
+            </div>
+            <div class = "info-row">
+<select id="gender" name="gender" required>
+  <option value="">-- Select Gender --</option>
+  <option value="male">Male</option>
+  <option value="female">Female</option>
+</select>     
+<button type = "button" id = "info-btn">Submit</button>
+</div>
+<div class = "info-row">
+<p id = "cal-p">BMI Calculator</p> 
+<p id = "cal-result-p">90</p>
+</div>
+<div class = "info-row">
+<p id = "cal-p">BMI Calculator</p> 
+<p id = "cal-result-p">90</p></div>
+        </div>
+
+
+        <div class = "api-search">
+            <h1 id = "api-search-h1">Food Search</h1>
+            <div class = "search-btn">
+<input type = "text" id = "search" placeholder="Search Food">
+<button type = "button" id = "search-btn">
+    Search
+</button>
+</div>
+<div class = "api-search-container">
+    <div class = "api-search-row">
+        <p id = "title">name</p>
+        <p id = "text">Chicken</p>
+    </div>    
+      <div class = "api-search-row">
+        <p id = "title">Protein</p>
+        <p id = "text">20 MG</p>
+    </div>  
+      <div class = "api-search-row">
+        <p id = "title">Carbs</p>
+        <p id = "text">8 MG</p>
+    </div>  
+      <div class = "api-search-row">
+        <p id = "title">Fat</p>
+        <p id = "text">200 MG</p>
+    </div>  
+</div>
+        </div>
+        <div class = "health-tracker">
+            <h1 id = "health-tracker-h1">Health Tracker</h1>
+<div class = "health-tracker-container">
+    <div class = "health-tracker-row">
+        <p id = "title">Steps</p>
+        <p id = "text">2000</p>
+    </div>    
+      <div class = "health-tracker-row">
+        <p id = "title">Water</p>
+        <p id = "text">5 ML</p>
+    </div>  
+      <div class = "health-tracker-row">
+        <p id = "title">Calories</p>
+        <p id = "text">100</p>
+    </div>  
+      <div class = "health-tracker-row">
+        <p id = "title">Sleep Hours</p>
+        <p id = "text">8 HR</p>
+    </div>  
+</div>
+        </div>
+    </div>
+
+    <div class = "footer">
+         <p id="footer-p-name">Personal Health</p>
+        <p id="footer-p-created">Created By Musawer Popalzai</p>
+
+    </div>
     <script src = "script.js">
-        
     </script>
 </body>
 </html>
