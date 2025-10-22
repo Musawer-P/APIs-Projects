@@ -1,3 +1,99 @@
 body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: rgb(36, 36, 36);
+    color: white;
+    font-size: 15px;
+}
+
+.row{
+    display: flex;
+      background: #1e1e1e;
+  border-radius: 15px;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6),
+              0 0 10px rgba(255, 255, 255, 0.05);
+}
+.sidebar{
+    padding: 10px;
+    border-right: 1px solid rgba(255, 255, 255, 0.336);
+}
+.container{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.336);
+}
+#artist-profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+.row1{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#artist-name{
+margin-bottom: 0px;
+    font-size: 15px;
+
+}
+#art-name{
+margin-top: 5px;
+font-weight: lighter;
+    font-size: 15px;
+
+}
+.body{
+    padding: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+.trend-song{
+        border-top: 1px solid rgba(255, 255, 255, 0.315);
+
+    padding: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.trend1{
+    padding-top: 10px;
+}
+.trend-song h3 , p{
+    font-size: 15px;
+ 
+}
+#trend-img{
+width: 230px;
+  height: 230px;
+  background: url('images/art-img.jpg');
+  background-size: contain;
+  background-size: cover;
+  border-radius: 5px;
+
+}
+.artist-row{
+    border-top: 1px solid rgba(255, 255, 255, 0.315);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.artist1{
+            padding-top: 10px;
+
+}
+.artist1 h3{
+text-align: center;
+}
+
+#artist-img{
+    width: 150px;
+  height: 150px;
+  background: url('images/art-img.jpg');
+  background-size: contain;
+  background-size: cover;
+  border-radius: 100px;
+
+}
+#artist-h1 , #trend-h1{
+    padding: 10px;
+    margin-bottom: 10px;
 }
