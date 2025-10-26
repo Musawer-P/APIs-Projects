@@ -222,3 +222,52 @@ p {
     padding: 10px;
     margin-bottom: 10px;
 }
+.search{
+  display: flex;
+margin-bottom: 30px;
+
+}
+#search{
+  background-color: rgba(240, 248, 255, 0);
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid white;
+  outline: none;
+  color: white;
+  width: 100%;
+}
+#search::placeholder{
+  color: white;
+}
+#btn{
+    background-color: rgba(240, 248, 255, 0);
+  color: white;
+  border: none;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+}
+
+
+.artist-search{
+  display: flex;
+}
+
+#search-artist{
+  background-color: rgba(240, 248, 255, 0);
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.308);
+  outline: none;
+  color: white;
+  width: 100%;
+}
+#search-artist::placeholder{
+  color: white;
+}
+#btn-artist{
+    background-color: rgba(240, 248, 255, 0);
+  color: white;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.308);
+  cursor: pointer;
+}
