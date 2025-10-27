@@ -1,37 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href = "style.css" rel = "stylesheet">
+  <link href="style.css" rel="stylesheet">
   <title>Game Recommendation Hub</title>
-  
+
 </head>
+
 <body>
   <header>
-    <h1>🎮 Game Recommendation Hub</h1>
+    <h1>Game Recommendation Hub</h1>
     <p>Discover games by genre, sort them, or let us surprise you with a random pick!</p>
   </header>
 
   <!-- Controls -->
   <div class="controls">
     <input type="text" id="genreInput" placeholder="Enter a game genre (e.g. action)">
-    <button id="searchBtn">Search</button>
     <select id="sortSelect">
       <option value="">Sort by...</option>
       <option value="rating">Rating</option>
       <option value="released">Release Date</option>
     </select>
-    <button id="randomBtn">🎲 Random Game</button>
-  </div>
+    <button id="searchBtn">Search</button>
+    <button id="randomBtn">Random</button>
 
-  <!-- Results -->
-  <div id="gameResults">
-    <!-- Game cards will be injected here -->
-  </div>
+    <!-- Results -->
+    <div class="gameResults">
+      <div class="row">
+        <div class="images">
+          <img src="images/fifa25.jpg" id="poster">
 
-<script src="script.js">
-    
-</script>
+        </div>
+        <div class="name-desc">
+          <h1>FIFA 25</h1>
+          <p>EA Sports FC 25 (often called FIFA 25) is the latest football simulation game by EA Sports, released in
+            September 2024. It introduces the new FC IQ system, enhanced player roles, and improved animations for more
+            realistic gameplay. The “Rush” 5-vs-5 mode adds fast, fun matches. It’s available on PlayStation, Xbox, PC,
+            and Nintendo Switch.</p>
+          <div class="rating-other">
+            <div class="row1">
+              <p>Developer</p>
+              <p>EA Sport</p>
+            </div>
+            <div class="row2">
+              <p>Rating</p>
+              <p>4.8</p>
+              </div>
+            <div class="row3">
+              <p>Age</p>
+              <p>12+</p>
+</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <script src="script.js">
+
+    </script>
 </body>
+
 </html>
