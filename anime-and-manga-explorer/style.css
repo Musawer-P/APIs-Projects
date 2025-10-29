@@ -1,0 +1,115 @@
+body {
+    margin: 10px;
+    padding: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: rgb(0, 0, 0);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.header {
+    margin-left: 100px;
+}
+
+#h1-main {
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+}
+
+#search-bar {
+    width: 70%;
+    padding: 15px;
+    border: 1px solid white;
+    background-color: rgba(27, 27, 27, 0.493);
+    border-radius: 5px;
+    color: white;
+    outline: none;
+}
+
+#image {
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 250px;
+}
+
+i {
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    padding: 10px;
+}
+
+.body-container {
+    margin-left: 100px;
+    margin-top: 30px;
+    display: flex;
+}
+
+.card {
+    background-color: none;
+    border-radius: 5px;
+    height: 280px;
+    width: 512px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#genre-p {
+    color: rgb(0, 0, 0);
+    background-color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#movie-time {
+    text-align: center;
+    color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#rating-p {
+    color: rgb(0, 0, 0);
+    background-color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.description {
+    width: 100%;
+    padding-left: 0px;
+}
+
+#h2-movie-name {
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.white-space {
+    width: 420px;
+    height: 1px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+#movie-description {
+    color: white;
+}
+
+.card-2 {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 700px;
+}
