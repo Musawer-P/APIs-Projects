@@ -1,27 +1,32 @@
 body {
     background: url('main-background.jpg') no-repeat center center fixed;
-  background-size: cover;
+    background-size: cover;
 
-    margin: 10px;
-    padding: 10px;
+    margin: 0px;
+    padding: 0px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: rgb(0, 0, 0);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-
+.main{
+    padding: 15px;
+    margin: 10px;
+}
 .search {
-margin-top: 50px;
+    margin-top: 50px;
 }
 
 #h1-main {
+    background-color: rgba(27, 27, 27, 0.493);
+
     color: rgb(255, 255, 255);
-    font-size: 50px;
+    font-size: 4vw;
     text-align: center;
     border-bottom: 1px solid white;
-    padding-bottom: 25px;
-    width: 70%;
-    margin: 0 auto;
-    margin-top: 5px;
+    padding: 10px 0px;
+    padding-bottom: 15px;
+    width: 100%;
+    margin: 0px;
 }
 
 #search-bar {
@@ -34,56 +39,67 @@ margin-top: 50px;
     outline: none;
 }
 
-#trend-img{
+#trend-img {
     border: 1px solid white;
- border-radius: 0px;
+    border-radius: 0px;
     border-top-left-radius: 4px;
-        border-top-right-radius: 4px;    
-        margin-bottom: 0px;
+    border-top-right-radius: 4px;
+    margin-bottom: 0px;
 }
-.trend{
+
+.trend {
     margin-top: 100px;
 }
-.trend-row{
+
+.trend-row {
     padding: 20px;
     padding-bottom: 0px;
-     background: rgba(255, 255, 255, 0.1); 
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); 
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
 
     display: flex;
     text-align: center;
     justify-content: space-between;
     gap: 10px;
 }
-.trend1,.trend2,.trend3,.trend4,.trend5{
+
+.trend1,
+.trend2,
+.trend3,
+.trend4,
+.trend5 {
     display: flex;
     flex-direction: column;
 
 }
-#h2-trend{
+
+#h2-trend {
     color: white;
-    font-size: 30px;
+    font-size: 3.5vw;
     margin-bottom: 30px;
+    font-weight: 100;
 }
-h3{
+
+h3 {
     margin-top: 0px;
     background-color: rgba(0, 0, 0, 0.089);
     padding: 10px;
     color: white;
     font-size: 20px;
     font-weight: 100;
-        border-left: 1px solid white;
-        border-right: 1px solid white;
-        border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
 
     border-radius: 0px;
     border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 
 }
+
 #image {
     border: 1px solid white;
     border-radius: 5px;
@@ -103,12 +119,12 @@ i {
 }
 
 .card {
- background: rgba(255, 255, 255, 0.1); 
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); 
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
-    height: 280px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    height: fit-content;
     width: 100%;
     padding: 20px;
 }
@@ -124,7 +140,7 @@ i {
 }
 
 #movie-time {
-     background-color: rgba(0, 0, 0, 0.089);
+    background-color: rgba(0, 0, 0, 0.089);
     padding: 10px;
     text-align: center;
     color: white;
@@ -141,10 +157,13 @@ i {
     padding: 5px;
     border-radius: 5px;
     font-weight: bold;
+
 }
-.title{
+
+.title {
     width: 80.5%;
 }
+
 .description {
     display: flex;
     flex-direction: column;
@@ -154,16 +173,19 @@ i {
 }
 
 .row {
+    font-size: clamp(12px, 15px, 17px);
+
     display: flex;
     justify-content: start;
     gap: 10px;
     padding-left: 5px;
     padding-right: 5px;
-    
+
 }
+
 #h2-movie-name {
     color: white;
-    font-size: 35px;
+    font-size: clamp(25px, 20px, 30px);
     font-weight: bold;
     margin: 0px;
     border-bottom: 1px solid white;
@@ -179,9 +201,10 @@ i {
 }
 
 #movie-description {
+    font-size: clamp(17px, 2vw, 17px);
     padding: 10px;
     border-radius: 5px;
-        background-color: rgba(0, 0, 0, 0.089);
+    background-color: rgba(0, 0, 0, 0.089);
     color: white;
 }
 
@@ -190,4 +213,56 @@ i {
     justify-content: space-between;
     gap: 30px;
     width: 70%;
+}
+
+
+
+
+/* ===== Tablet (768px and below) ===== */
+@media (max-width: 1100px) {
+
+    .trend-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+
+    .card-2 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .title {
+        width: 100%;
+    }
+
+    #image {
+        width: 40%;
+        height: 40%;
+        max-width: 190px;
+    }
+
+}
+
+/* ===== Mobile (480px and below) ===== */
+@media (max-width: 590px) {
+    .trend-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+
+    .card-2 {
+        width: 100%;
+    }
+
+    .title {
+        width: 100%;
+    }
+
+    #image {
+        width: 70%;
+        height: 70%;
+    }
 }
