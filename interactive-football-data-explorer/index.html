@@ -1,309 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href = "style.css" rel = "stylesheet">
-    <title>Football Data Explorer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <title>Football Data Explorer</title>
 </head>
+
 <body>
-    <div class = "header">
-        <h1>Football Explolrer</h1>
-    </div>
-
-
-      <div class="topbar" style="width:100%;justify-content:space-between;">
-      <div style="display:flex; gap:12px; align-items:center;">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.12" stroke-width="1.2"/>
-          <path d="M6 8v8" stroke="currentColor" stroke-width="1.4" stroke-opacity="0.9" stroke-linecap="round"/>
-          <path d="M18 8v8" stroke="currentColor" stroke-width="1.4" stroke-opacity="0.9" stroke-linecap="round"/>
-          <path d="M6 12h12" stroke="currentColor" stroke-width="1.4" stroke-opacity="0.9" stroke-linecap="round"/>
-        </svg>
-        <div>
-          <h1>Football Data Explorer</h1>
-          <div class="small">Search players & teams • Filter seasons, leagues, nationalities</div>
-        </div>
-      </div>
-
-      <form class="search" role="search" aria-label="Search players or teams" onsubmit="return false;">
-        <input type="search" id="global-search" name="q" placeholder="Search player or team (e.g. Salah, Real Madrid)" aria-label="Search player or team" />
-        <select aria-label="Search type" title="Search type">
-          <option value="player">Player</option>
-          <option value="team">Team</option>
-        </select>
-        <button type="button" title="Search">Search</button>
-      </form>
-    </div>
-  </header>
-
-  <div class="container" role="main">
-    <!-- LEFT SIDEBAR: Filters -->
-    <aside aria-labelledby="filters-heading" class="card" id="sidebar">
-      <h2 id="filters-heading" style="margin:0 0 10px 0; font-size:15px;">Filters</h2>
-
-      <div class="filters" role="region" aria-label="Filters">
-        <div>
-          <label for="league">League</label>
-          <select id="league" name="league" aria-label="Filter by league">
-            <option value="">All leagues</option>
-            <option>Premier League</option>
-            <option>La Liga</option>
-            <option>Serie A</option>
-            <option>Bundesliga</option>
-            <option>Ligue 1</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="season">Season</label>
-          <select id="season" name="season" aria-label="Filter by season">
-            <option value="">All seasons</option>
-            <option>2024/25</option>
-            <option>2023/24</option>
-            <option>2022/23</option>
-            <option>2021/22</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="nationality">Nationality</label>
-          <select id="nationality" name="nationality" aria-label="Filter by nationality">
-            <option value="">Any</option>
-            <option>England</option>
-            <option>Spain</option>
-            <option>Italy</option>
-            <option>Argentina</option>
-            <option>Brazil</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="position">Position</label>
-          <select id="position" name="position" aria-label="Filter by position">
-            <option value="">Any position</option>
-            <option>Forward</option>
-            <option>Midfielder</option>
-            <option>Defender</option>
-            <option>Goalkeeper</option>
-          </select>
-        </div>
-
-        <div style="display:flex; gap:8px; margin-top:8px;">
-          <button type="button" aria-label="Apply filters">Apply</button>
-          <button type="button" aria-label="Clear filters" style="background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);">Clear</button>
-        </div>
-
-        <hr style="border:none;height:1px;background:rgba(255,255,255,0.02);margin:10px 0;">
-
-        <div>
-          <h3 style="margin:6px 0 8px 0;font-size:13px;">Quick picks</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="pill" type="button" title="Top scorers">Top Scorers</button>
-            <button class="pill" type="button" title="Top assists">Top Assists</button>
-            <button class="pill" type="button" title="Most minutes">Most Minutes</button>
-            <button class="pill" type="button" title="Rising players">Rising</button>
-          </div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <h3 style="margin:6px 0 6px 0;font-size:13px;">Saved comparisons</h3>
-          <div class="small">None yet. Save player comparisons to access them here.</div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN: Stats, Charts, Matches -->
-    <main>
-      <!-- SUMMARY STATS -->
-      <section class="card" aria-labelledby="summary-heading">
-        <h2 id="summary-heading" style="margin:0 0 10px 0; font-size:15px;">Overview</h2>
-        <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
-          <div class="stats-grid" style="flex:1; min-width:220px;">
-            <div class="stat" aria-hidden="true">
-              <div style="font-size:12px; color:var(--muted);">Goals (selected)</div>
-              <div style="font-size:20px; font-weight:700; margin-top:6px;">24</div>
-            </div>
-            <div class="stat" aria-hidden="true">
-              <div style="font-size:12px; color:var(--muted);">Assists</div>
-              <div style="font-size:20px; font-weight:700; margin-top:6px;">9</div>
-            </div>
-            <div class="stat" aria-hidden="true">
-              <div style="font-size:12px; color:var(--muted);">Minutes/90</div>
-              <div style="font-size:20px; font-weight:700; margin-top:6px;">82</div>
-            </div>
-          </div>
-
-          <div style="min-width:260px;">
-            <label class="small" for="compare-select">Quick compare</label>
-            <select id="compare-select" aria-label="Compare players">
-              <option value="">Choose player to compare</option>
-              <option>Player A</option>
-              <option>Player B</option>
-              <option>Player C</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <!-- CHARTS -->
-      <section class="card charts" aria-labelledby="charts-heading">
-        <div>
-          <h2 id="charts-heading" style="margin:0 0 8px 0; font-size:15px;">Player performance over time</h2>
-          <p class="small" style="margin:0 0 12px 0;">Line chart: Goals / Assists / xG by match or by month</p>
-
-          <!-- Primary chart canvas (attach Chart.js / D3 to #performance-chart) -->
-          <canvas id="performance-chart" data-chart="line" role="img" aria-label="Line chart placeholder for player performance over time">
-            <!-- Placeholder: add your charting library to draw here -->
-          </canvas>
-
-          <div style="display:flex; gap:10px; margin-top:10px; align-items:center;">
-            <div class="small">Metric:</div>
-            <select aria-label="Metric selector">
-              <option>Goals</option>
-              <option>Assists</option>
-              <option>xG</option>
-              <option>Pass accuracy</option>
-            </select>
-
-            <div class="small">Range:</div>
-            <select aria-label="Range selector">
-              <option>By match</option>
-              <option>By month</option>
-              <option>Season summary</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Right column: comparison and radar -->
-        <aside style="display:flex;flex-direction:column; gap:12px;">
-          <div>
-            <h3 style="margin:0 0 8px 0; font-size:13px;">Comparison</h3>
-            <!-- Radar / Bar chart placeholder -->
-            <canvas id="comparison-chart" class="chart-small" data-chart="radar" role="img" aria-label="Radar chart placeholder for player comparison"></canvas>
-            <div class="small" style="margin-top:8px;">Compare selected player's attributes (pace, shooting, passing...)</div>
-          </div>
-
-          <div>
-            <h3 style="margin:0 0 8px 0; font-size:13px;">Summary</h3>
-            <div class="small">Selected: <strong id="selected-player">Mohamed Salah</strong></div>
-            <div style="display:flex; gap:8px; margin-top:8px;">
-              <div class="pill">Apps: 34</div>
-              <div class="pill">Goals: 24</div>
-              <div class="pill">Assists: 9</div>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <!-- MATCH RESULTS & TIMELINE -->
-      <section class="card" aria-labelledby="matches-heading">
-        <h2 id="matches-heading" style="margin:0 0 10px 0; font-size:15px;">Match results & timeline</h2>
-        <p class="small" style="margin:0 0 12px 0;">Heatmap or timeline of results, shots, goals, and events. Hook your visualization library to #matches-heatmap or #timeline-canvas.</p>
-
-        <div style="display:grid; grid-template-columns: 1fr 300px; gap:12px;">
-          <!-- Left: heatmap/timeline -->
-          <div>
-            <h3 style="font-size:13px; margin:0 0 8px 0;">Match timeline (placeholder)</h3>
-            <canvas id="timeline-canvas" data-chart="timeline" role="img" aria-label="Timeline visualization placeholder"></canvas>
-
-            <h3 style="font-size:13px; margin:12px 0 8px 0;">Heatmap (shots)</h3>
-            <div id="matches-heatmap" style="height:180px; border-radius:8px; background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); display:flex; align-items:center; justify-content:center;">
-              <div class="small">Heatmap placeholder — add SVG or canvas visualization here</div>
-            </div>
-          </div>
-
-          <!-- Right: recent matches list -->
-          <div>
-            <h3 style="font-size:13px; margin:0 0 8px 0;">Recent matches</h3>
-            <div class="matches-list" id="recent-matches">
-              <!-- Each match is a clickable details element with expand for events -->
-              <details class="match" aria-details="match-1">
-                <summary style="display:flex; align-items:center; justify-content:space-between; width:100%;">
-                  <div style="display:flex; gap:8px; align-items:center;">
-                    <div style="font-weight:700;">Real Madrid</div>
-                    <div class="small">2 - 1</div>
-                  </div>
-                  <div class="small">Oct 19, 2025</div>
-                </summary>
-                <div style="margin-top:8px;">
-                  <div class="small">Events:</div>
-                  <ul style="margin:6px 0 0 16px;">
-                    <li><span title="Goal by Benzema">Goal (55')</span></li>
-                    <li><span title="Yellow card to Casemiro">Yellow (70')</span></li>
-                    <li><span title="Goal by opposition">Goal (83')</span></li>
-                  </ul>
-                </div>
-              </details>
-
-              <details class="match">
-                <summary style="display:flex; align-items:center; justify-content:space-between; width:100%;">
-                  <div style="display:flex; gap:8px; align-items:center;">
-                    <div style="font-weight:700;">Manchester City</div>
-                    <div class="small">3 - 0</div>
-                  </div>
-                  <div class="small">Oct 12, 2025</div>
-                </summary>
-                <div style="margin-top:8px;">
-                  <div class="small">Events:</div>
-                  <ul style="margin:6px 0 0 16px;">
-                    <li><span title="Goal by Haaland">Goal (12')</span></li>
-                    <li><span title="Assist by De Bruyne">Assist (42')</span></li>
-                    <li><span title="Clean sheet">Clean sheet</span></li>
-                  </ul>
-                </div>
-              </details>
-
-              <!-- Add more details elements dynamically when you have data -->
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TOOLTIP / DETAILS EXAMPLE -->
-      <section class="card" aria-labelledby="interactives-heading">
-        <h2 id="interactives-heading" style="margin:0 0 10px 0; font-size:15px;">Interactivity examples</h2>
-
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <div style="min-width:240px;">
-            <label class="small">Hover for quick stat</label>
-            <div class="tooltip card" style="padding:10px;">
-              <div><strong>Pass accuracy</strong></div>
-              <div title="Pass accuracy is the percentage of successful passes out of attempted passes." class="small">87% (hover for definition)</div>
-            </div>
-          </div>
-
-          <div style="min-width:240px;">
-            <label class="small">Click to expand detailed stats</label>
-            <details class="card" style="padding:10px;">
-              <summary><strong>Match events & deeper stats</strong></summary>
-              <div style="margin-top:8px;">
-                <div class="small">Shots: 12 (On target: 6)</div>
-                <div class="small">xG: 1.83</div>
-                <div class="small">Possession: 62%</div>
-                <div style="margin-top:8px;">
-                  <a href="#" class="small" style="color:var(--accent); text-decoration:none;">Open match report</a>
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <div style="min-width:240px;">
-            <label class="small">Accessible controls</label>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <button type="button" aria-pressed="false">Toggle viz</button>
-              <button type="button">Export CSV</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer class="small card">
-        <div></div>
-      </footer>
-    </main>
+  <div class="header">
+    <h1>Football Explorer</h1>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search..." id="search-input">
+    <select id="sortSelect">
+      <option value="">Sort by...</option>
+      <option value="rating">Player</option>
+      <option value="released">Team</option>
+    </select>
+    <button type="button" id="search-btn">Search</button>
   </div>
 
+  <div class="team-div">
+    <div class="player-list">
+      <div class="list1">
+        <p id="number">10</p>
+        <div class="name-pos">
+          <p id="name">Jaoe Flex</p>
+          <p id="position">Forward</p>
+        </div>
+      </div>
+      <div class="list2">
+        <p id="number">10</p>
+        <div class="name-pos">
+          <p id="name">Jaoe Flex</p>
+          <p id="position">Forward</p>
+        </div>
+      </div>
+    </div>
 
+    <div class="view-matches">
+      <div class="matches1">
+        <div class="one">
+          <p id="club-name">Real Madrid</p>
+          <p id="goal">2</p>
+          <p id="goal-time">87</p>
+          <p id="goal-time">90</p>
+
+
+        </div>
+        <div class="two">
+          <p id="club-name">Bayern</p>
+          <p id="goal">0</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="trophies">
+      <div class="t-head">
+        <p id="title-trophies">Title</p>
+        <p id="trophies-p">Champions league</p>
+        <p id="trophies-p">FIFA Club</p>
+      </div>
+      <div class="t-number">
+        <p id="number-trophies">Number</p>
+        <p id="trophies-p">5</p>
+        <p id="trophies-p">9</p>
+      </div>
+      <div class="t-year">
+        <p id="year-trophies">Year</p>
+        <p id="trophies-p">2000-2010</p>
+        <p id="trophies-p">2015-2020</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="player-info-main">
+    <div class="player-img">
+      <img src="" id="player-img">
+    </div>
+    <div class="player-info">
+      <div class="info1">
+        <h4>name</h4>
+        <p>Salah</p>
+      </div>
+
+        <div class="info1">
+        <h4>Age</h4>
+        <p>36</p>
+      </div>
+
+       <div class="info1">
+        <h4>Height</h4>
+        <p>1.80</p>
+      </div>
+
+        <div class="info1">
+        <h4>Nationality</h4>
+        <p>Egypt</p>
+      </div>
+
+       
+
+        <div class="info1">
+        <h4>Clubs</h4>
+        <p>Liverpool</p>
+      </div>
+
+      
+      <div class = "player-trophies">
+        <h4>Ballondor</h4>
+        <p>2015</p>
+        
+      </div>
+    </div>
+  </div>
+  <script src="script.js">
+  </script>
 </body>
+
 </html>
