@@ -1,4 +1,27 @@
-const API_KEY = ""; // your football-data.org API key
+  const select = document.getElementById("sortSelect");
+  const playerDiv = document.getElementById("player-info-main");
+  const teamDiv = document.getElementById("team-div");
+
+  select.addEventListener("change", function () {
+    const value = this.value;
+
+    if (value === "player") {
+      playerDiv.style.display = "flex";
+      teamDiv.style.display = "none";
+    } else if (value === "team") {
+      teamDiv.style.display = "flex";
+      playerDiv.style.display = "none";
+    } else {
+      playerDiv.style.display = "none";
+      teamDiv.style.display = "none";
+    }
+  });
+
+
+
+
+
+const API_KEY = ""; 
 const API_URL = "https://api.football-data.org/v4/teams";
 
 const searchBox = document.getElementById("searchBox");

@@ -16,13 +16,14 @@
     <input type="text" placeholder="Search..." id="search-input">
     <select id="sortSelect">
       <option value="">Sort by...</option>
-      <option value="rating">Player</option>
-      <option value="released">Team</option>
+      <option value="player">Player</option>
+      <option value="team">Team</option>
     </select>
     <button type="button" id="search-btn">Search</button>
   </div>
 <div class = "first-row">
-  <div class="team-div">
+  <div class = "merge" id = "merge">
+  <div class="team-div" id = "team-div">
     <div class="player-list-h1">
       <h1>Player List</h1>
       <div class="player-list">
@@ -84,6 +85,74 @@
     </div>
   </div>
 
+
+  <div class="player-info-main" id = "player-info-main">
+    <div class="container">
+      <div class="player-info">
+        <div class = "image-info">
+        <div class="image">
+          <img src="salah.png" id="player-img">
+        </div>
+
+          <div class="info-name">
+            <p id="player-name">Salah</p>
+            <p id="player-age">36</p>
+            <p id="player-nationality">Egypt</p>
+
+        </div>
+</div>
+
+        <div class="club-div">
+          <div class="club-div-head">
+            <h1>Clubs</h1>
+          </div>
+          <div class="club-div-name">
+            <h4>Liverpool</h4>
+            <p>2015 - 2024</p>
+          </div>
+        </div>
+
+ <div class="club-div">
+          <div class="club-div-head">
+            <h1>Goals</h1>
+          </div>
+          <div class="club-div-name">
+            <h4>Champions league</h4>
+            <p>10</p>
+          </div>
+        </div>
+
+
+        <div class="club-div">
+          <div class="club-div-head">
+            <h1>Assist</h1>
+          </div>
+          <div class="club-div-name">
+            <h4>Champions league</h4>
+            <p>12</p>
+          </div>
+        </div>
+        
+        
+        <div class="club-div">
+          <div class="club-div-head">
+            <h1>Trophies</h1>
+          </div>
+          <div class="club-div-name">
+            <h4>BallondOr</h4>
+            <p>2022</p>
+          </div>
+        </div>
+        
+        
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+  
+  
     <div class="recent-match">
       <div class="recent-view-matches">
         <h1>Recent Matches</h1>
@@ -139,71 +208,6 @@
     </div>
 </div>
 
-  <div class="player-info-main">
-    <div class="container">
-      <div class="player-info">
-        <div class = "image-info">
-        <div class="image">
-          <img src="salah.png" id="player-img">
-        </div>
-
-          <div class="info-name">
-            <p id="player-name">Salah</p>
-            <p id="player-age">36</p>
-            <p id="player-nationality">Egypt</p>
-
-        </div>
-</div>
-
-        <div class="club-div">
-          <div class="club-div-head">
-            <h1>Clubs</h1>
-          </div>
-          <div class="club-div-name">
-            <h4>Liverpool</h4>
-            <p>2015 - 2024</p>
-          </div>
-        </div>
-
- <div class="club-div">
-          <div class="club-div-head">
-            <h1>Goals</h1>
-          </div>
-          <div class="club-div-name">
-            <h4>Champions league</h4>
-            <p>10</p>
-          </div>
-        </div>
-
-
-        
- <div class="club-div">
-          <div class="club-div-head">
-            <h1>Assist</h1>
-          </div>
-          <div class="club-div-name">
-            <h4>Champions league</h4>
-            <p>12</p>
-          </div>
-        </div>
-
-
-        <div class="club-div">
-          <div class="club-div-head">
-            <h1>Trophies</h1>
-          </div>
-          <div class="club-div-name">
-            <h4>BallondOr</h4>
-            <p>2022</p>
-          </div>
-        </div>
-
-
-      </div>
-
-
-    </div>
-  </div>
   <script src="script.js">
   </script>
 </body>
