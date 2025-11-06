@@ -43,3 +43,25 @@
         resultsDiv.innerHTML = `<p>Error: ${err.message}</p>`;
       }
     });
+
+
+const express = require("express");
+const cors = require("cors");
+const setupLogger = require("./logger");
+const setupStatusRoute = require("./status");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// ✅ Add reusable features
+setupLogger(app);      // Logs all requests
+setupStatusRoute(app); // API status info
+
+// Example route
+app.get("/", (req, res) => {
+  res.send("Merged API is running with logger and status features!");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
