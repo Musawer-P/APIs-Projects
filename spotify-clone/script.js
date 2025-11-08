@@ -1,3 +1,19 @@
+// server.js
+import express from "express";
+import playlistRoutes from "./routes/playlist.js";
+import playerRoutes from "./routes/player.js";
+
+const app = express();
+app.use(express.json());
+
+app.use("/api/playlists", playlistRoutes);
+app.use("/api/player", playerRoutes);
+
+app.listen(5000, () => console.log("🎧 Spotify Clone API running on port 5000"));
+
+
+
+
 const clientId = "";
 const clientSecret = "";
 let token = "";
@@ -169,3 +185,7 @@ video.onpause = () => playBtn.textContent = "Play";
 
 // start with first video
 load(0);
+
+
+
+
