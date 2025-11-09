@@ -1,25 +1,29 @@
-// routes/player.js
-import express from "express";
-const router = express.Router();
+const video = document.getElementById("video");
+const playBtn = document.getElementById("play");
+const nextBtn = document.getElementById("next");
+const prevBtn = document.getElementById("prev");
+const volumeUp = document.getElementById("volUp");
+const volumeDown = document.getElementById("volDown");
 
-let currentTrack = null;
-let isPlaying = false;
+let index = 0;
+const videos = [
+  "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+];
 
-// Play a track
-router.post("/play", (req, res) => {
-  const { songId, title } = req.body;
-  if (!songId || !title) return res.status(400).json({ message: "Missing song data" });
+function load(i) {
+  index = (i + videos.length) % videos.length;
+  video.src = videos[index];
+  video.play();
+}
 
-  currentTrack = { songId, title };
-  isPlaying = true;
-  res.json({ message: `Playing: ${title}` });
-});
+playBtn.onclick = () => (video.paused ? video.play() : video.pause());
+nextBtn.onclick = () => load(index + 1);
+prevBtn.onclick = () => load(index - 1);
+volumeUp.onclick = () => (video.volume = Math.min(video.volume + 0.1, 1));
+volumeDown.onclick = () => (video.volume = Math.max(video.volume - 0.1, 0));
 
-// Pause current track
-router.post("/pause", (req, res) => {
-  if (!currentTrack) return res.status(400).json({ message: "No track playing" });
-  isPlaying = false;
-  res.json({ message: `Paused: ${currentTrack.title}` });
-});
+video.onplay = () => (playBtn.textContent = "Pause");
+video.onpause = () => (playBtn.textContent = "Play");
 
-export default router;
+load(0);
