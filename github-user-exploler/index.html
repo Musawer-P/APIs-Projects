@@ -12,29 +12,35 @@
         <p>Github</p>
     </div>
     <div class = "title">
-<h1>Explore User Profiles <br> no Github</h1>
+<h1>Explore User Profiles, <br> no Github</h1>
     </div>
     <div class = "form-section">
-        <input type = "text" id = "search" placeholder = "Explore User Profile">
-        <button type = "button" id = "btn">Search</button>
+        <input type = "text" id = "username" placeholder = "Explore User Profile">
+        <button type = "button" id = "btn" onclick  = "getUser()">Search</button>
     </div>
 
-    <div class = "result">
-        <div class = "image">
-            <img src = "images/men-character.png" id = "character">
-        </div>
-        <div class = "name">
-<p id = "c-name">Ahmad</p>
-<p id = "c-description">Senior Full Stack Engineer based in NYC.</p>
-        <div class = "info">
-<p>16 Followers |</p>
-<p>0 Following |</p>
-<p>10 Repository</p>
+    
+<div class="result">
+  <div class="image">
+    <img src="images/men-character.png" id="character">
+  </div>
+  <div class="name">
+    <p id="c-name">Ahmad</p>
+    <p id="c-description">Senior Full Stack Engineer based in NYC.</p>
+    <div class="info">
+      <p id="followers">16 Followers |</p>
+      <p id="following">0 Following |</p>
+      <p id="repos">10 Repository</p>
+    </div>
+  </div>
 </div>
-        </div>
+
+<div id="repo-list">
+    <h1 id = "repo-h1">Repositories</h1>
+</div>
 
 
-</div>
+
     </body>
     <script src = "script.js"></script>
 </body>

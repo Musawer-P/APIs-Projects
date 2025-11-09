@@ -218,10 +218,10 @@ width: fit-content;
     font-weight: bold;
 }
 .footer {
+    padding: 10px;
     height: auto;
-    width: 100%;
+    width: 90%;
     border-top: 1px solid rgb(74, 116, 230);
-    display: flex;
    align-items: center;
     justify-content: center;
 }
