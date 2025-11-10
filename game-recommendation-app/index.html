@@ -12,53 +12,43 @@
 <body>
   <header>
     <h1>Game Recommendation Hub</h1>
-    <p>Discover games by genre, sort them, or let us surprise you with a random pick!</p>
+    <p>Discover games by Searches or let us surprise you with a random pick!</p>
   </header>
-
-  <!-- Controls -->
   <div class="controls">
-    <input type="text" id="genreInput" placeholder="Enter a game genre (e.g. action)">
-    <select id="sortSelect">
-      <option value="">Sort by...</option>
-      <option value="rating">Rating</option>
-      <option value="released">Release Date</option>
-    </select>
+    <input type="text" id="genreInput" placeholder="Enter a game name (e.g. GTA)">
     <button id="searchBtn">Search</button>
     <button id="randomBtn">Random</button>
 
     <!-- Results -->
-    <div class="gameResults">
-      <div class="row">
-        <div class="images">
-          <img src="images/fifa25.jpg" id="poster">
-
-        </div>
-        <div class="name-desc">
-          <h1>FIFA 25</h1>
-          <p>EA Sports FC 25 (often called FIFA 25) is the latest football simulation game by EA Sports, released in
-            September 2024. It introduces the new FC IQ system, enhanced player roles, and improved animations for more
-            realistic gameplay. The “Rush” 5-vs-5 mode adds fast, fun matches. It’s available on PlayStation, Xbox, PC,
-            and Nintendo Switch.</p>
-          <div class="rating-other">
-            <div class="row1">
-              <p>Developer</p>
-              <p>EA Sport</p>
-            </div>
-            <div class="row2">
-              <p>Rating</p>
-              <p>4.8</p>
+    <div class="gameResults" id="gameResults">
+        <div class="row">
+          <div class="images"> <img src="images/fifa25.jpg" id="poster"> </div>
+          <div class="name-desc">
+            <h1>FIFA 25</h1>
+            <p>EA Sports FC 25 (often called FIFA 25) is the latest football simulation game by EA Sports, released in
+              September 2024. It introduces the new FC IQ system, enhanced player roles, and improved animations for
+              more realistic gameplay. The “Rush” 5-vs-5 mode adds fast, fun matches. It’s available on PlayStation,
+              Xbox, PC, and Nintendo Switch.</p>
+            <div class="rating-other">
+              <div class="row1">
+                <p>Developer</p>
+                <p>EA Sport</p>
               </div>
-            <div class="row3">
-              <p>Age</p>
-              <p>12+</p>
-</div>
+              <div class="row2">
+                <p>Rating</p>
+                <p>4.8</p>
+              </div>
+              <div class="row3">
+                <p>Age</p>
+                <p>12+</p>
+              </div>
             </div>
           </div>
-
         </div>
-
       </div>
-    </div>
+
+
+
 
     <script src="script.js">
 

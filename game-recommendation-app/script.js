@@ -1,58 +1,79 @@
-  const apiKey = ""; // 
-    const resultsDiv = document.getElementById("gameResults");
-    const sortSelect = document.getElementById("sortSelect");
-    const randomBtn = document.getElementById("randomBtn");
+const apiKey = "f6f6cd1f74e048bba274d734063de5e9";
+const searchBtn = document.getElementById("searchBtn");
+const randomBtn = document.getElementById("randomBtn");
+const genreInput = document.getElementById("genreInput");
+const gameResults = document.getElementById("gameResults");
 
-    document.getElementById("searchBtn").addEventListener("click", async () => {
-      const genre = document.getElementById("genreInput").value.trim();
-      if (!genre) return;
+async function fetchGames(query = "") {
+  const url = query
+    ? `https://api.rawg.io/api/games?key=${apiKey}&search=${query}`
+    : `https://api.rawg.io/api/games?key=${apiKey}&page_size=40`;
 
-      resultsDiv.innerHTML = "<p>Loading...</p>";
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.results || [];
+}
 
-      try {
-        const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genre}`);
-        const data = await res.json();
+async function fetchGameDetails(id) {
+  const res = await fetch(`https://api.rawg.io/api/games/${id}?key=${apiKey}`);
+  return await res.json();
+}
 
-        if (!data.results || data.results.length === 0) {
-          resultsDiv.innerHTML = "<p>No games found for that genre.</p>";
-          return;
-        }
+function renderGame(game) {
+  gameResults.innerHTML = `
+    <div class="row">
+      <div class="images">
+        <img src="${game.background_image || 'images/default.jpg'}" id="poster" alt="${game.name}">
+      </div>
 
-        window.fetchedGames = data.results;
-        displayGames(data.results);
-
-      } catch (err) {
-        resultsDiv.innerHTML = "<p>⚠️ Error fetching games. Try again.</p>";
-      }
-    });
-
-    sortSelect.addEventListener("change", () => {
-      if (!window.fetchedGames) return;
-      let sorted = [...window.fetchedGames];
-
-      if (sortSelect.value === "rating") {
-        sorted.sort((a, b) => b.rating - a.rating);
-      } else if (sortSelect.value === "released") {
-        sorted.sort((a, b) => new Date(b.released) - new Date(a.released));
-      }
-
-      displayGames(sorted);
-    });
-
-    randomBtn.addEventListener("click", () => {
-      if (!window.fetchedGames) return;
-      const randomGame = window.fetchedGames[Math.floor(Math.random() * window.fetchedGames.length)];
-      displayGames([randomGame]);
-    });
-
-    function displayGames(games) {
-      resultsDiv.innerHTML = games.map(game => `
-        <div class="card">
-          <img src="${game.background_image}" alt="${game.name}" />
-          <h3>${game.name}</h3>
-          <p>⭐ Rating: ${game.rating}</p>
-          <p>Released: ${game.released}</p>
-          <p>Platforms: ${game.platforms.map(p => p.platform.name).join(", ")}</p>
+      <div class="name-desc">
+        <h1>${game.name}</h1>
+        <p>${game.description_raw ? game.description_raw.slice(0, 300) + '...' : 'No description available.'}</p>
+        <div class="rating-other">
+          <div class="row1">
+            <p>Developer</p>
+            <p>${game.developers?.[0]?.name || 'Unknown'}</p>
+          </div>
+          <div class="row2">
+            <p>Rating</p>
+            <p>${game.rating || 'N/A'}</p>
+          </div>
+          <div class="row3">
+            <p>Released</p>
+            <p>${game.released || 'Unknown'}</p>
+          </div>
         </div>
-      `).join("");
-    }
+      </div>
+    </div>
+  `;
+}
+
+let allGames = [];
+
+searchBtn.addEventListener("click", async () => {
+  const query = genreInput.value.trim();
+  if (!query) return;
+
+  gameResults.innerHTML = "<p>Loading...</p>";
+
+  const games = await fetchGames(query);
+  if (games.length === 0) {
+    gameResults.innerHTML = "<p>No games found.</p>";
+    return;
+  }
+
+  const details = await fetchGameDetails(games[0].id);
+  renderGame(details);
+});
+
+randomBtn.addEventListener("click", async () => {
+  gameResults.innerHTML = "<p>Loading random game...</p>";
+
+  if (allGames.length === 0) {
+    allGames = await fetchGames();
+  }
+
+  const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
+  const details = await fetchGameDetails(randomGame.id);
+  renderGame(details);
+});
