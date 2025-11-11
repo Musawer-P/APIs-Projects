@@ -1,57 +1,65 @@
- const input = document.getElementById("searchInput");
-    const card = document.getElementById("countryCard");
+const searchInput = document.getElementById("search");
+const countrySelect = document.getElementById("country");
+const searchBtn = document.getElementById("submit");
 
-    input.addEventListener("change", async () => {
-      const country = input.value.trim();
-      if (!country) return;
+const flagImg = document.querySelector(".flag img");
+const nameEl = document.getElementById("name");
+const capitalEl = document.getElementById("capital");
+const populationEl = document.querySelector(".population p");
+const areaEl = document.querySelector(".area p");
+const currencyEl = document.getElementById("currency");
+const timeEl = document.getElementById("time");
+const languageEl = document.getElementById("language");
 
-      const res = await fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`);
-      if (!res.ok) {
-        card.style.display = 'none';
-        alert("Country not found!");
-        return;
-      }
+async function fetchCountryData(country) {
+  if (!country) {
+    alert("Please enter or select a country!");
+    return;
+  }
 
-      const data = await res.json();
-      const c = data[0];
+  try {
+    const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+    if (!res.ok) throw new Error("Country not found");
 
-      document.getElementById("flag").src = c.flags.png;
-      document.getElementById("name").textContent = c.name.common;
-      document.getElementById("capital").textContent = c.capital?.[0] || "N/A";
-      document.getElementById("population").textContent = c.population.toLocaleString();
-      document.getElementById("region").textContent = c.region;
-      document.getElementById("subregion").textContent = c.subregion;
-      document.getElementById("area").textContent = c.area.toLocaleString();
-      document.getElementById("timezones").textContent = c.timezones.join(", ");
-      document.getElementById("languages").textContent = Object.values(c.languages || {}).join(", ");
-      document.getElementById("currencies").textContent = Object.values(c.currencies || {}).map(cur => `${cur.name} (${cur.symbol})`).join(", ");
-      document.getElementById("mapLink").href = c.maps.googleMaps;
+    const data = await res.json();
+    const c = data[0];
 
-      card.style.display = 'block';
-    });
+    flagImg.src = c.flags.png;
+    nameEl.textContent = c.name.common;
+    capitalEl.textContent = c.capital?.[0] || "N/A";
+    populationEl.textContent = `${c.population.toLocaleString()} people`;
+    areaEl.textContent = `${c.area.toLocaleString()} km²`;
 
-    // Neighboring country review 
+    // Currency
+    currencyEl.textContent = Object.values(c.currencies || {})
+      .map(cur => `${cur.name} (${cur.symbol})`)
+      .join(", ") || "N/A";
 
-    const neighborsDiv = document.getElementById("neighbors");
-neighborsDiv.innerHTML = "";
+    // Timezone
+    timeEl.textContent = c.timezones.join(", ");
 
-if (c.borders) {
-  c.borders.forEach(async code => {
-    const res2 = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
-    const data2 = await res2.json();
-    const neighbor = document.createElement("button");
-    neighbor.textContent = data2[0].name.common;
-    neighbor.onclick = () => { input.value = neighbor.textContent; input.dispatchEvent(new Event("change")); };
-    neighborsDiv.appendChild(neighbor);
-  });
+    // Language
+    languageEl.textContent = Object.values(c.languages || {}).join(", ") || "N/A";
+
+  } catch (error) {
+    alert("Country not found. Please try again.");
+    console.error(error);
+  }
 }
 
+// Search button click
+searchBtn.addEventListener("click", () => {
+  const country = searchInput.value.trim() || countrySelect.value;
+  fetchCountryData(country);
+});
 
-// Weater of capital city 
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    fetchCountryData(searchInput.value.trim());
+  }
+});
 
-if (c.capital) {
-  const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${c.capital[0]}&appid=YOUR_API_KEY&units=metric`);
-  const weatherData = await weatherRes.json();
-  document.getElementById("weather").textContent = 
-    `🌡️ ${weatherData.main.temp}°C, ${weatherData.weather[0].description}`;
-}
+countrySelect.addEventListener("change", () => {
+  const country = countrySelect.value;
+  if (country) fetchCountryData(country);
+});
