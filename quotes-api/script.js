@@ -1,119 +1,103 @@
-  
-  
 const modal = document.getElementById("Modal");
-const btn = document.getElementById("showFavs");
+const showFavsBtn = document.getElementById("showFavs");
 const closeBtn = document.querySelector(".close");
 
-btn.onclick = () => {
+showFavsBtn.onclick = () => {
   modal.style.display = "block";
+  showFavorites();
 };
 
+// Close modal
 closeBtn.onclick = () => {
   modal.style.display = "none";
 };
 
+// Close modal if click outside
 window.onclick = (event) => {
   if (event.target === modal) {
     modal.style.display = "none";
   }
 };
 
-  
-  
-  
-  
-  
-  
-  const moodInput = document.getElementById('moodInput');
-    const inspireBtn = document.getElementById('inspireBtn');
-    const quoteText = document.getElementById('quoteText');
-    const quoteAuthor = document.getElementById('quoteAuthor');
-    const wikiFact = document.getElementById('wikiFact');
-    const bgImage = document.getElementById('bgImage');
-    const saveFav = document.getElementById('saveFav');
-    const showFavs = document.getElementById('showFavs');
-    const clearFavs = document.getElementById('clearFavs');
-    const favoritesList = document.getElementById('favoritesList');
-    const copyBtn = document.getElementById("copyQuote");
+const inspireBtn = document.getElementById('inspireBtn');
+const quoteText = document.getElementById('quote');
+const quoteAuthor = document.getElementById('quote-author');
+const saveBtn = document.getElementById('save');
+const favoritesContainer = document.querySelector('.main-fav-row');
 
-    let cache = {};
-    let favorites = [];
+let cache = null; // store current quote
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    async function fetchQuote(topic){
-      try{
-        const res = await fetch('https://api.quotable.io/random' + (topic ? '?tags=' + encodeURIComponent(topic) : ''));
-        const data = await res.json();
-        return { content: data.content, author: data.author };
-      }catch(e){ return { content: 'Could not load quote.', author: '' }; }
+async function fetchRandomQuote() {
+  try {
+    const res = await fetch('https://quoteslate.vercel.app/api/quotes/random');
+    const data = await res.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      return { content: data[0].quote, author: data[0].author };
     }
-
-    async function fetchImage(topic){
-      const q = topic ? topic : 'inspiration';
-      return `https://source.unsplash.com/800x400/?${encodeURIComponent(q)}&sig=${Math.random()}`;
+    if (data.quote) {
+      return { content: data.quote, author: data.author };
     }
+    return { content: "No quote found.", author: "" };
+  } catch (e) {
+    return { content: "Could not load quote.", author: "" };
+  }
+}
 
-    async function fetchWikiSnippet(topic){
-      if(!topic) return '';
-      try{
-        const s = await (await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(topic)}&format=json&origin=*`)).json();
-        const first = s?.query?.search?.[0];
-        if(!first) return '';
-        const title = first.title;
-        const p = await (await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)).json();
-        return p.extract || '';
-      }catch(e){return ''}
-    }
+async function showQuoteOnClick() {
+  const quote = await fetchRandomQuote();
+  cache = quote; // store current quote
+  quoteText.textContent = quote.content;
+  quoteAuthor.textContent = quote.author ? `— ${quote.author}` : '';
+}
 
-    async function generateInspiration(){
-      const topic = moodInput.value.trim();
-      const [quote, imageUrl, wiki] = await Promise.all([
-        fetchQuote(topic),
-        fetchImage(topic),
-        fetchWikiSnippet(topic)
-      ]);
-      cache = {quote, imageUrl, wiki};
-      quoteText.textContent = quote.content;
-      quoteAuthor.textContent = quote.author ? '— ' + quote.author : '';
-      wikiFact.textContent = wiki ? '💡 Fact: ' + wiki : '';
-      bgImage.src = imageUrl;
-    }
+function addFavorite() {
+  if (!cache) return;
+  const exists = favorites.some(f => f.content === cache.content && f.author === cache.author);
+  if (exists) {
+    alert('This quote is already in favorites!');
+    return;
+  }
+  favorites.push(cache);
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  alert('Saved to Favorites!');
+  showFavorites();
+}
 
-    function addFavorite(){
-      if(!cache.quote) return;
-      favorites.push(cache);
-      alert('Saved to Favorites!');
-    }
+function showFavorites() {
+  favoritesContainer.innerHTML = '';
+  if (favorites.length === 0) {
+    favoritesContainer.innerHTML = '<p id = "no-favorites">No favorites yet.</p>';
+    return;
+  }
 
-    function showFavorites(){
-      favoritesList.innerHTML = '';
-      if(favorites.length === 0){
-        favoritesList.textContent = 'No favorites yet.';
-        return;
-      }
-      favorites.forEach(f => {
-        const div = document.createElement('div');
-        div.className = 'fav-item';
-        div.textContent = `${f.quote.content} — ${f.quote.author}`;
-        favoritesList.appendChild(div);
-      });
-    }
+  favorites.forEach((f, index) => {
+    const div = document.createElement('div');
+    div.className = 'fav-row';
+    div.innerHTML = `
+      <p>${f.content}</p>
+      <p>— ${f.author}</p>
+      <button class="deleteFav" data-index="${index}">Delete</button>
+    `;
+    favoritesContainer.appendChild(div);
+  });
 
-    // Copy current quote
-    copyBtn.addEventListener("click", () => {
-      if(!cache.quote) return;
-      const text = `${cache.quote.content} — ${cache.quote.author}`;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Quote copied to clipboard!");
-      });
+  document.querySelectorAll('.deleteFav').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const index = e.target.getAttribute('data-index');
+      deleteFavorite(index);
     });
+  });
+}
 
-    inspireBtn.addEventListener('click', generateInspiration);
-    saveFav.addEventListener('click', addFavorite);
-    showFavs.addEventListener('click', showFavorites);
-    clearFavs.addEventListener('click', ()=>{favorites=[];favoritesList.innerHTML='';});
+function deleteFavorite(index) {
+  favorites.splice(index, 1);
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  showFavorites();
+}
 
-    // Load one quote on start
-    generateInspiration();
+inspireBtn.addEventListener('click', showQuoteOnClick);
+saveBtn.addEventListener('click', addFavorite);
 
-
-
+showQuoteOnClick();
