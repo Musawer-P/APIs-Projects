@@ -66,3 +66,32 @@ searchInput.addEventListener("keypress", async (e) => {
     renderAnime(animeList);
   }
 });
+
+
+async function fetchTrendingAnime() {
+  try {
+    const res = await fetch("https://api.jikan.moe/v4/top/anime?filter=airing&limit=5");
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching trending anime:", error);
+    return [];
+  }
+}
+
+async function renderTrending() {
+  const trends = await fetchTrendingAnime();
+
+  trends.forEach((anime, index) => {
+    const img = document.getElementById(`trend-img-${index + 1}`);
+    const title = document.getElementById(`trend-title-${index + 1}`);
+
+    if (img && title) {
+      img.src = anime.images.jpg.image_url;
+      title.textContent = anime.title;
+    }
+  });
+}
+
+// Load trends when page opens
+renderTrending();

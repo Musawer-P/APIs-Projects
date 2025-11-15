@@ -47,6 +47,13 @@ body {
     margin-bottom: 0px;
 }
 
+#trend-img-1 ,#trend-img-2 ,#trend-img-3 ,#trend-img-4 ,#trend-img-5{
+    width: 230px;
+    height: fit-content;
+}
+.trend1 ,.trend2 ,.trend3 ,.trend4 ,.trend5{
+    width: 230px;
+} 
 .trend {
     margin-top: 100px;
 }
@@ -83,12 +90,12 @@ body {
     font-weight: 100;
 }
 
-h3 {
+#trend-title-1,#trend-title-2,#trend-title-3,#trend-title-4,#trend-title-5 {
     margin-top: 0px;
     background-color: rgba(0, 0, 0, 0.089);
     padding: 10px;
     color: white;
-    font-size: 20px;
+    font-size: 80%;
     font-weight: 100;
     border-left: 1px solid white;
     border-right: 1px solid white;
@@ -104,6 +111,7 @@ h3 {
     border: 1px solid white;
     border-radius: 5px;
     width: 250px;
+    height: fit-content;
 }
 
 i {
