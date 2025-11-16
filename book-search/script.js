@@ -1,64 +1,79 @@
-  lucide.createIcons();
+lucide.createIcons();
 
+const searchInput = document.querySelector(".search-text");
+const posterImg = document.querySelector(".poster-img");
+const titleEl = document.querySelector(".book-desc h2");
+const descEl = document.querySelector(".book-desc p");
+const rows = document.querySelectorAll(".row-p"); 
 
-   const results = document.getElementById("results");
-    const favList = document.getElementById("favList");
+const authorRow = rows[0].querySelector("#p-p");
+const pagesRow = rows[1].querySelector("#p-p");
+const languageRow = rows[2].querySelector("#p-p");
+const isbn10Row = rows[3].querySelector("#p-p");
+const isbn13Row = rows[4].querySelector("#p-p");
+const categoryRow = rows[5].querySelector("#p-p");
+const ratingRow = rows[6].querySelector("#p-p");
 
-    async function searchBooks() {
-      const query = document.getElementById("searchBox").value.trim();
-      const category = document.getElementById("categoryFilter").value;
-      if (!query) return;
+searchInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") searchBook();
+});
 
-      results.innerHTML = "<p>Loading...</p>";
+async function searchBook() {
+  const query = searchInput.value.trim();
+  if (!query) return;
 
-      const url = `https://www.googleapis.com/books/v1/volumes?q=${query}${category ? "+subject:" + category : ""}&maxResults=10`;
-      const res = await fetch(url);
-      const data = await res.json();
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1`;
 
-      if (!data.items) {
-        results.innerHTML = "<p>No results found.</p>";
-        return;
-      }
+  const res = await fetch(url);
+  const data = await res.json();
 
-      results.innerHTML = "";
-      data.items.forEach(book => {
-        const info = book.volumeInfo;
-        const card = document.createElement("div");
-        card.className = "book-card";
+  if (!data.items || data.items.length === 0) {
+    titleEl.textContent = "No book found";
+    descEl.textContent = "";
+    return;
+  }
 
-        card.innerHTML = `
-          <img src="${info.imageLinks ? info.imageLinks.thumbnail : 'https://via.placeholder.com/100x150'}" alt="${info.title}">
-          <div class="info">
-            <h3>${info.title}</h3>
-            <p><strong>Author:</strong> ${info.authors ? info.authors.join(", ") : "Unknown"}</p>
-            <p><strong>Category:</strong> ${info.categories ? info.categories.join(", ") : "N/A"}</p>
-            <p><strong>Rating:</strong> ⭐ ${info.averageRating || "N/A"}</p>
-            <p>${info.description ? info.description.substring(0, 120) + "..." : "No description."}</p>
-            <button class="save-btn" onclick="saveBook('${info.title}')">❤️ Save</button>
-          </div>
-        `;
-        results.appendChild(card);
-      });
-    }
+  const info = data.items[0].volumeInfo;
 
-    function saveBook(title) {
-      let saved = JSON.parse(localStorage.getItem("favorites")) || [];
-      if (!saved.includes(title)) {
-        saved.push(title);
-        localStorage.setItem("favorites", JSON.stringify(saved));
-      }
-      renderFavorites();
-    }
+  posterImg.src =
+    info.imageLinks?.thumbnail ||
+    "https://via.placeholder.com/200x300?text=No+Image";
 
-    function renderFavorites() {
-      let saved = JSON.parse(localStorage.getItem("favorites")) || [];
-      favList.innerHTML = "";
-      saved.forEach(title => {
-        const li = document.createElement("li");
-        li.textContent = title;
-        favList.appendChild(li);
-      });
-    }
+  titleEl.textContent = info.title || "No Title";
 
-    // Load saved list on page load
-    renderFavorites();
+  descEl.textContent =
+    info.description
+      ? info.description.substring(0, 300) + "..."
+      : "No description available.";
+
+  authorRow.textContent = info.authors ? info.authors.join(", ") : "Unknown";
+
+  pagesRow.textContent = info.pageCount
+    ? `${info.pageCount} pages`
+    : "N/A";
+
+  languageRow.textContent = info.language
+    ? info.language.toUpperCase()
+    : "N/A";
+
+  let isbn10 = "N/A";
+  let isbn13 = "N/A";
+
+  if (info.industryIdentifiers) {
+    info.industryIdentifiers.forEach((id) => {
+      if (id.type === "ISBN_10") isbn10 = id.identifier;
+      if (id.type === "ISBN_13") isbn13 = id.identifier;
+    });
+  }
+
+  isbn10Row.textContent = isbn10;
+  isbn13Row.textContent = isbn13;
+
+  categoryRow.textContent = info.categories
+    ? info.categories.join(", ")
+    : "N/A";
+
+  ratingRow.textContent = info.averageRating
+    ? info.averageRating + " ⭐"
+    : "No rating";
+}
