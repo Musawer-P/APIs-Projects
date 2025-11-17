@@ -1,92 +1,128 @@
-const map = L.map('map').setView([20, 0], 2);
+const disasterNameInput = document.getElementById("disaster-name");
+const countryInput = document.getElementById("affected-country");
+const dateTimeInput = document.getElementById("date-time");
+const btn = document.getElementById("btn");
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+const countryName = document.getElementById("country-name");
+const resultDate = document.getElementById("date");
+const disasterNameP = document.getElementById("disaster-name-p");
+const quantity = document.getElementById("quantity");
+const statusText = document.getElementById("status-p");
 
-async function loadEarthquakes() {
-  try {
-    const res = await fetch(
-      "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
-    );
-    const data = await res.json();
+const newsTitle = document.getElementById("news-p");
+const newsDesc = document.getElementById("news-desc");
+const newsDate = document.getElementById("news-date");
 
-    data.features.forEach(eq => {
-      const coords = eq.geometry.coordinates;
-      const magnitude = eq.properties.mag;
-      const place = eq.properties.place;
-      const time = new Date(eq.properties.time).toLocaleString();
+const footerP = document.getElementById("footer-p-2");
 
-      L.circleMarker([coords[1], coords[0]], {
-        radius: magnitude * 2,
-        color: "red",
-        fillOpacity: 0.6
-      })
-        .addTo(map)
-        .bindPopup(`<b>Earthquake</b><br>Location: ${place}<br>Magnitude: ${magnitude}<br>Time: ${time}`);
-    });
-  } catch (err) {
-    console.error("Error fetching earthquake data:", err);
-  }
+function getLevel(mag) {
+    if (mag < 3) return "Low";
+    if (mag < 6) return "Medium";
+    return "High";
 }
 
-async function loadWildfires() {
-  try {
-    const res = await fetch(
-      "https://eonet.gsfc.nasa.gov/api/v3/events?category=wildfires"
-    );
-    const data = await res.json();
+async function searchDisaster(country) {
+    try {
+        const res = await fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson");
+        const data = await res.json();
 
-    data.events.forEach(fire => {
-      fire.geometry.forEach(g => {
-        const coords = g.coordinates;
-        const date = new Date(g.date).toLocaleString();
+        return data.features.find(eq =>
+            eq.properties.place.toLowerCase().includes(country.toLowerCase())
+        ) || null;
 
-        L.marker([coords[1], coords[0]], { icon: fireIcon })
-          .addTo(map)
-          .bindPopup(`<b>Wildfire</b><br>${fire.title}<br>Date: ${date}`);
-      });
-    });
-  } catch (err) {
-    console.error("Error fetching wildfire data:", err);
-  }
+    } catch (err) {
+        console.log("Disaster error:", err);
+        return null;
+    }
 }
 
-//Custom Icon for Wildfires
-const fireIcon = L.icon({
-  iconUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Fire_icon.svg",
-  iconSize: [30, 30],
-  iconAnchor: [15, 15]
+async function searchNews(disasterName, country) {
+    const apiKey = "pub_b36f56b434a644baa095b05d05f7e852";
+    const query = `${disasterName} ${country}`;
+
+    try {
+        const res = await fetch(
+            `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${encodeURIComponent(query)}&language=en`
+        );
+
+        const data = await res.json();
+        console.log("NewsData:", data);
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0];
+        }
+
+        return null;
+
+    } catch (err) {
+        console.log("News API Error:", err);
+        return null;
+    }
+}
+
+async function loadLatestNews() {
+    const apiKey = "pub_b36f56b434a644baa095b05d05f7e852";
+
+    try {
+        const res = await fetch(
+            `https://newsdata.io/api/1/news?apikey=${apiKey}&language=en&country=us`
+        );
+
+        const data = await res.json();
+
+        if (data.results && data.results.length > 0) {
+            footerP.innerText = data.results[0].title;
+        }
+
+    } catch (err) {
+        console.log("Footer news error:", err);
+    }
+}
+
+loadLatestNews();
+
+btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const disasterName = disasterNameInput.value.trim();
+    const country = countryInput.value.trim();
+    const dateTime = dateTimeInput.value;
+
+    if (!disasterName || !country) {
+        alert("Enter disaster name & country");
+        return;
+    }
+
+    const eq = await searchDisaster(country);
+
+    if (eq) {
+        const mag = eq.properties.mag;
+        const place = eq.properties.place;
+        const date = new Date(eq.properties.time).toLocaleDateString();
+
+        countryName.innerText = place;
+        resultDate.innerText = date;
+        disasterNameP.innerText = disasterName;
+        quantity.innerText = mag;
+        statusText.innerText = getLevel(mag);
+
+    } else {
+        countryName.innerText = country;
+        resultDate.innerText = dateTime;
+        disasterNameP.innerText = disasterName;
+        quantity.innerText = "N/A";
+        statusText.innerText = "Unknown";
+    }
+
+    const news = await searchNews(disasterName, country);
+
+    if (news) {
+        newsTitle.innerText = news.title;
+        newsDesc.innerText = news.description || "No description";
+        newsDate.innerText = news.pubDate;
+    } else {
+        newsTitle.innerText = "No recent news found";
+        newsDesc.innerText = "";
+        newsDate.innerText = "";
+    }
 });
-
-//Load all data
-loadEarthquakes();
-loadWildfires();
-
-
-
-//Digital Time Capsule Feature
-
-
-function saveCapsule(message, unlockDate) {
-  const capsule = { message, unlockDate };
-  localStorage.setItem("timeCapsule", JSON.stringify(capsule));
-}
-
-function openCapsule() {
-  const capsule = JSON.parse(localStorage.getItem("timeCapsule"));
-  if (!capsule) return alert("No capsule found!");
-
-  const now = new Date();
-  const unlock = new Date(capsule.unlockDate);
-
-  if (now >= unlock) {
-    alert("💌 Your message: " + capsule.message);
-  } else {
-    alert("⏳ Capsule is locked until " + unlock.toDateString());
-  }
-}
-
-// Example usage
-saveCapsule("Stay strong and keep coding 💻", "2025-12-31");
-openCapsule();
