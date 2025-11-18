@@ -7,7 +7,7 @@ A web application that allows users to search for natural disasters (like earthq
 
 Features:
 
-Search Disaster Data
+Search Disaster Data 
 Fetch live earthquake data from the USGS API including:
 
 Affected country/location

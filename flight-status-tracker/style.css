@@ -49,6 +49,7 @@ h2{
 }
 
 #airport::placeholder, #company::placeholder, #flight-number::placeholder{
+font-size: clamp(13px, 2vw, 18px);
   color: rgba(255, 255, 255, 0.349);
 }
 
@@ -117,7 +118,72 @@ button:hover {
 }
 
 .result-box {
+  display: grid;
+  grid-template-columns: 1fr;   
+    gap: 20px;
+width: 100%;
   margin-top: 20px;
   font-size: 14px;
   line-height: 1.6;
+}
+
+
+
+@media (min-width: 900px) {
+  #result {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+.main-result-div{
+  border: 1px solid rgb(255, 255, 255);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.first-div{
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 10px;
+  
+}
+strong{
+  padding: 5px;
+  border-radius: 10px;
+  color: rgb(22, 22, 22);
+  line-height: 2;
+
+}
+.first-s{
+
+}
+.second-s{
+
+}
+.third-s{
+  padding-top: 10px;
+  border-top: 1px solid white;
+text-align: center;
+}
+
+.flight-info{
+  color: rgb(255, 255, 255);
+}
+.flight-status{
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.loading-box{
+  color: white;
+}
+
+
+
+/* Tablet */
+@media (max-width: 600px) {
+ .dearrive{
+  display: flex;
+  flex-direction: column;
+ }
 }
