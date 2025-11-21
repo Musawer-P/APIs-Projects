@@ -158,7 +158,7 @@ async function searchStop(query) {
           <p>ID: ${id}</p>
           <p>
             <button class="btn-arrivals" data-stopid="${id}" data-stopname="${encodeURIComponent(name)}">Show live arrivals</button>
-            <a target="_blank" href="https://www.google.com/maps?q=${m.lat || ""},${m.lon || ""}">Map</a>
+            <a class = "a-class" target="_blank" href="https://www.google.com/maps?q=${m.lat || ""},${m.lon || ""}">Map</a>
           </p>
         </div>
       `;
@@ -227,7 +227,7 @@ async function showStopArrivals(stopId, stopName) {
           <p><strong>Expected:</strong> ${expected}</p>
           <p><strong>VehicleId:</strong> ${vehicleId}</p>
           ${ (lat && lon) ? `<p><strong>Location:</strong> ${lat.toFixed(5)}, ${lon.toFixed(5)}</p>` : "" }
-          <p><a target="_blank" href="https://www.google.com/maps?q=${lat || ""},${lon || ""}">Open in Maps</a></p>
+          <p class = "open-map-class"><a class = "open-map" target="_blank" href="https://www.google.com/maps?q=${lat || ""},${lon || ""}">Open in Maps</a></p>
         </div>
       `;
 

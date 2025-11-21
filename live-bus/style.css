@@ -44,7 +44,6 @@
 
  #search-btn {
    font-size: 1.1rem;
-
    padding: 10px;
    border: none;
    color: white;
@@ -53,6 +52,10 @@
  }
 #search-btn:hover{
 color: rgb(236, 236, 236);
+}
+.btn-div{
+  display: flex;
+  align-items: center;
 }
  .btn-div:hover{
 color: rgb(236, 236, 236);
@@ -72,12 +75,20 @@ color: rgb(236, 236, 236);
  }
 
  .bus-info {
-  width: 88%;
+  width: 100%;
+  margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
    padding-top: 10px;
    gap:10px;
  }
 
+ .btn-arrivals{
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  background-color: white;
+ }
  .bus-card {
    background-color: #1065969a;
    border: 1px solid #106596;
@@ -87,7 +98,26 @@ color: rgb(236, 236, 236);
    border-left: 4px solid #0a5da0;
    border-radius: 6px;
  }
-
+.a-class{
+color: white;
+text-decoration: none;
+background-color: rgba(0, 0, 0, 0.89);
+padding: 5px;
+border-radius: 3px;
+}
+.open-map{
+  color: white;
+text-decoration: none;
+}
+.open-map-class{
+  margin-top: 10px;
+  color: white;
+text-decoration: none;
+background-color: rgba(0, 0, 0, 0.89);
+padding: 5px;
+border-radius: 3px;
+width: fit-content;
+}
  .bus-card p {
    margin: 4px 0;
    font-size: 0.95rem;
