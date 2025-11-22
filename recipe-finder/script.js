@@ -1,118 +1,48 @@
-  lucide.createIcons();
+lucide.createIcons();
 
+const API_KEY = "651b3fbd780947c29336458e593e944a"; 
+const BASE_URL = "https://api.spoonacular.com/recipes/complexSearch";
 
-  
-const API_KEY = ""; 
-const BASE_URL = "https://api.spoonacular.com/recipes";
+const searchInput = document.getElementById("search");
+const titleEl = document.querySelector(".main h2");
+const descEl = document.querySelector(".desc p");
+const timeEl = document.getElementById("time");
+const caloriesEl = document.getElementById("calories");
 
-const searchInput = document.getElementById("searchInput");
-const dietSelect = document.getElementById("dietSelect");
-const calorieInput = document.getElementById("calorieInput");
-const searchBtn = document.getElementById("searchBtn");
-const resultsDiv = document.getElementById("results");
-const cookingDiv = document.getElementById("cookingMode");
-
-let currentSteps = [];
-let stepIndex = 0;
-
-// Ingredient-based Search with Diet + Calories
-async function searchRecipes() {
-  const ingredients = searchInput.value.trim();
-  const diet = dietSelect.value;
-  const maxCalories = calorieInput.value;
-
-  if (!ingredients) {
-    alert("Please enter at least one ingredient.");
-    return;
-  }
-
-  let url = `${BASE_URL}/complexSearch?query=${ingredients}&addRecipeNutrition=true&number=5&apiKey=${API_KEY}`;
-
-  if (diet) url += `&diet=${diet}`;
-  if (maxCalories) url += `&maxCalories=${maxCalories}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-
-    displayRecipes(data.results);
-  } catch (err) {
-    console.error("Error fetching recipes:", err);
-  }
-}
-
-//  Display Recipes with Nutrition
-function displayRecipes(recipes) {
-  resultsDiv.innerHTML = "";
-
-  if (!recipes.length) {
-    resultsDiv.innerHTML = "<p>No recipes found. Try different ingredients.</p>";
-    return;
-  }
-
-  recipes.forEach(recipe => {
-    const card = document.createElement("div");
-    card.className = "recipe-card";
-    card.innerHTML = `
-      <h3>${recipe.title}</h3>
-      <img src="${recipe.image}" alt="${recipe.title}" />
-      <p><b>Calories:</b> ${recipe.nutrition.nutrients[0].amount} kcal</p>
-      <p><b>Protein:</b> ${recipe.nutrition.nutrients[8].amount} g</p>
-      <button onclick="getSteps(${recipe.id})">Start Cooking</button>
-    `;
-    resultsDiv.appendChild(card);
-  });
-}
-
-// Step-by-Step Cooking Mode
-async function getSteps(recipeId) {
-  try {
-    const res = await fetch(`${BASE_URL}/${recipeId}/analyzedInstructions?apiKey=${API_KEY}`);
-    const data = await res.json();
-
-    if (!data.length || !data[0].steps.length) {
-      alert("No instructions found for this recipe.");
-      return;
+searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        searchRecipe();
     }
+});
 
-    currentSteps = data[0].steps.map(step => step.step);
-    stepIndex = 0;
-    showCookingStep();
-  } catch (err) {
-    console.error("Error fetching steps:", err);
-  }
+async function searchRecipe() {
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    const url = `${BASE_URL}?query=${query}&addRecipeInformation=true&addRecipeNutrition=true&number=1&apiKey=${API_KEY}`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.results.length) {
+            titleEl.textContent = "Not Found";
+            descEl.textContent = "No recipe found. Try something else.";
+            timeEl.textContent = "--";
+            caloriesEl.textContent = "--";
+            return;
+        }
+
+        const recipe = data.results[0];
+
+        titleEl.textContent = recipe.title;
+        descEl.textContent = recipe.summary.replace(/<[^>]*>?/gm, "").slice(0, 150) + "...";
+        timeEl.textContent = recipe.readyInMinutes + " Min";
+        caloriesEl.textContent = recipe.nutrition.nutrients[0].amount + " Calories";
+
+    } catch (err) {
+        console.error(err);
+        titleEl.textContent = "Error";
+        descEl.textContent = "Something went wrong.";
+    }
 }
-
-function showCookingStep() {
-  cookingDiv.innerHTML = `
-    <h2>Step ${stepIndex + 1} of ${currentSteps.length}</h2>
-    <p>${currentSteps[stepIndex]}</p>
-    <button onclick="prevStep()">⬅ Prev</button>
-    <button onclick="nextStep()">Next ➡</button>
-    <button onclick="speakStep()">🔊 Speak</button>
-  `;
-}
-
-function nextStep() {
-  if (stepIndex < currentSteps.length - 1) {
-    stepIndex++;
-    showCookingStep();
-  } else {
-    cookingDiv.innerHTML = "<h2>✅ You finished cooking! Enjoy your meal!</h2>";
-  }
-}
-
-function prevStep() {
-  if (stepIndex > 0) {
-    stepIndex--;
-    showCookingStep();
-  }
-}
-
-function speakStep() {
-  const speech = new SpeechSynthesisUtterance(currentSteps[stepIndex]);
-  window.speechSynthesis.speak(speech);
-}
-
-// Event Listeners
-searchBtn.addEventListener("click", searchRecipes);

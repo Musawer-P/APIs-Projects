@@ -68,13 +68,14 @@ font-size: 1.2rem;
 }
 
 .time-calories{
+
 display: flex;
 justify-content: space-between;
 }
 
 #time,#calories{
 background-color: rgb(252, 173, 100);
-color: white;
+color: black;
 padding: 10px;
 border-radius: 5px;
 }
