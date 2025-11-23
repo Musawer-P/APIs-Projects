@@ -1,129 +1,156 @@
-// =======================
-// ===== Utilities =======
-// =======================
+const NUTRITIONIX_ID = "NUTRITIONIX_ID";      
+const NUTRITIONIX_KEY = "NUTRITIONIX_KEY";    
+
+const $ = (s) => document.querySelector(s);
 const todayKey = () => new Date().toISOString().slice(0, 10);
 
-const state = {
-  totals: storage.get("totals_" + todayKey(), { in: 0, out: 0 }),
-  hydration: storage.get("hydration_" + todayKey(), { goal: 2500, consumed: 0 }),
-  goals: storage.get("goals", []),
-  keys: storage.get("keys", { nutritionixId: "", nutritionixKey: "", wgerToken: "" }),
-  remindTimer: null,
-  location: { name: "Kabul", lat: 34.5553, lon: 69.2075 },
+const storage = {
+  get(k, fallback) {
+    const v = localStorage.getItem(k);
+    return v ? JSON.parse(v) : fallback;
+  },
+  set(k, v) {
+    localStorage.setItem(k, JSON.stringify(v));
+  },
 };
 
-function saveDay() {
-  storage.set("totals_" + todayKey(), state.totals);
-  storage.set("hydration_" + todayKey(), state.hydration);
-}
-function saveGoals() {
-  storage.set("goals", state.goals);
-}
-function saveKeys() {
-  storage.set("keys", state.keys);
-}
+const state = {
+  user: storage.get("ph_user", { name: "", age: "", height: "", weight: "", gender: "" }),
+  totals: storage.get("ph_totals_" + todayKey(), { kcalIn: 0, steps: 0, waterMl: 0 }),
+  bmrInfo: storage.get("ph_bmr", null),
+};
+
+const nameInput = $("#name");
+const ageInput = $("#age");
+const heightInput = $("#height");
+const weightInput = $("#weight");
+const genderSelect = $("#gender");
+const infoBtn = $("#info-btn");
+const calResultP = document.querySelectorAll("#cal-result-p")[0]; 
+const calResultP2 = document.querySelectorAll("#cal-result-p")[1]; 
+const bmiLabel = $("#cal-p") || null; 
+const searchInput = $("#search");
+const searchBtn = $("#search-btn");
+
+const healthRows = document.querySelectorAll(".health-tracker-row");
+const stepsValueEl = healthRows[0] ? healthRows[0].querySelector("#text") : null;
+const waterValueEl = healthRows[1] ? healthRows[1].querySelector("#text") : null;
+const caloriesValueEl = healthRows[2] ? healthRows[2].querySelector("#text") : null;
+const sleepValueEl = healthRows[3] ? healthRows[3].querySelector("#text") : null;
+
+const apiRows = document.querySelectorAll(".api-search-row");
+const foodNameEl = apiRows[0] ? apiRows[0].querySelector("#text") : null;
+const proteinEl = apiRows[1] ? apiRows[1].querySelector("#text") : null;
+const carbsEl = apiRows[2] ? apiRows[2].querySelector("#text") : null;
+const fatEl = apiRows[3] ? apiRows[3].querySelector("#text") : null;
 
 function toast(msg) {
   const t = document.createElement("div");
   t.textContent = msg;
   t.style.cssText =
-    "position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f151d;border:1px solid rgba(255,255,255,.18);padding:10px 14px;border-radius:12px;z-index:999;color:#e8f0f8;box-shadow:0 8px 30px rgba(0,0,0,.35)";
+    "position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0f151d;color:#fff;padding:10px 14px;border-radius:10px;z-index:9999;";
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 1800);
 }
 
-// =======================
-// ===== Summary UI ======
-// =======================
-function renderSummary() {
-  $("#kcalIn").textContent = Math.round(state.totals.in);
-  $("#kcalOut").textContent = Math.round(state.totals.out);
-  const pct = Math.min(
-    100,
-    Math.round((state.hydration.consumed / Math.max(1, state.hydration.goal)) * 100)
-  );
-  $("#hydrationKpi").textContent = pct + "%";
+function round2(n) { return Math.round(n * 100) / 100; }
+
+function calculateBMI(weightKg, heightCm) {
+  const h = heightCm / 100;
+  if (!weightKg || !heightCm) return null;
+  const bmi = weightKg / (h * h);
+  let cat = "";
+  if (bmi < 18.5) cat = "Underweight";
+  else if (bmi < 25) cat = "Normal";
+  else if (bmi < 30) cat = "Overweight";
+  else cat = "Obese";
+  return { bmi: round2(bmi), category: cat };
 }
 
-// ==========================
-// ===== Nutrition + Mood ===
-// ==========================
-async function fetchNutrition(food) {
-  const { nutritionixId, nutritionixKey } = state.keys;
-  if (nutritionixId && nutritionixKey) {
-    try {
-      const res = await fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-app-id": nutritionixId,
-          "x-app-key": nutritionixKey,
-        },
-        body: JSON.stringify({ query: food }),
-      });
-      if (!res.ok) throw new Error("Nutritionix error");
-      const data = await res.json();
-
-      // Mood & Stress Calendar
-      const calendar = document.getElementById("calendar");
-      const moodSelect = document.getElementById("mood");
-      const saveBtn = document.getElementById("saveMood");
-      const tip = document.getElementById("tip");
-
-      const today = new Date();
-      const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-      const moods = JSON.parse(localStorage.getItem("moods")) || {};
-
-      function renderCalendar() {
-        calendar.innerHTML = "";
-        for (let day = 1; day <= daysInMonth; day++) {
-          const dayDiv = document.createElement("div");
-          dayDiv.classList.add("day");
-          dayDiv.textContent = day;
-          if (moods[day]) dayDiv.classList.add(moods[day]);
-          calendar.appendChild(dayDiv);
-        }
-      }
-
-      saveBtn.addEventListener("click", () => {
-        const mood = moodSelect.value;
-        const day = today.getDate();
-        moods[day] = mood;
-        localStorage.setItem("moods", JSON.stringify(moods));
-        renderCalendar();
-        checkStress();
-      });
-
-      function checkStress() {
-        const stressCount = Object.values(moods).filter((m) => m === "stressed").length;
-        if (stressCount >= 3) {
-          tip.textContent =
-            "💡 Tip: You’ve been stressed a lot. Try 5 minutes of deep breathing or a short walk.";
-        } else {
-          tip.textContent = "";
-        }
-      }
-
-      renderCalendar();
-      checkStress();
-
-      // Map nutrition data
-      const items = (data.foods || []).map((f) => ({
-        name: f.food_name,
-        kcal: f.nf_calories,
-        protein: f.nf_protein,
-        carbs: f.nf_total_carbohydrate,
-        fat: f.nf_total_fat,
-        qty: f.serving_qty,
-        unit: f.serving_unit,
-      }));
-      return items.length ? items : estimateNutrition(food);
-    } catch (e) {
-      console.warn(e);
-      return estimateNutrition(food);
-    }
+function calculateBMR({ gender, weightKg, heightCm, age }) {
+  // Mifflin-St Jeor
+  if (!weightKg || !heightCm || !age) return null;
+  let bmr;
+  if (gender === "male") {
+    bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+  } else {
+    bmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
   }
-  return estimateNutrition(food);
+  return Math.round(bmr);
+}
+
+function recommendedDailyCalories(bmr, activity = "sedentary") {
+  // activity multipliers
+  const mult = {
+    sedentary: 1.2,        // little/no exercise
+    light: 1.375,          // light exercise 1-3 days/week
+    moderate: 1.55,        // moderate 3-5 days/week
+    active: 1.725,         // hard exercise 6-7 days/week
+    veryActive: 1.9,       // very hard
+  };
+  const m = mult[activity] || mult.sedentary;
+  return Math.round(bmr * m);
+}
+
+function recommendedWaterMl(weightKg) {
+  return Math.round(weightKg * 35);
+}
+
+function recommendedSteps(age) {
+  age = Number(age) || 30;
+  if (age < 18) return 12000;
+  if (age <= 40) return 10000;
+  if (age <= 60) return 8000;
+  return 6000;
+}
+
+function recommendedSleepHours(age) {
+  age = Number(age) || 30;
+  if (age < 1) return "14-17";
+  if (age < 3) return "11-14";
+  if (age < 6) return "10-13";
+  if (age < 13) return "9-11";
+  if (age < 18) return "8-10";
+  if (age <= 64) return "7-9";
+  return "7-8";
+}
+
+async function fetchNutritionixFood(query) {
+  if (!NUTRITIONIX_ID || !NUTRITIONIX_KEY) {
+    return estimateNutrition(query)[0];
+  }
+
+  try {
+    const res = await fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-app-id": NUTRITIONIX_ID,
+        "x-app-key": NUTRITIONIX_KEY,
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Nutritionix API error");
+    }
+    const data = await res.json();
+    if (!data.foods || data.foods.length === 0) throw new Error("No foods");
+    const f = data.foods[0];
+    return {
+      name: f.food_name || query,
+      kcal: f.nf_calories || 0,
+      protein: f.nf_protein || 0,
+      carbs: f.nf_total_carbohydrate || 0,
+      fat: f.nf_total_fat || 0,
+      qty: f.serving_qty || 1,
+      unit: f.serving_unit || "serving",
+    };
+  } catch (e) {
+    console.warn("Nutritionix failed:", e);
+    // fallback
+    return estimateNutrition(query)[0];
+  }
 }
 
 function estimateNutrition(food) {
@@ -143,82 +170,202 @@ function estimateNutrition(food) {
       c: 28,
       fat: 8,
     };
-  return [
-    { name: food, kcal: hit.kcal, protein: hit.p, carbs: hit.c, fat: hit.fat, qty: 1, unit: "serving" },
-  ];
+  return [{ name: food, kcal: hit.kcal, protein: hit.p, carbs: hit.c, fat: hit.fat, qty: 1, unit: "serving" }];
+}
+
+function updateUIAll() {
+  nameInput.value = state.user.name || "";
+  ageInput.value = state.user.age || "";
+  heightInput.value = state.user.height || "";
+  weightInput.value = state.user.weight || "";
+  genderSelect.value = state.user.gender || "";
+
+  stepsValueEl && (stepsValueEl.textContent = state.totals.steps || 0);
+  waterValueEl && (waterValueEl.textContent = (state.totals.waterMl || 0) + " ml");
+  caloriesValueEl && (caloriesValueEl.textContent = Math.round(state.totals.kcalIn || 0));
+  sleepValueEl && (sleepValueEl.textContent = recommendedSleepHours(state.user.age));
+
+  const h = Number(state.user.height), w = Number(state.user.weight), age = Number(state.user.age);
+  const bmiRes = calculateBMI(w, h);
+  if (bmiRes) {
+    calResultP && (calResultP.textContent = `BMI: ${bmiRes.bmi} (${bmiRes.category})`);
+    calResultP2 && (calResultP2.textContent = `Recommended water: ${recommendedWaterMl(w)} ml`);
+  } else {
+    calResultP && (calResultP.textContent = "Fill info and press Submit");
+  }
+
+  if (state.bmrInfo) {
+    const { bmr, dailyCal } = state.bmrInfo;
+    if (calResultP) {
+      const ex = document.getElementById("bmr-info");
+      if (!ex) {
+        const el = document.createElement("div");
+        el.id = "bmr-info";
+        el.style.marginTop = "8px";
+        el.style.fontSize = "13px";
+        el.style.color = "#333";
+        calResultP.parentNode && calResultP.parentNode.appendChild(el);
+      }
+      document.getElementById("bmr-info").textContent = `BMR: ${bmr} kcal • Daily need (sedentary): ${dailyCal} kcal`;
+    }
+  }
+}
+
+function createTrackerControls() {
+  if (stepsValueEl) {
+    const parent = stepsValueEl.parentNode;
+    if (!parent.querySelector(".tracker-controls")) {
+      const wrap = document.createElement("div");
+      wrap.className = "tracker-controls";
+      wrap.style.marginTop = "6px";
+      wrap.innerHTML = `
+        <button id="add-steps">+1000</button>
+        <button id="reset-steps">Reset</button>
+      `;
+      parent.appendChild(wrap);
+      wrap.querySelector("#add-steps").addEventListener("click", () => {
+        state.totals.steps = (state.totals.steps || 0) + 1000;
+        saveTotals();
+        updateUIAll();
+      });
+      wrap.querySelector("#reset-steps").addEventListener("click", () => {
+        state.totals.steps = 0;
+        saveTotals();
+        updateUIAll();
+      });
+    }
+  }
+
+  if (waterValueEl) {
+    const parent = waterValueEl.parentNode;
+    if (!parent.querySelector(".water-controls")) {
+      const wrap = document.createElement("div");
+      wrap.className = "water-controls";
+      wrap.style.marginTop = "6px";
+      wrap.innerHTML = `
+        <button id="add-water">+250ml</button>
+        <button id="reset-water">Reset</button>
+      `;
+      parent.appendChild(wrap);
+      wrap.querySelector("#add-water").addEventListener("click", () => {
+        state.totals.waterMl = (state.totals.waterMl || 0) + 250;
+        if (state.totals.waterMl > 99999) state.totals.waterMl = 99999;
+        saveTotals();
+        updateUIAll();
+      });
+      wrap.querySelector("#reset-water").addEventListener("click", () => {
+        state.totals.waterMl = 0;
+        saveTotals();
+        updateUIAll();
+      });
+    }
+  }
+
+  if (caloriesValueEl) {
+    const parent = caloriesValueEl.parentNode;
+    if (!parent.querySelector(".cal-controls")) {
+      const wrap = document.createElement("div");
+      wrap.className = "cal-controls";
+      wrap.style.marginTop = "6px";
+      wrap.innerHTML = `
+        <button id="add-cal-100">+100 kcal</button>
+        <button id="reset-cal">Reset</button>
+      `;
+      parent.appendChild(wrap);
+      wrap.querySelector("#add-cal-100").addEventListener("click", () => {
+        state.totals.kcalIn = (state.totals.kcalIn || 0) + 100;
+        saveTotals();
+        updateUIAll();
+      });
+      wrap.querySelector("#reset-cal").addEventListener("click", () => {
+        state.totals.kcalIn = 0;
+        saveTotals();
+        updateUIAll();
+      });
+    }
+  }
+}
+
+function saveUser() { storage.set("ph_user", state.user); }
+function saveTotals() { storage.set("ph_totals_" + todayKey(), state.totals); }
+function saveBmr() { storage.set("ph_bmr", state.bmrInfo); }
+
+async function handleInfoSubmit() {
+  // gather
+  const name = (nameInput.value || "").trim();
+  const age = Number(ageInput.value || 0);
+  const height = Number(heightInput.value || 0); // cm
+  const weight = Number(weightInput.value || 0); // kg
+  const gender = genderSelect.value;
+
+  if (!name || !age || !height || !weight || !gender) {
+    toast("Please fill all personal info fields.");
+    return;
+  }
+
+  state.user = { name, age, height, weight, gender };
+  saveUser();
+
+  // calculations
+  const bmi = calculateBMI(weight, height);
+  const bmr = calculateBMR({ gender, weightKg: weight, heightCm: height, age });
+  const dailyCal = recommendedDailyCalories(bmr, "sedentary");
+  const waterMl = recommendedWaterMl(weight);
+  const stepsRec = recommendedSteps(age);
+
+  state.bmrInfo = { bmr, dailyCal, stepsRec, waterMl };
+  saveBmr();
+
+  toast("Personal info saved.");
+  updateUIAll();
+}
+
+// Food search handler
+async function handleFoodSearch() {
+  const query = (searchInput.value || "").trim();
+  if (!query) {
+    toast("Enter a food to search.");
+    return;
+  }
+
+  // show loading
+  foodNameEl && (foodNameEl.textContent = "Searching...");
+  proteinEl && (proteinEl.textContent = "-");
+  carbsEl && (carbsEl.textContent = "-");
+  fatEl && (fatEl.textContent = "-");
+
+  const item = await fetchNutritionixFood(query);
+
+  // Display
+  foodNameEl && (foodNameEl.textContent = item.name || query);
+  proteinEl && (proteinEl.textContent = (item.protein != null ? round2(item.protein) + " g" : "N/A"));
+  carbsEl && (carbsEl.textContent = (item.carbs != null ? round2(item.carbs) + " g" : "N/A"));
+  fatEl && (fatEl.textContent = (item.fat != null ? round2(item.fat) + " g" : "N/A"));
+
+  if (item.kcal) {
+    state.totals.kcalIn = (state.totals.kcalIn || 0) + Number(item.kcal);
+    saveTotals();
+    updateUIAll();
+    toast(`+${Math.round(item.kcal)} kcal added to daily total`);
+  }
+}
+
+function init() {
+  // wire listeners
+  infoBtn && infoBtn.addEventListener("click", handleInfoSubmit);
+  searchBtn && searchBtn.addEventListener("click", handleFoodSearch);
+  searchInput && searchInput.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") handleFoodSearch();
+  });
+
+  // create tracker controls
+  createTrackerControls();
+
+  updateUIAll();
+
+  // small welcome
+  const lastUser = state.user.name || "Guest";
+  console.log("Personal Health initialized for", lastUser);
 }
 
 init();
-
-// ==============================
-// ===== Features Section =======
-// ==============================
-
-/***********************************
- * // one – AI-Powered Smart Meal Planner
- ***********************************/
-async function getMealPlan(calories = 2000) {
-  const API_KEY = "YOUR_SPOONACULAR_KEY"; // Replace with your Spoonacular API key
-  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${API_KEY}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log("Meal Plan:", data);
-    data.meals.forEach((meal) => {
-      console.log(`${meal.title} - Ready in ${meal.readyInMinutes} mins`);
-    });
-  } catch (err) {
-    console.error("Meal Planner Error:", err);
-  }
-}
-// Example: getMealPlan(2200);
-
-/***********************************
- * // two – Real-Time Hydration Tracker
- ***********************************/
-function HydrationTracker() {
-  const DAILY_GOAL = 2000; // ml
-  let current = parseInt(localStorage.getItem("waterIntake")) || 0;
-
-  function addWater(amount) {
-    current += amount;
-    if (current > DAILY_GOAL) current = DAILY_GOAL;
-    localStorage.setItem("waterIntake", current);
-    updateUI();
-  }
-
-  function updateUI() {
-    const percent = Math.round((current / DAILY_GOAL) * 100);
-    console.log(`Hydration: ${current}ml / ${DAILY_GOAL}ml (${percent}%)`);
-    // UI: Update your water bottle animation here
-  }
-
-  return { addWater, updateUI };
-}
-
-const tracker = HydrationTracker();
-tracker.updateUI();
-// Example: tracker.addWater(250);
-
-/***********************************
- * // three – Live Fitness & Heartbeat Dashboard
- ***********************************/
-function LiveFitnessDashboard() {
-  let heartRate = 70; // bpm
-  let steps = 0;
-
-  function simulate() {
-    heartRate = 60 + Math.floor(Math.random() * 40); // 60–100 bpm
-    steps += Math.floor(Math.random() * 10); // simulate step increase
-    const stressLevel = heartRate > 90 ? "High" : "Normal";
-
-    console.log(`❤️ Heartbeat: ${heartRate} bpm`);
-    console.log(`👟 Steps: ${steps}`);
-    console.log(`⚡ Stress Level: ${stressLevel}`);
-  }
-
-  setInterval(simulate, 5000);
-}
-
-LiveFitnessDashboard();
