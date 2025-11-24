@@ -103,7 +103,7 @@ justify-content: center;
     background-color: rgba(255, 101, 12, 0.116);
     padding: 3px;
     border-radius: 5px;
-    color: white;
+    color: black;
 }
 #info-h1, #api-search-h1 ,#health-tracker-h1{
     font-size: 25px;
@@ -144,3 +144,18 @@ display: flex;
 
 /* ===== Mobile (480px and below) ===== */
 @media (max-width: 590px) {}
+
+#add-steps , #reset-steps , #add-water, #reset-water , #add-cal-100, #reset-cal{
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(255, 255, 255);
+padding: 3px;
+border-radius: 3px;
+margin-left: 5px;
+}
+
+.info1-row{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}

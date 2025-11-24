@@ -1,5 +1,4 @@
-const NUTRITIONIX_ID = "NUTRITIONIX_ID";      
-const NUTRITIONIX_KEY = "NUTRITIONIX_KEY";    
+const API_NINJAS_KEY = "EIQRnY+VmcGplpv2+dDeRA==WPFtNUHVc3udhmq3";
 
 const $ = (s) => document.querySelector(s);
 const todayKey = () => new Date().toISOString().slice(0, 10);
@@ -26,9 +25,8 @@ const heightInput = $("#height");
 const weightInput = $("#weight");
 const genderSelect = $("#gender");
 const infoBtn = $("#info-btn");
-const calResultP = document.querySelectorAll("#cal-result-p")[0]; 
-const calResultP2 = document.querySelectorAll("#cal-result-p")[1]; 
-const bmiLabel = $("#cal-p") || null; 
+const calResultP = document.querySelectorAll("#cal-result-p")[0];
+const calResultP2 = document.querySelectorAll("#cal-result-p")[1];
 const searchInput = $("#search");
 const searchBtn = $("#search-btn");
 
@@ -47,8 +45,7 @@ const fatEl = apiRows[3] ? apiRows[3].querySelector("#text") : null;
 function toast(msg) {
   const t = document.createElement("div");
   t.textContent = msg;
-  t.style.cssText =
-    "position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0f151d;color:#fff;padding:10px 14px;border-radius:10px;z-index:9999;";
+  t.style.cssText = "position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0f151d;color:#fff;padding:10px 14px;border-radius:10px;z-index:9999;";
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 1800);
 }
@@ -68,28 +65,16 @@ function calculateBMI(weightKg, heightCm) {
 }
 
 function calculateBMR({ gender, weightKg, heightCm, age }) {
-  // Mifflin-St Jeor
   if (!weightKg || !heightCm || !age) return null;
   let bmr;
-  if (gender === "male") {
-    bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
-  } else {
-    bmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
-  }
+  if (gender === "male") bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+  else bmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
   return Math.round(bmr);
 }
 
 function recommendedDailyCalories(bmr, activity = "sedentary") {
-  // activity multipliers
-  const mult = {
-    sedentary: 1.2,        // little/no exercise
-    light: 1.375,          // light exercise 1-3 days/week
-    moderate: 1.55,        // moderate 3-5 days/week
-    active: 1.725,         // hard exercise 6-7 days/week
-    veryActive: 1.9,       // very hard
-  };
-  const m = mult[activity] || mult.sedentary;
-  return Math.round(bmr * m);
+  const mult = { sedentary: 1.2, light: 1.375, moderate: 1.55, active: 1.725, veryActive: 1.9 };
+  return Math.round(bmr * (mult[activity] || mult.sedentary));
 }
 
 function recommendedWaterMl(weightKg) {
@@ -113,65 +98,36 @@ function recommendedSleepHours(age) {
   if (age < 18) return "8-10";
   if (age <= 64) return "7-9";
   return "7-8";
+
 }
-
-async function fetchNutritionixFood(query) {
-  if (!NUTRITIONIX_ID || !NUTRITIONIX_KEY) {
-    return estimateNutrition(query)[0];
-  }
-
+async function fetchNutritionFood(query) {
   try {
-    const res = await fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-app-id": NUTRITIONIX_ID,
-        "x-app-key": NUTRITIONIX_KEY,
-      },
-      body: JSON.stringify({ query }),
+    const res = await fetch("https://api.api-ninjas.com/v1/nutrition?query=" + encodeURIComponent(query), {
+      headers: { "X-Api-Key": "EIQRnY+VmcGplpv2+dDeRA==WPFtNUHVc3udhmq3" }
     });
-
-    if (!res.ok) {
-      throw new Error("Nutritionix API error");
-    }
     const data = await res.json();
-    if (!data.foods || data.foods.length === 0) throw new Error("No foods");
-    const f = data.foods[0];
+    if (!data || !data.length) throw new Error("No data");
+
+    const f = data[0]; // first item
     return {
-      name: f.food_name || query,
-      kcal: f.nf_calories || 0,
-      protein: f.nf_protein || 0,
-      carbs: f.nf_total_carbohydrate || 0,
-      fat: f.nf_total_fat || 0,
-      qty: f.serving_qty || 1,
-      unit: f.serving_unit || "serving",
+      name: f.name || query,
+      kcal: f.calories || 0,
+      protein: f.protein_g || 0,
+      carbs: f.carbohydrates_total_g || 0,
+      fat: f.fat_total_g || 0
     };
   } catch (e) {
-    console.warn("Nutritionix failed:", e);
-    // fallback
-    return estimateNutrition(query)[0];
+    console.warn("Nutrition API error:", e);
+    return { name: query, kcal: 0, protein: 0, carbs: 0, fat: 0 };
   }
 }
 
-function estimateNutrition(food) {
-  const f = food.toLowerCase();
-  const table = [
-    { k: ["apple", "banana", "fruit"], kcal: 95, p: 0.5, c: 25, fat: 0.3 },
-    { k: ["rice", "biryani", "pilaf", "kabuli"], kcal: 250, p: 5, c: 52, fat: 2 },
-    { k: ["chicken", "kebab", "shawarma"], kcal: 300, p: 28, c: 2, fat: 18 },
-    { k: ["bread", "naan"], kcal: 160, p: 5, c: 30, fat: 1.5 },
-    { k: ["egg"], kcal: 78, p: 6, c: 0.6, fat: 5 },
-    { k: ["salad", "vegetable"], kcal: 90, p: 3, c: 12, fat: 3 },
-  ];
-  const hit =
-    table.find((x) => x.k.some((w) => f.includes(w))) || {
-      kcal: 220,
-      p: 8,
-      c: 28,
-      fat: 8,
-    };
-  return [{ name: food, kcal: hit.kcal, protein: hit.p, carbs: hit.c, fat: hit.fat, qty: 1, unit: "serving" }];
-}
+// Clear inputs after save
+nameInput.value = "";
+ageInput.value = "";
+heightInput.value = "";
+weightInput.value = "";
+genderSelect.value = "";
 
 function updateUIAll() {
   nameInput.value = state.user.name || "";
@@ -185,7 +141,7 @@ function updateUIAll() {
   caloriesValueEl && (caloriesValueEl.textContent = Math.round(state.totals.kcalIn || 0));
   sleepValueEl && (sleepValueEl.textContent = recommendedSleepHours(state.user.age));
 
-  const h = Number(state.user.height), w = Number(state.user.weight), age = Number(state.user.age);
+  const h = Number(state.user.height), w = Number(state.user.weight);
   const bmiRes = calculateBMI(w, h);
   if (bmiRes) {
     calResultP && (calResultP.textContent = `BMI: ${bmiRes.bmi} (${bmiRes.category})`);
@@ -196,18 +152,13 @@ function updateUIAll() {
 
   if (state.bmrInfo) {
     const { bmr, dailyCal } = state.bmrInfo;
-    if (calResultP) {
-      const ex = document.getElementById("bmr-info");
-      if (!ex) {
-        const el = document.createElement("div");
-        el.id = "bmr-info";
-        el.style.marginTop = "8px";
-        el.style.fontSize = "13px";
-        el.style.color = "#333";
-        calResultP.parentNode && calResultP.parentNode.appendChild(el);
-      }
-      document.getElementById("bmr-info").textContent = `BMR: ${bmr} kcal • Daily need (sedentary): ${dailyCal} kcal`;
-    }
+    const el = document.getElementById("bmr-info") || document.createElement("div");
+    el.id = "bmr-info";
+    el.style.marginTop = "8px";
+    el.style.fontSize = "13px";
+    el.style.color = "#333";
+    calResultP.parentNode && calResultP.parentNode.appendChild(el);
+    el.textContent = `BMR: ${bmr} kcal • Daily need (sedentary): ${dailyCal} kcal`;
   }
 }
 
@@ -218,20 +169,14 @@ function createTrackerControls() {
       const wrap = document.createElement("div");
       wrap.className = "tracker-controls";
       wrap.style.marginTop = "6px";
-      wrap.innerHTML = `
-        <button id="add-steps">+1000</button>
-        <button id="reset-steps">Reset</button>
-      `;
+      wrap.innerHTML = `<button id="add-steps">+1000</button><button id="reset-steps">Reset</button>`;
       parent.appendChild(wrap);
       wrap.querySelector("#add-steps").addEventListener("click", () => {
         state.totals.steps = (state.totals.steps || 0) + 1000;
-        saveTotals();
-        updateUIAll();
+        saveTotals(); updateUIAll();
       });
       wrap.querySelector("#reset-steps").addEventListener("click", () => {
-        state.totals.steps = 0;
-        saveTotals();
-        updateUIAll();
+        state.totals.steps = 0; saveTotals(); updateUIAll();
       });
     }
   }
@@ -242,21 +187,15 @@ function createTrackerControls() {
       const wrap = document.createElement("div");
       wrap.className = "water-controls";
       wrap.style.marginTop = "6px";
-      wrap.innerHTML = `
-        <button id="add-water">+250ml</button>
-        <button id="reset-water">Reset</button>
-      `;
+      wrap.innerHTML = `<button id="add-water">+250ml</button><button id="reset-water">Reset</button>`;
       parent.appendChild(wrap);
       wrap.querySelector("#add-water").addEventListener("click", () => {
         state.totals.waterMl = (state.totals.waterMl || 0) + 250;
         if (state.totals.waterMl > 99999) state.totals.waterMl = 99999;
-        saveTotals();
-        updateUIAll();
+        saveTotals(); updateUIAll();
       });
       wrap.querySelector("#reset-water").addEventListener("click", () => {
-        state.totals.waterMl = 0;
-        saveTotals();
-        updateUIAll();
+        state.totals.waterMl = 0; saveTotals(); updateUIAll();
       });
     }
   }
@@ -267,20 +206,13 @@ function createTrackerControls() {
       const wrap = document.createElement("div");
       wrap.className = "cal-controls";
       wrap.style.marginTop = "6px";
-      wrap.innerHTML = `
-        <button id="add-cal-100">+100 kcal</button>
-        <button id="reset-cal">Reset</button>
-      `;
+      wrap.innerHTML = `<button id="add-cal-100">+100 kcal</button><button id="reset-cal">Reset</button>`;
       parent.appendChild(wrap);
       wrap.querySelector("#add-cal-100").addEventListener("click", () => {
-        state.totals.kcalIn = (state.totals.kcalIn || 0) + 100;
-        saveTotals();
-        updateUIAll();
+        state.totals.kcalIn = (state.totals.kcalIn || 0) + 100; saveTotals(); updateUIAll();
       });
       wrap.querySelector("#reset-cal").addEventListener("click", () => {
-        state.totals.kcalIn = 0;
-        saveTotals();
-        updateUIAll();
+        state.totals.kcalIn = 0; saveTotals(); updateUIAll();
       });
     }
   }
@@ -291,81 +223,62 @@ function saveTotals() { storage.set("ph_totals_" + todayKey(), state.totals); }
 function saveBmr() { storage.set("ph_bmr", state.bmrInfo); }
 
 async function handleInfoSubmit() {
-  // gather
   const name = (nameInput.value || "").trim();
   const age = Number(ageInput.value || 0);
-  const height = Number(heightInput.value || 0); // cm
-  const weight = Number(weightInput.value || 0); // kg
+  const height = Number(heightInput.value || 0);
+  const weight = Number(weightInput.value || 0);
   const gender = genderSelect.value;
 
-  if (!name || !age || !height || !weight || !gender) {
-    toast("Please fill all personal info fields.");
-    return;
-  }
+  if (!name || !age || !height || !weight || !gender) { toast("Please fill all personal info fields."); return; }
 
   state.user = { name, age, height, weight, gender };
   saveUser();
 
-  // calculations
-  const bmi = calculateBMI(weight, height);
   const bmr = calculateBMR({ gender, weightKg: weight, heightCm: height, age });
   const dailyCal = recommendedDailyCalories(bmr, "sedentary");
-  const waterMl = recommendedWaterMl(weight);
-  const stepsRec = recommendedSteps(age);
-
-  state.bmrInfo = { bmr, dailyCal, stepsRec, waterMl };
+  state.bmrInfo = { bmr, dailyCal };
   saveBmr();
 
   toast("Personal info saved.");
+
+
+
   updateUIAll();
 }
 
-// Food search handler
 async function handleFoodSearch() {
   const query = (searchInput.value || "").trim();
-  if (!query) {
-    toast("Enter a food to search.");
-    return;
-  }
+  if (!query) { toast("Enter a food to search."); return; }
 
-  // show loading
   foodNameEl && (foodNameEl.textContent = "Searching...");
   proteinEl && (proteinEl.textContent = "-");
   carbsEl && (carbsEl.textContent = "-");
   fatEl && (fatEl.textContent = "-");
 
-  const item = await fetchNutritionixFood(query);
+const item = await fetchNutritionFood(query); // use the new function here
 
-  // Display
-  foodNameEl && (foodNameEl.textContent = item.name || query);
-  proteinEl && (proteinEl.textContent = (item.protein != null ? round2(item.protein) + " g" : "N/A"));
-  carbsEl && (carbsEl.textContent = (item.carbs != null ? round2(item.carbs) + " g" : "N/A"));
-  fatEl && (fatEl.textContent = (item.fat != null ? round2(item.fat) + " g" : "N/A"));
-
+  foodNameEl && (foodNameEl.textContent = item.name);
+proteinEl.textContent = item.kcal != null ? Math.round(item.kcal) + " kcal" : "0 kcal"; // show calories here
+carbsEl.textContent = item.carbs != null ? round2(item.carbs) + " g" : "0 g";
+fatEl.textContent = item.fat != null ? round2(item.fat) + " g" : "0 g";
   if (item.kcal) {
     state.totals.kcalIn = (state.totals.kcalIn || 0) + Number(item.kcal);
     saveTotals();
     updateUIAll();
-    toast(`+${Math.round(item.kcal)} kcal added to daily total`);
+    toast(`+${Math.round(item.kcal)} kcal added`);
   }
 }
 
 function init() {
-  // wire listeners
   infoBtn && infoBtn.addEventListener("click", handleInfoSubmit);
   searchBtn && searchBtn.addEventListener("click", handleFoodSearch);
-  searchInput && searchInput.addEventListener("keyup", (e) => {
-    if (e.key === "Enter") handleFoodSearch();
-  });
-
-  // create tracker controls
+  searchInput && searchInput.addEventListener("keyup", (e) => { if (e.key === "Enter") handleFoodSearch(); });
   createTrackerControls();
-
   updateUIAll();
-
-  // small welcome
-  const lastUser = state.user.name || "Guest";
-  console.log("Personal Health initialized for", lastUser);
+  console.log("Personal Health initialized for", state.user.name || "Guest");
 }
 
 init();
+
+
+

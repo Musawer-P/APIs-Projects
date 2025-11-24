@@ -10,7 +10,6 @@ const moviePoster = document.querySelector(".merging-div img");
 const movieRating = document.getElementById("movie-rating");
 const movieHour = document.getElementById("movie-hour");
 
-// Search Movie (OMDb)
 async function searchMovie(query) {
   try {
     const res = await fetch(`${BASE_URL}?apikey=${API_KEY}&t=${query}`);
@@ -27,7 +26,6 @@ async function searchMovie(query) {
   }
 }
 
-// Display Movie (OMDb fields)
 function displayMovie(movie) {
   movieTitle.textContent = movie.Title;
   movieDesc.textContent = movie.Plot || "No description available.";
@@ -50,3 +48,46 @@ exploreBtn.addEventListener("click", () => {
     alert("Please enter a movie name!");
   }
 });
+
+
+async function loadTrendingMovies() {
+  const posterList = document.getElementById("poster-list");
+  posterList.innerHTML = "Loading...";
+
+  try {
+    const res = await fetch("https://api.tvmaze.com/shows");
+    const data = await res.json();
+
+    // Top 10 trending shows
+    const trending = data.slice(0, 10);
+
+    posterList.innerHTML = "";
+
+    trending.forEach(movie => {
+      const div = document.createElement("div");
+      div.classList.add("poster-p");
+
+      div.innerHTML = `
+        <img src="${movie.image.medium}" alt="${movie.name}">
+        <p>${movie.name}</p>
+      `;
+
+      div.addEventListener("click", () => {
+        displayMovie({
+          Title: movie.name,
+          Plot: movie.summary.replace(/<[^>]+>/g, ""),
+          Poster: movie.image.medium,
+          imdbRating: movie.rating.average || "N/A",
+          Runtime: movie.runtime || "N/A"
+        });
+      });
+
+      posterList.appendChild(div);
+    });
+
+  } catch (err) {
+    console.log("Error loading trending:", err);
+  }
+}
+
+loadTrendingMovies();
