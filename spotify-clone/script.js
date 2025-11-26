@@ -1,113 +1,111 @@
-const clientId = ""; 
-const clientSecret = ""; 
-let token = "";
-let nextUrl = "";
+// Containers
+const trendContainer = document.querySelector(".trend-song");
+const artistContainer = document.querySelector(".artist-row");
+const searchInput = document.getElementById("search");
+const searchBtn = document.getElementById("btn");
 
-async function getToken() {
-  const result = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": "Basic " + btoa(clientId + ":" + clientSecret),
-    },
-    body: "grant_type=client_credentials",
+// --- JSONP helper ---
+function jsonp(url, callbackName) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    const name = callbackName || "jsonpCallback";
+    window[name] = function(data) {
+      resolve(data);
+      document.body.removeChild(script);
+      delete window[name];
+    };
+    script.src = url + `&output=jsonp&callback=${name}`;
+    script.onerror = () => reject("JSONP request failed");
+    document.body.appendChild(script);
   });
-
-  const data = await result.json();
-  token = data.access_token;
 }
 
+// --- 1. Load trending songs ---
 async function getTrending() {
-  await getToken();
-  const url =
-    "https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF/tracks?limit=10";
+  trendContainer.innerHTML = "<p>Loading trending songs...</p>";
+  try {
+    const data = await jsonp("https://api.deezer.com/chart/0/tracks");
+    const tracks = data.data || [];
 
-  const result = await fetch(url, {
-    headers: { Authorization: "Bearer " + token },
-  });
-  const data = await result.json();
+    trendContainer.innerHTML = "";
 
-  const container = document.querySelector(".trend-song");
-  container.innerHTML = "";
-
-  data.items.forEach((item) => {
-    const track = item.track;
-    const div = document.createElement("div");
-    div.classList.add("trend1");
-    div.innerHTML = `
-      <img id="trend-img" src="${track.album.images[0]?.url}" alt="Album">
-      <h3>${track.artists.map((a) => a.name).join(", ")} <br> ${track.name}</h3>
-    `;
-    container.appendChild(div);
-  });
+    tracks.slice(0, 8).forEach(track => {
+      const div = document.createElement("div");
+      div.classList.add("trend1");
+      div.innerHTML = `
+        <img id="trend-img" src="${track.album.cover_medium}" alt="Album Cover">
+        <h3>${track.artist.name} <br> ${track.title}</h3>
+      `;
+      trendContainer.appendChild(div);
+    });
+  } catch (err) {
+    console.error(err);
+    trendContainer.innerHTML = "<p>Failed to load trending songs.</p>";
+  }
 }
 
+// --- 2. Load top artists ---
 async function getArtists() {
-  await getToken();
-  const url =
-    "https://api.spotify.com/v1/browse/new-releases?limit=10";
+  artistContainer.innerHTML = "<p>Loading artists...</p>";
+  try {
+    const data = await jsonp("https://api.deezer.com/chart/0/artists");
+    const artists = data.data || [];
 
-  const result = await fetch(url, {
-    headers: { Authorization: "Bearer " + token },
-  });
-  const data = await result.json();
+    artistContainer.innerHTML = "";
 
-  const container = document.querySelector(".artist-row");
-  container.innerHTML = "";
-
-  data.albums.items.forEach((album) => {
-    const div = document.createElement("div");
-    div.classList.add("artist1");
-    div.innerHTML = `
-      <img src="${album.images[0]?.url}" alt="Artist Image">
-      <h3>${album.artists.map((a) => a.name).join(", ")}</h3>
-    `;
-    container.appendChild(div);
-  });
+    artists.slice(0, 8).forEach(artist => {
+      const div = document.createElement("div");
+      div.classList.add("artist1");
+      div.innerHTML = `
+        <img src="${artist.picture_medium}" alt="Artist Image">
+        <h3>${artist.name}</h3>
+      `;
+      artistContainer.appendChild(div);
+    });
+  } catch (err) {
+    console.error(err);
+    artistContainer.innerHTML = "<p>Failed to load artists.</p>";
+  }
 }
 
+// --- 3. Search tracks by keyword ---
 async function searchTracks() {
-  const query = document.getElementById("searchInput").value.trim();
+  const query = searchInput.value.trim();
   if (!query) return;
 
-  if (!token) await getToken();
+  trendContainer.innerHTML = "<p>Searching...</p>";
+  try {
+    const data = await jsonp(`https://api.deezer.com/search?q=${encodeURIComponent(query)}`);
+    const tracks = data.data || [];
 
-  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-    query
-  )}&type=track&limit=10`;
+    trendContainer.innerHTML = "";
 
-  const result = await fetch(url, {
-    headers: { Authorization: "Bearer " + token },
-  });
-  const data = await result.json();
+    if (tracks.length === 0) {
+      trendContainer.innerHTML = "<p>No tracks found.</p>";
+      return;
+    }
 
-  const container = document.getElementById("results");
-  container.innerHTML = "";
-
-  data.tracks.items.forEach((track) => {
-    const div = document.createElement("div");
-    div.classList.add("track");
-    div.innerHTML = `
-      <img src="${track.album.images[0]?.url}" alt="Album Cover">
-      <h4>${track.name}</h4>
-      <p>${track.artists.map((a) => a.name).join(", ")}</p>
-      ${
-        track.preview_url
-          ? `<audio controls src="${track.preview_url}"></audio>`
-          : "<p>No preview available</p>"
-      }
-      <button onclick="window.open('${track.external_urls.spotify}', '_blank')">Play on Spotify</button>
-    `;
-    container.appendChild(div);
-  });
+    tracks.slice(0, 8).forEach(track => {
+      const div = document.createElement("div");
+      div.classList.add("trend1");
+      div.innerHTML = `
+        <img id="trend-img" src="${track.album.cover_medium}" alt="Album Cover">
+        <h3>${track.artist.name} <br> ${track.title}</h3>
+      `;
+      trendContainer.appendChild(div);
+    });
+  } catch (err) {
+    console.error(err);
+    trendContainer.innerHTML = "<p>Error searching tracks.</p>";
+  }
 }
 
-document.getElementById("btn").addEventListener("click", searchTracks);
-document
-  .getElementById("searchInput")
-  .addEventListener("keypress", (e) => {
-    if (e.key === "Enter") searchTracks();
-  });
+// Event listeners
+searchBtn.addEventListener("click", searchTracks);
+searchInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") searchTracks();
+});
 
+// Load initial data
 getTrending();
 getArtists();
