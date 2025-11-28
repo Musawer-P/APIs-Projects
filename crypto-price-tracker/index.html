@@ -13,30 +13,40 @@
     <h1>Crypto Price Tracker</h1>
     <div class="main">
         <input type="text" id="search" placeholder="Search Coin...">
+
+
         <div class="display">
             <div class="h-crypto">
-                <p id="currency">Bitcoin</p>
+                <h2 id="currency">Trending Coins</h2>
             </div>
+            <div id="trendingList" class="trending">
+
+            </div>
+            <div class="h-crypto">
+                <p id="currency">Coins</p>
+            </div>
+
             <div class="row">
                 <div class="rate">
-                    <p id="rate">1 BTC</p>
+                    <p id="rateCoin">Coin Name</p>
                 </div>
 
                 <div class="rate">
-                    <p id="rate">1,17,000 USD</p>
+                    <p id="rateUSD">Price in USD</p>
                 </div>
             </div>
-
+<div class="price-change">
+                <p id="percent">0% Today</p>
+            </div>
             <div class="chart">
-                <canvas id="myChart"></canvas>
-
+                <h2 id = "graph-h2">Graph Showing</h2>
+                <canvas id="myChart">
+                </canvas>
             </div>
 
-            <div class="price-change">
-                <p>2% Today</p>
-
-            </div>
+            
         </div>
+
 
         <div class="price-chart">
 

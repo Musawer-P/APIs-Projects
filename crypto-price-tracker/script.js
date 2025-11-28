@@ -1,82 +1,113 @@
- const ctx = document.getElementById('myChart').getContext('2d');
+const search = document.getElementById("search");
+const currency = document.getElementById("currency");
+const rateCoin = document.getElementById("rateCoin");
+const rateUSD = document.getElementById("rateUSD");
+const percent = document.getElementById("percent");
 
-    const myChart = new Chart(ctx, {
-      type: 'line', 
-      data: {
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], // X-axis labels
-        datasets: [{
-          label: 'Bitcoin',
-          data: [12, 19, 3, 5, 2, 3, 7], // Y-axis data
-          fill: false,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+let chart;
+
+// When user presses Enter
+search.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        const coin = search.value.trim().toLowerCase();
+        if (coin) loadCoinData(coin);
+    }
+});
+
+async function loadCoinData(coin) {
+    try {
+        const url = `https://api.coingecko.com/api/v3/coins/${coin}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.error) {
+            alert("Coin not found!");
+            return;
         }
-      }
-    });
 
+        const name = data.name;
+        const price = data.market_data.current_price.usd;
+        const change = data.market_data.price_change_percentage_24h.toFixed(2);
 
-    //Real-Time Portfolio Growth Simulation
+        // Update UI
+        currency.innerText = name;
+        rateCoin.innerText = `1 ${name}`;
+        rateUSD.innerText = `${price.toLocaleString()} USD`;
+        percent.innerText = `${change}% Today`;
+        percent.style.color = change >= 0 ? "limegreen" : "red";
 
+        // Load price chart
+        loadChart(coin);
 
-     let chart;
-    const apiUrl = "https://api.coingecko.com/api/v3/simple/price";
+    } catch (err) {
+        alert("Error fetching data");
+    }
+}
 
-    async function trackInvestment() {
-      const coin = document.getElementById("coin").value.toLowerCase();
-      const amount = parseFloat(document.getElementById("amount").value);
+async function loadChart(coin) {
+    const url = `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7`;
+    const res = await fetch(url);
+    const data = await res.json();
 
-      if (!coin || !amount) {
-        alert("Enter coin name and amount!");
-        return;
-      }
+    const prices = data.prices.map(p => p[1]);
+    const labels = data.prices.map((_, i) => `Day ${i + 1}`);
 
-      // Fetch coin price
-      const res = await fetch(`${apiUrl}?ids=${coin}&vs_currencies=usd`);
-      const data = await res.json();
+    const ctx = document.getElementById("myChart").getContext("2d");
 
-      if (!data[coin]) {
-        alert("Coin not found!");
-        return;
-      }
+    if (chart) chart.destroy();
 
-      const price = data[coin].usd;
-      const portfolioValue = amount / price * price; // keeps it simple
-      const randomOldPrice = price * (0.8 + Math.random() * 0.4); // fake old price
-      const changePercent = ((price - randomOldPrice) / randomOldPrice * 100).toFixed(2);
-
-      // Update UI
-      document.getElementById("output").style.display = "block";
-      document.getElementById("coinName").innerText = coin.toUpperCase();
-      document.getElementById("currentPrice").innerText = price.toLocaleString();
-      document.getElementById("portfolioValue").innerText = portfolioValue.toLocaleString();
-      const changeEl = document.getElementById("change");
-      changeEl.innerText = changePercent + "%";
-      changeEl.className = changePercent >= 0 ? "profit" : "loss";
-
-      // Chart update
-      const ctx = document.getElementById("chart").getContext("2d");
-      if (chart) chart.destroy();
-      chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
         type: "line",
         data: {
-          labels: ["Past", "Now"],
-          datasets: [{
-            label: coin.toUpperCase() + " Growth",
-            data: [randomOldPrice, price],
-            borderColor: "#3b82f6",
-            backgroundColor: "rgba(59,130,246,0.2)",
-            fill: true,
-            tension: 0.3
-          }]
+            labels: labels,
+            datasets: [{
+                label: coin.toUpperCase() + " Price",
+                data: prices,
+                borderColor: "orange",
+                backgroundColor: "rgba(255,165,0,0.2)",
+                fill: true,
+                tension: 0.3
+            }]
         },
-        options: { responsive: true }
-      });
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: false }
+            }
+        }
+    });
+}
+
+
+async function loadTrendingCoins() {
+    const url = "https://api.coingecko.com/api/v3/search/trending";
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const trendingList = document.getElementById("trendingList");
+        trendingList.innerHTML = ""; // clear old data
+
+        data.coins.slice(0, 10).forEach(item => {
+            const coin = item.item;
+
+            const div = document.createElement("div");
+            div.className = "trend-item";
+
+            div.innerHTML = `
+                <img src="${coin.thumb}" alt="">
+                <span>${coin.name} (${coin.symbol.toUpperCase()})</span>
+                <span class="trend-price">$${coin.data.price.toFixed(4)}</span>
+            `;
+
+            trendingList.appendChild(div);
+        });
+
+    } catch (err) {
+        console.log("Error loading trending coins", err);
     }
+}
+
+// Load trending coins on page open:
+loadTrendingCoins();
