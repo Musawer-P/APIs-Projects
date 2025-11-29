@@ -158,9 +158,14 @@ h1 {
 }
 
 .cards-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     margin-top: 60px;
 
+}
+
+.hidden-card {
+    display: none !important;
 }
 
 #upcoming-details {

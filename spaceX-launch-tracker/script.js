@@ -1,192 +1,332 @@
-    const API_BASE = 'https://api.spacexdata.com/v4';
+const API_BASE = 'https://api.spacexdata.com/v4';
 
-    const nextTitle = document.getElementById('nextTitle');
-    const nextDetails = document.getElementById('nextDetails');
-    const countdownEl = document.getElementById('countdown');
-    const upcomingList = document.getElementById('upcomingList');
-    const latestCard = document.getElementById('latestCard');
+const nextTitle = document.getElementById('nextTitle');
+const nextDetails = document.getElementById('nextDetails');
+const countdownEl = document.getElementById('countdown');
+const upcomingList = document.getElementById('upcomingList');
+const latestCard = document.getElementById('latestCard');
 
-    function prettyDate(utcString){
-      const d = new Date(utcString);
-      return d.toLocaleString(); // local timezone
-    }
 
-    // Countdown helper (returns {d,h,m,s})
-    function getCountdownParts(targetDate){
-      const now = Date.now();
-      const diff = new Date(targetDate).getTime() - now;
-      if (diff <= 0) return null;
-      const s = Math.floor(diff / 1000);
-      const days = Math.floor(s / 86400);
-      const hours = Math.floor((s % 86400) / 3600);
-      const mins = Math.floor((s % 3600) / 60);
-      const secs = s % 60;
-      return {days, hours, mins, secs};
-    }
+function initUpcomingShowMore() {
+  const cards = document.querySelectorAll("#upcoming-launches .cards-row .cards");
+  const maxVisible = 8; // show 8 cards initially
+  const btn = document.getElementById("upcomingShowMoreBtn");
 
-    // Render countdown to the DOM
-    let countdownInterval = null;
-    function startCountdown(utcString){
-      if (countdownInterval) clearInterval(countdownInterval);
-      function tick(){
-        const parts = getCountdownParts(utcString);
-        if (!parts) {
-          countdownEl.textContent = 'Launched / In progress';
-          clearInterval(countdownInterval);
-          return;
-        }
-        const pad = n => String(n).padStart(2,'0');
-        countdownEl.textContent = `${parts.days}d ${pad(parts.hours)}:${pad(parts.mins)}:${pad(parts.secs)}`;
+  if (!btn || cards.length === 0) return;
+
+  // Hide extra cards initially
+  cards.forEach((card, index) => {
+    if (index >= maxVisible) card.classList.add("hidden-card");
+  });
+
+  let expanded = false;
+
+  btn.addEventListener("click", () => {
+    expanded = !expanded;
+
+    cards.forEach((card, index) => {
+      if (index >= maxVisible) {
+        card.classList.toggle("hidden-card", !expanded);
       }
-      tick();
-      countdownInterval = setInterval(tick, 1000);
-    }
+    });
 
-    async function loadNextLaunch(){
-      try{
-        const res = await fetch(`${API_BASE}/launches/upcoming`);
-        if (!res.ok) throw new Error('Failed to fetch upcoming launches');
-        const data = await res.json();
-        if (!Array.isArray(data) || data.length === 0) {
-          nextTitle.textContent = 'No upcoming launches found';
-          countdownEl.textContent = '--:--:--:--';
-          return;
-        }
+    btn.textContent = expanded ? "Show Less" : "Show More";
+  });
+}
 
-        // Sort by date_utc ascending to find the earliest upcoming
-        data.sort((a,b) => new Date(a.date_utc) - new Date(b.date_utc));
-        const next = data[0];
 
-        nextTitle.textContent = `${next.name} (${next.flight_number ?? 'N/A'})`;
-        nextDetails.textContent = `Launch date: ${prettyDate(next.date_utc)} • Launchpad: ${next.launchpad ?? 'unknown'}`;
-        startCountdown(next.date_utc);
+function initPastShowMore() {
+  const cards = document.querySelectorAll("#past-launches .cards-row .cards");
+  const maxVisible = 8; // show 8 cards initially
+  const btn = document.getElementById("pastShowMoreBtn");
 
-        renderUpcomingList(data.slice(0,6));
-      } catch(err){
-        console.error(err);
-        nextTitle.textContent = 'Error loading next launch';
-        nextDetails.textContent = '';
-        countdownEl.textContent = '--:--:--:--';
+  if (!btn || cards.length === 0) return;
+
+  // Hide extra cards initially
+  cards.forEach((card, index) => {
+    if (index >= maxVisible) card.classList.add("hidden-card");
+  });
+
+  let expanded = false;
+
+  btn.addEventListener("click", () => {
+    expanded = !expanded;
+
+    cards.forEach((card, index) => {
+      if (index >= maxVisible) {
+        card.classList.toggle("hidden-card", !expanded);
       }
+    });
+
+    btn.textContent = expanded ? "Show Less" : "Show More";
+  });
+}
+
+window.addEventListener("load", () => {
+  initUpcomingShowMore();
+  initPastShowMore();
+});
+
+
+
+
+async function getLaunchpads() {
+  const res = await fetch(`${API_BASE}/launchpads`);
+  const data = await res.json();
+  const map = {};
+  data.forEach(lp => map[lp.id] = lp.name);
+  return map;
+}
+
+async function getRockets() {
+  const res = await fetch(`${API_BASE}/rockets`);
+  const data = await res.json();
+  const map = {};
+  data.forEach(r => map[r.id] = r.name);
+  return map;
+}
+
+function makeCard(launch, rocketName, siteName, isUpcoming) {
+  return `
+    <div class="cards">
+      <div class="first-card">
+        <div class="status">
+          <p id="p1">${escapeHtml(launch.name || 'Unknown')}</p>
+          <button type="button" id="${isUpcoming ? "waiting" : (launch.success ? "success-fail" : "fail")}"></button>
+        </div>
+
+        <div class="row-main">
+          <div class="row1">
+            <p id="p2">Rocket Name</p>
+            <p id="p2">${escapeHtml(rocketName)}</p>
+          </div>
+
+          <div class="row1">
+            <p id="p3">Launch site Name</p>
+            <p id="p3">${escapeHtml(siteName)}</p>
+          </div>
+        </div>
+
+        <p id="p6">Countdown</p>
+        <p id="p4">--:--</p>
+
+        <p id="p5">${launch.date_utc ? new Date(launch.date_utc).toLocaleDateString() : 'TBD'}</p>
+
+      </div>
+    </div>
+  `;
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+async function loadLaunchData() {
+  try {
+    const [rocketMap, launchpadMap] = await Promise.all([getRockets(), getLaunchpads()]);
+
+    const [upcomingRes, pastRes] = await Promise.all([
+      fetch(`${API_BASE}/launches/upcoming`),
+      fetch(`${API_BASE}/launches/past`)
+    ]);
+
+    const upcoming = await upcomingRes.json();
+    const past = await pastRes.json();
+
+    // Sort
+    upcoming.sort((a, b) => new Date(a.date_utc) - new Date(b.date_utc));
+    past.sort((a, b) => new Date(b.date_utc) - new Date(a.date_utc));
+
+    const upcomingContainer = document.querySelector("#upcoming-launches .cards-row");
+    if (upcomingContainer) {
+      upcomingContainer.innerHTML = upcoming.map(launch =>
+        makeCard(
+          launch,
+          rocketMap[launch.rocket] || "Unknown",
+          launchpadMap[launch.launchpad] || "Unknown",
+          true
+        )
+      ).join("");
     }
 
-    function renderUpcomingList(list){
-      if (!Array.isArray(list) || list.length === 0){
-        upcomingList.innerHTML = '<div class="muted">No upcoming launches.</div>';
-        return;
-      }
-      upcomingList.innerHTML = '';
-      list.forEach(item => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'launch-item';
-        const left = document.createElement('div');
-        left.innerHTML = `<div><strong>${item.name}</strong></div><div class="small muted">Date: ${prettyDate(item.date_utc)}</div>`;
-        const right = document.createElement('div');
-        right.className = 'muted';
-        right.textContent = item.upcoming ? 'Upcoming' : 'TBD';
-        itemEl.appendChild(left);
-        itemEl.appendChild(right);
-        upcomingList.appendChild(itemEl);
-      });
+    // Render past launches
+    const pastContainer = document.querySelector("#past-launches .cards-row");
+    if (pastContainer) {
+      pastContainer.innerHTML = past.map(launch =>
+        makeCard(
+          launch,
+          rocketMap[launch.rocket] || "Unknown",
+          launchpadMap[launch.launchpad] || "Unknown",
+          false
+        )
+      ).join("");
     }
 
-    // Load latest launch
-    async function loadLatestLaunch(){
-      try{
-        const res = await fetch(`${API_BASE}/launches/latest`);
-        if (!res.ok) throw new Error('Failed to fetch latest launch');
-        const latest = await res.json();
-        latestCard.innerHTML = `<div><strong>${latest.name}</strong></div>
+    initUpcomingShowMore();
+
+        attachViewDetailsHandlers();
+
+    return { upcoming, past };
+  } catch (err) {
+    console.error("Error loading launch data:", err);
+  }
+}
+
+// attach handlers to "View Details" buttons (optional hook - safe no-op if you have no special behavior)
+function attachViewDetailsHandlers() {
+  const detailButtons = document.querySelectorAll("#upcoming-launches .upcoming-details, #past-launches .upcoming-details");
+  detailButtons.forEach(btn => {
+    // example: open mission modal or show more info — keep empty so we don't break existing behavior
+    btn.onclick = () => {
+      // You can fill this to open a modal based on the clicked card
+      // currently left intentionally blank to avoid changing your existing modal logic
+    };
+  });
+}
+
+function prettyDate(utcString){
+  const d = new Date(utcString);
+  return d.toLocaleString(); // local timezone
+}
+
+// Countdown helper (returns {d,h,m,s})
+function getCountdownParts(targetDate){
+  const now = Date.now();
+  const diff = new Date(targetDate).getTime() - now;
+  if (diff <= 0) return null;
+  const s = Math.floor(diff / 1000);
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  return {days, hours, mins, secs};
+}
+
+// Render countdown to the DOM
+let countdownInterval = null;
+function startCountdown(utcString){
+  if (countdownInterval) clearInterval(countdownInterval);
+  function tick(){
+    const parts = getCountdownParts(utcString);
+    if (!parts) {
+      if (countdownEl) countdownEl.textContent = 'Launched / In progress';
+      clearInterval(countdownInterval);
+      return;
+    }
+    const pad = n => String(n).padStart(2,'0');
+    if (countdownEl) countdownEl.textContent = `${parts.days}d ${pad(parts.hours)}:${pad(parts.mins)}:${pad(parts.secs)}`;
+  }
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
+
+// Load next launch summary (keeps your existing logic)
+async function loadNextLaunch(){
+  try{
+    const res = await fetch(`${API_BASE}/launches/upcoming`);
+    if (!res.ok) throw new Error('Failed to fetch upcoming launches');
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      if (nextTitle) nextTitle.textContent = 'No upcoming launches found';
+      if (countdownEl) countdownEl.textContent = '--:--:--:--';
+      return;
+    }
+
+    // Sort by date_utc ascending to find the earliest upcoming
+    data.sort((a,b) => new Date(a.date_utc) - new Date(b.date_utc));
+    const next = data[0];
+
+    if (nextTitle) nextTitle.textContent = `${next.name} (${next.flight_number ?? 'N/A'})`;
+    if (nextDetails) nextDetails.textContent = `Launch date: ${prettyDate(next.date_utc)} • Launchpad: ${next.launchpad ?? 'unknown'}`;
+    if (next && next.date_utc) startCountdown(next.date_utc);
+
+    renderUpcomingList(data.slice(0,6));
+  } catch(err){
+    console.error(err);
+    if (nextTitle) nextTitle.textContent = 'Error loading next launch';
+    if (nextDetails) nextDetails.textContent = '';
+    if (countdownEl) countdownEl.textContent = '--:--:--:--';
+  }
+}
+
+function renderUpcomingList(list){
+  if (!upcomingList) return;
+  if (!Array.isArray(list) || list.length === 0){
+    upcomingList.innerHTML = '<div class="muted">No upcoming launches.</div>';
+    return;
+  }
+  upcomingList.innerHTML = '';
+  list.forEach(item => {
+    const itemEl = document.createElement('div');
+    itemEl.className = 'launch-item';
+    const left = document.createElement('div');
+    left.innerHTML = `<div><strong>${escapeHtml(item.name)}</strong></div><div class="small muted">Date: ${prettyDate(item.date_utc)}</div>`;
+    const right = document.createElement('div');
+    right.className = 'muted';
+    right.textContent = item.upcoming ? 'Upcoming' : 'TBD';
+    itemEl.appendChild(left);
+    itemEl.appendChild(right);
+    upcomingList.appendChild(itemEl);
+  });
+}
+
+// Load latest launch (same as your logic)
+async function loadLatestLaunch(){
+  try{
+    const res = await fetch(`${API_BASE}/launches/latest`);
+    if (!res.ok) throw new Error('Failed to fetch latest launch');
+    const latest = await res.json();
+    if (latestCard) latestCard.innerHTML = `<div><strong>${escapeHtml(latest.name)}</strong></div>
                                 <div class="small muted">Date: ${prettyDate(latest.date_utc)}</div>
                                 <div class="small">Success: ${latest.success === true ? 'Yes' : (latest.success === false ? 'No' : 'Unknown')}</div>`;
-      }catch(err){
-        console.error(err);
-        latestCard.innerHTML = '<div class="error">Could not load latest launch.</div>';
-      }
-    }
+  }catch(err){
+    console.error(err);
+    if (latestCard) latestCard.innerHTML = '<div class="error">Could not load latest launch.</div>';
+  }
+}
 
-    // Initialize
-    (function init(){
-      loadNextLaunch();   
-      loadLatestLaunch(); 
-      setInterval(()=>{ loadNextLaunch(); loadLatestLaunch(); }, 60_000);
-    })();
-
-
-
-
-    const modal = document.getElementById("Modal");
-    const modal2 = document.getElementById("Modal2");
-    const modal3 = document.getElementById("Modal3");
-    const modal4 = document.getElementById("Modal4");
-    const btn = document.getElementById("openModal");
-    const btn2 = document.getElementById("openModal2");
-    const btn3 = document.getElementById("openModal3");
-    const btn4 = document.getElementById("openModal4");
-    const closeBtn = document.querySelector(".close");
-    const closeBtn2 = document.querySelector(".close2");
-    const closeBtn3 = document.querySelector(".close3");
-    const closeBtn4 = document.querySelector(".close4");
-
-btn.onclick = () => {
-      modal.style.display = "block";
-      
-    }
-    btn2.onclick = () => {
-      modal2.style.display = "block";
-      
-    } ;btn3.onclick = () => {
-      modal3.style.display = "block";
-      
-    } ;btn4.onclick = () => {
-      modal4.style.display = "block";
-      
-    }
-
-    closeBtn.onclick = () => {
-      modal.style.display = "none";
-    }
-  
-    
-    closeBtn2.onclick = () => {
-      modal2.style.display = "none";
-    }
-
-    
-    closeBtn3.onclick = () => {
-      modal3.style.display = "none";
-    }
-    
-    closeBtn4.onclick = () => {
-      modal4.style.display = "none";
-    }
-    window.onclick = (event) => {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-
-    window.onclick = (event) => {
-      if (event.target === modal2) {
-        modal2.style.display = "none";
-      }
-    }
-
-    window.onclick = (event) => {
-      if (event.target === modal3) {
-        modal3.style.display = "none";
-      }
-    }
-
-    window.onclick = (event) => {
-      if (event.target === modal4) {
-        modal4.style.display = "none";
-      }
-    }
+// Initialize auto-refresh for next/latest
+(function initAutoRefresh(){
+  loadNextLaunch();
+  loadLatestLaunch();
+  setInterval(()=>{ loadNextLaunch(); loadLatestLaunch(); }, 60_000);
+})();
 
 
 
-    // Image enlarge logic
+
+
+
+const modal = document.getElementById("Modal");
+const modal2 = document.getElementById("Modal2");
+const modal3 = document.getElementById("Modal3");
+const modal4 = document.getElementById("Modal4");
+
+const openModalBtn1 = document.getElementById("openModal");
+const openModalBtn2 = document.getElementById("openModal2");
+const openModalBtn3 = document.getElementById("openModal3");
+const openModalBtn4 = document.getElementById("openModal4");
+
+const closeBtn = document.querySelector(".close");
+const closeBtn2 = document.querySelector(".close2");
+const closeBtn3 = document.querySelector(".close3");
+const closeBtn4 = document.querySelector(".close4");
+
+// Safe attach open/close handlers (guard for null)
+if (openModalBtn1 && modal) openModalBtn1.onclick = () => modal.style.display = "block";
+if (openModalBtn2 && modal2) openModalBtn2.onclick = () => modal2.style.display = "block";
+if (openModalBtn3 && modal3) openModalBtn3.onclick = () => modal3.style.display = "block";
+if (openModalBtn4 && modal4) openModalBtn4.onclick = () => modal4.style.display = "block";
+
+if (closeBtn && modal) closeBtn.onclick = () => modal.style.display = "none";
+if (closeBtn2 && modal2) closeBtn2.onclick = () => modal2.style.display = "none";
+if (closeBtn3 && modal3) closeBtn3.onclick = () => modal3.style.display = "none";
+if (closeBtn4 && modal4) closeBtn4.onclick = () => modal4.style.display = "none";
+
+// Image viewers
 const images = document.querySelectorAll(".image-gallery img");
 const images2 = document.querySelectorAll(".image-gallery2 img");
 const images3 = document.querySelectorAll(".image-gallery3 img");
@@ -207,149 +347,54 @@ const closeImg2 = document.getElementById("closeImg2");
 const closeImg3 = document.getElementById("closeImg3");
 const closeImg4 = document.getElementById("closeImg4");
 
+// Safe add listeners for gallery images
+if (images && viewerImg && imgViewer) {
+  images.forEach(img => img.addEventListener("click", () => {
+    viewerImg.src = img.src;
+    imgViewer.style.display = "flex";
+  }));
+}
+if (images2 && viewerImg2 && imgViewer2) {
+  images2.forEach(img => img.addEventListener("click", () => {
+    viewerImg2.src = img.src;
+    imgViewer2.style.display = "flex";
+  }));
+}
+if (images3 && viewerImg3 && imgViewer3) {
+  images3.forEach(img => img.addEventListener("click", () => {
+    viewerImg3.src = img.src;
+    imgViewer3.style.display = "flex";
+  }));
+}
+if (images4 && viewerImg4 && imgViewer4) {
+  images4.forEach(img => img.addEventListener("click", () => {
+    viewerImg4.src = img.src;
+    imgViewer4.style.display = "flex";
+  }));
+}
 
+// Close viewer buttons
+if (closeImg && imgViewer) closeImg.onclick = () => imgViewer.style.display = "none";
+if (closeImg2 && imgViewer2) closeImg2.onclick = () => imgViewer2.style.display = "none";
+if (closeImg3 && imgViewer3) closeImg3.onclick = () => imgViewer3.style.display = "none";
+if (closeImg4 && imgViewer4) closeImg4.onclick = () => imgViewer4.style.display = "none";
 
-images.forEach(img => {
-img.addEventListener("click", () => {
-viewerImg.src = img.src;
-imgViewer.style.display = "flex";
-});
-});
+const Missionmodal = document.getElementById("MissionModal");
+const Missionmodal2 = document.getElementById("MissionModal2");
+const Missionmodal3 = document.getElementById("MissionModal3");
+const Missionmodal4 = document.getElementById("MissionModal4");
 
+const Missionbtn = document.getElementById("mission-btn-modal");
+const Missionbtn2 = document.getElementById("mission-btn-modal2");
+const Missionbtn3 = document.getElementById("mission-btn-modal3");
+const Missionbtn4 = document.getElementById("mission-btn-modal4");
 
+const MissioncloseBtn = document.querySelector(".Missionclose");
+const MissioncloseBtn2 = document.querySelector(".Missionclose2");
+const MissioncloseBtn3 = document.querySelector(".Missionclose3");
+const MissioncloseBtn4 = document.querySelector(".Missionclose4");
 
-images2.forEach(img => {
-  img.addEventListener("click", () => {
-  viewerImg2.src = img.src;
-  imgViewer2.style.display = "flex";
-  });
-  });
-
-  
-  
-images3.forEach(img => {
-  img.addEventListener("click", () => {
-  viewerImg3.src = img.src;
-  imgViewer3.style.display = "flex";
-  });
-  });
-
-  
-  
-images4.forEach(img => {
-  img.addEventListener("click", () => {
-  viewerImg4.src = img.src;
-  imgViewer4.style.display = "flex";
-  });
-  });
-  
-closeImg.onclick = () => imgViewer.style.display = "none";
-window.onclick = (e) => {
-if (e.target === imgViewer) imgViewer.style.display = "none";
-};
-
- 
-closeImg2.onclick = () => imgViewer2.style.display = "none";
-window.onclick = (e) => {
-if (e.target === imgViewer2) imgViewer2.style.display = "none";
-};
-
- 
-closeImg3.onclick = () => imgViewer3.style.display = "none";
-window.onclick = (e) => {
-if (e.target === imgViewer3) imgViewer3.style.display = "none";
-};
-
- 
-closeImg4.onclick = () => imgViewer4.style.display = "none";
-window.onclick = (e) => {
-if (e.target === imgViewer4) imgViewer4.style.display = "none";
-};
-
-
-
-
- //Mission Details
-
- const Missionmodal = document.getElementById("MissionModal");
-    const Missionmodal2 = document.getElementById("MissionModal2");
-    const Missionmodal3 = document.getElementById("MissionModal3");
-    const Missionmodal4 = document.getElementById("MissionModal4");
-    const Missionbtn = document.getElementById("mission-btn-modal");
-    const Missionbtn2 = document.getElementById("mission-btn-modal2");
-    const Missionbtn3 = document.getElementById("mission-btn-modal3");
-    const Missionbtn4 = document.getElementById("mission-btn-modal4");
-    const MissioncloseBtn = document.querySelector(".Missionclose");
-    const MissioncloseBtn2 = document.querySelector(".Missionclose2");
-    const MissioncloseBtn3 = document.querySelector(".Missionclose3");
-    const MissioncloseBtn4 = document.querySelector(".Missionclose4");
-
-    
-
-//Mission Details 
-
-
-    Missionbtn.onclick = () => {
-      Missionmodal.style.display = "block";
-      
-    }
-    Missionbtn2.onclick = () => {
-      Missionmodal2.style.display = "block";
-      
-    } ;Missionbtn3.onclick = () => {
-      Missionmodal3.style.display = "block";
-      
-    } ;Missionbtn4.onclick = () => {
-      Missionmodal4.style.display = "block";
-      
-    }
-
-    MissioncloseBtn.onclick = () => {
-      Missionmodal.style.display = "none";
-    }
-  
-    
-    MissioncloseBtn2.onclick = () => {
-      Missionmodal2.style.display = "none";
-    }
-
-    
-    MissioncloseBtn3.onclick = () => {
-      Missionmodal3.style.display = "none";
-    }
-    
-    MissioncloseBtn4.onclick = () => {
-      Missionmodal4.style.display = "none";
-    }
-    window.onclick = (event) => {
-      if (event.target === Missionmodal) {
-        Missionmodal.style.display = "none";
-      }
-    }
-
-    window.onclick = (event) => {
-      if (event.target === Missionmodal2) {
-        Missionmodal2.style.display = "none";
-      }
-    }
-
-    window.onclick = (event) => {
-      if (event.target === Missionmodal3) {
-        Missionmodal3.style.display = "none";
-      }
-    }
-
-    window.onclick = (event) => {
-      if (event.target === Missionmodal4) {
-        Missionmodal4.style.display = "none";
-      }
-    }
-
-
-
-//Mission Details
-
-
+// mission image viewers
 const Missionimages = document.querySelectorAll(".Missionimage-gallery img");
 const Missionimages2 = document.querySelectorAll(".Missionimage-gallery2 img");
 const Missionimages3 = document.querySelectorAll(".Missionimage-gallery3 img");
@@ -370,63 +415,68 @@ const MissioncloseImg2 = document.getElementById("MissioncloseImg2");
 const MissioncloseImg3 = document.getElementById("MissioncloseImg3");
 const MissioncloseImg4 = document.getElementById("MissioncloseImg4");
 
-//Mission Details
+// Safe attach mission open/close handlers
+if (Missionbtn && Missionmodal) Missionbtn.onclick = () => Missionmodal.style.display = "block";
+if (Missionbtn2 && Missionmodal2) Missionbtn2.onclick = () => Missionmodal2.style.display = "block";
+if (Missionbtn3 && Missionmodal3) Missionbtn3.onclick = () => Missionmodal3.style.display = "block";
+if (Missionbtn4 && Missionmodal4) Missionbtn4.onclick = () => Missionmodal4.style.display = "block";
 
-Missionimages.forEach(img => {
-img.addEventListener("click", () => {
-MissionviewerImg.src = img.src;
-MissionimgViewer.style.display = "flex";
+if (MissioncloseBtn && Missionmodal) MissioncloseBtn.onclick = () => Missionmodal.style.display = "none";
+if (MissioncloseBtn2 && Missionmodal2) MissioncloseBtn2.onclick = () => Missionmodal2.style.display = "none";
+if (MissioncloseBtn3 && Missionmodal3) MissioncloseBtn3.onclick = () => Missionmodal3.style.display = "none";
+if (MissioncloseBtn4 && Missionmodal4) MissioncloseBtn4.onclick = () => Missionmodal4.style.display = "none";
+
+// Mission image viewer handlers
+if (Missionimages && MissionviewerImg && MissionimgViewer) {
+  Missionimages.forEach(img => img.addEventListener("click", () => {
+    MissionviewerImg.src = img.src;
+    MissionimgViewer.style.display = "flex";
+  }));
+}
+if (Missionimages2 && MissionviewerImg2 && MissionimgViewer2) {
+  Missionimages2.forEach(img => img.addEventListener("click", () => {
+    MissionviewerImg2.src = img.src;
+    MissionimgViewer2.style.display = "flex";
+  }));
+}
+if (Missionimages3 && MissionviewerImg3 && MissionimgViewer3) {
+  Missionimages3.forEach(img => img.addEventListener("click", () => {
+    MissionviewerImg3.src = img.src;
+    MissionimgViewer3.style.display = "flex";
+  }));
+}
+if (Missionimages4 && MissionviewerImg4 && MissionimgViewer4) {
+  Missionimages4.forEach(img => img.addEventListener("click", () => {
+    MissionviewerImg4.src = img.src;
+    MissionimgViewer4.style.display = "flex";
+  }));
+}
+
+if (MissioncloseImg && MissionimgViewer) MissioncloseImg.onclick = () => MissionimgViewer.style.display = "none";
+if (MissioncloseImg2 && MissionimgViewer2) MissioncloseImg2.onclick = () => MissionimgViewer2.style.display = "none";
+if (MissioncloseImg3 && MissionimgViewer3) MissioncloseImg3.onclick = () => MissionimgViewer3.style.display = "none";
+if (MissioncloseImg4 && MissionimgViewer4) MissioncloseImg4.onclick = () => MissionimgViewer4.style.display = "none";
+
+// ============== single window click handler to close any modal/viewer ==============
+window.addEventListener("click", (event) => {
+  const allModals = [
+    modal, modal2, modal3, modal4,
+    imgViewer, imgViewer2, imgViewer3, imgViewer4,
+    Missionmodal, Missionmodal2, Missionmodal3, Missionmodal4,
+    MissionimgViewer, MissionimgViewer2, MissionimgViewer3, MissionimgViewer4
+  ].filter(Boolean);
+
+  allModals.forEach(m => {
+    if (event.target === m) m.style.display = "none";
+  });
 });
+
+window.addEventListener('DOMContentLoaded', async () => {
+  // load main card lists
+  await loadLaunchData();
+
+  // call other existing init functions (countdown / next/latest already handled separately)
+  // Also ensure next/latest are loaded once at start:
+  loadNextLaunch();
+  loadLatestLaunch();
 });
-
-
-
-Missionimages2.forEach(img => {
-  img.addEventListener("click", () => {
-  MissionviewerImg2.src = img.src;
-  MissionimgViewer2.style.display = "flex";
-  });
-  });
-
-  
-  
-Missionimages3.forEach(img => {
-  img.addEventListener("click", () => {
-  MissionviewerImg3.src = img.src;
-  MissionimgViewer3.style.display = "flex";
-  });
-  });
-
-  
-  
-Missionimages4.forEach(img => {
-  img.addEventListener("click", () => {
-  MissionviewerImg4.src = img.src;
-  MissionimgViewer4.style.display = "flex";
-  });
-  });
-  
-MissioncloseImg.onclick = () => MissionimgViewer.style.display = "none";
-window.onclick = (e) => {
-if (e.target === MissionimgViewer) MissionimgViewer.style.display = "none";
-};
-
- 
-MissioncloseImg2.onclick = () => MissionimgViewer2.style.display = "none";
-window.onclick = (e) => {
-if (e.target === MissionimgViewer2) MissionimgViewer2.style.display = "none";
-};
-
- 
-MissioncloseImg3.onclick = () => MissionimgViewer3.style.display = "none";
-window.onclick = (e) => {
-if (e.target === MissionimgViewer3) MissionimgViewer3.style.display = "none";
-};
-
- 
-MissioncloseImg4.onclick = () => MissionimgViewer4.style.display = "none";
-window.onclick = (e) => {
-if (e.target === MissionimgViewer4) MissionimgViewer4.style.display = "none";
-};
-
-
