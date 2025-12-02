@@ -109,6 +109,7 @@ async function searchTracks() {
   }
 }
 
+
 // Listeners
 searchBtn.addEventListener("click", searchTracks);
 searchInput.addEventListener("keypress", (e) => {

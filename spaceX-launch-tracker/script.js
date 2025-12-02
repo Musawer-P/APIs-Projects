@@ -7,66 +7,32 @@ const upcomingList = document.getElementById('upcomingList');
 const latestCard = document.getElementById('latestCard');
 
 
-function initUpcomingShowMore() {
-  const cards = document.querySelectorAll("#upcoming-launches .cards-row .cards");
-  const maxVisible = 8; // show 8 cards initially
-  const btn = document.getElementById("upcomingShowMoreBtn");
+//show more function 
+function initShowMore(containerId, btnId, initialVisible = 8) {
+    const container = document.querySelector(`#${containerId} .cards-row`);
+    const btn = document.getElementById(btnId);
+    if (!container || !btn) return;
 
-  if (!btn || cards.length === 0) return;
+    const cards = Array.from(container.children);
+    let visibleCount = initialVisible;
 
-  // Hide extra cards initially
-  cards.forEach((card, index) => {
-    if (index >= maxVisible) card.classList.add("hidden-card");
-  });
-
-  let expanded = false;
-
-  btn.addEventListener("click", () => {
-    expanded = !expanded;
-
-    cards.forEach((card, index) => {
-      if (index >= maxVisible) {
-        card.classList.toggle("hidden-card", !expanded);
-      }
+    // Initially hide extra cards
+    cards.forEach((card, i) => {
+        if (i >= visibleCount) card.style.display = "none";
     });
 
-    btn.textContent = expanded ? "Show Less" : "Show More";
-  });
+    btn.onclick = () => {
+        visibleCount += initialVisible;
+        cards.forEach((card, i) => {
+            if (i < visibleCount) card.style.display = "block";
+        });
+        if (visibleCount >= cards.length) btn.style.display = "none"; // hide button if all shown
+    };
 }
 
-
-function initPastShowMore() {
-  const cards = document.querySelectorAll("#past-launches .cards-row .cards");
-  const maxVisible = 8; // show 8 cards initially
-  const btn = document.getElementById("pastShowMoreBtn");
-
-  if (!btn || cards.length === 0) return;
-
-  // Hide extra cards initially
-  cards.forEach((card, index) => {
-    if (index >= maxVisible) card.classList.add("hidden-card");
-  });
-
-  let expanded = false;
-
-  btn.addEventListener("click", () => {
-    expanded = !expanded;
-
-    cards.forEach((card, index) => {
-      if (index >= maxVisible) {
-        card.classList.toggle("hidden-card", !expanded);
-      }
-    });
-
-    btn.textContent = expanded ? "Show Less" : "Show More";
-  });
-}
-
-window.addEventListener("load", () => {
-  initUpcomingShowMore();
-  initPastShowMore();
-});
-
+// Call it for both upcoming and past
+initShowMore("upcoming-launches", "upcomingShowMoreBtn", 8);
+initShowMore("past-launches", "pastShowMoreBtn", 8);
 
 
 
@@ -457,7 +423,6 @@ if (MissioncloseImg2 && MissionimgViewer2) MissioncloseImg2.onclick = () => Miss
 if (MissioncloseImg3 && MissionimgViewer3) MissioncloseImg3.onclick = () => MissionimgViewer3.style.display = "none";
 if (MissioncloseImg4 && MissionimgViewer4) MissioncloseImg4.onclick = () => MissionimgViewer4.style.display = "none";
 
-// ============== single window click handler to close any modal/viewer ==============
 window.addEventListener("click", (event) => {
   const allModals = [
     modal, modal2, modal3, modal4,
@@ -480,3 +445,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   loadNextLaunch();
   loadLatestLaunch();
 });
+
+
+
