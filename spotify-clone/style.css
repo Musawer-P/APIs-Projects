@@ -1,32 +1,35 @@
 body {
-    background: url('images/black3.jpg') no-repeat center center fixed;
+  background: url('images/black3.jpg') no-repeat center center fixed;
   background-size: cover;
 
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        background-color: rgba(0, 0, 0, 0.959);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: rgba(0, 0, 0, 0.959);
 
-    color: white;
-    font-size: 15px;
-    overflow: hidden;
+  color: white;
+  font-size: 15px;
+  overflow: hidden;
 }
 
 .row {
-    display: flex;
-    border-radius: 15px;
+  display: flex;
+  border-radius: 15px;
 
 }
 
 .sidebar-container {
-  background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 
-    height:535px;
-  overflow: auto; /* adds scrollbars if content overflows */
-    width: 25%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6),
-        0 0 10px rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+  height: 535px;
+  overflow: auto;
+  /* adds scrollbars if content overflows */
+  width: 25%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
 
 }
 
@@ -34,14 +37,17 @@ body {
 
 /* Chrome, Edge, Safari styling */
 .sidebar-container::-webkit-scrollbar {
-  width: 5px; /* width of scrollbar */
+  width: 5px;
+  /* width of scrollbar */
 }
 
 .sidebar-container::-webkit-scrollbar-track {
 
-background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 
 
   border-radius: 12px;
@@ -49,9 +55,11 @@ background: rgba(255, 255, 255, 0.1); /* slight white tint */
 
 .sidebar-container::-webkit-scrollbar-thumb {
 
-background: rgba(255, 255, 255, 0.473); /* slight white tint */
+  background: rgba(255, 255, 255, 0.473);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 
 
   border-radius: 8px;
@@ -59,9 +67,11 @@ background: rgba(255, 255, 255, 0.473); /* slight white tint */
 
 .sidebar-container::-webkit-scrollbar-thumb:hover {
 
-background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 
 
 
@@ -69,55 +79,59 @@ background: rgba(255, 255, 255, 0.1); /* slight white tint */
 
 
 .sidebar {
-    padding: 10px;
+  padding: 10px;
 }
 
 .container {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.336);
+  
+  border-bottom: 1px solid rgba(255, 255, 255, 0.336);
 }
 
 #artist-profile {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
 }
 
 .row1 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #artist-name {
-    margin-bottom: 0px;
-    font-size: 15px;
+  margin-bottom: 0px;
+  font-size: 15px;
 
 }
 
 #art-name {
-    margin-top: 5px;
-    font-weight: lighter;
-    font-size: 15px;
+  margin-top: 5px;
+  font-weight: lighter;
+  font-size: 15px;
 
 }
 
 .body {
 
-background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 
 
 
-    height:517px;
-  overflow: auto; /* adds scrollbars if content overflows */
-    padding: 10px;
-    width: 80%;
-    margin: 0 auto;
-    margin-left: 10px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6),
-        0 0 10px rgba(255, 255, 255, 0.05);
+  height: 517px;
+  overflow: auto;
+  /* adds scrollbars if content overflows */
+  padding: 10px;
+  width: 80%;
+  margin: 0 auto;
+  margin-left: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(255, 255, 255, 0.05);
 
 }
 
@@ -128,106 +142,122 @@ background: rgba(255, 255, 255, 0.1); /* slight white tint */
 
 /* Chrome, Edge, Safari styling */
 .body::-webkit-scrollbar {
-  width: 5px; /* width of scrollbar */
-  
-background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  width: 5px;
+  /* width of scrollbar */
+
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 
 }
 
 .body::-webkit-scrollbar-track {
 
-background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
   border-radius: 12px;
 }
 
 .body::-webkit-scrollbar-thumb {
 
-background: rgba(255, 255, 255, 0.473); /* slight white tint */
+  background: rgba(255, 255, 255, 0.473);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
   border-radius: 8px;
 }
 
 .body::-webkit-scrollbar-thumb:hover {
 
-background: rgba(255, 255, 255, 0.1); /* slight white tint */
+  background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px); /* for Safari */
+  -webkit-backdrop-filter: blur(15px);
+  /* for Safari */
 }
 
 
 
 
 .trend-song {
-    border-top: 1px solid rgba(255, 255, 255, 0.315);
-
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.315);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0px;
 }
 
 .trend1 {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .trend-song h3,
 p {
-    font-size: 15px;
+  width: 200px;
+  font-size: 15px;
 
 }
 
 #trend-img {
-    width: 230px;
-    height: 230px;
-    background: url('images/art-img.jpg');
-    background-size: contain;
-    background-size: cover;
-    border-radius: 5px;
+  width: 230px;
+  height: 230px;
+  background: url('images/art-img.jpg');
+  background-size: contain;
+  background-size: cover;
+  border-radius: 5px;
 
 }
 
 .artist-row {
-    border-top: 1px solid rgba(255, 255, 255, 0.315);
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.315);
+  padding: 10px;
+  display: flex;
+   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  justify-content: space-between;
+  gap: 50px;
 }
 
 .artist1 {
-    padding-top: 10px;
+  padding-top: 10px;
 
 }
 
 .artist1 h3 {
-    text-align: center;
+  text-align: center;
 }
 
 #artist-img {
-    width: 150px;
-    height: 150px;
-    background: url('images/art-img.jpg');
-    background-size: contain;
-    background-size: cover;
-    border-radius: 100px;
+  width: 150px;
+  height: 150px;
+  background: url('images/art-img.jpg');
+  background-size: contain;
+  background-size: cover;
+  border-radius: 100px;
 
 }
 
 #artist-h1,
 #trend-h1,
 #playlist-h1 {
-    padding: 10px;
-    margin-bottom: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
-.search{
+
+.search {
   display: flex;
-margin-bottom: 30px;
+  margin-bottom: 30px;
 
 }
-#search{
+
+#search {
   background-color: rgba(240, 248, 255, 0);
   padding: 10px;
   border: none;
@@ -236,11 +266,13 @@ margin-bottom: 30px;
   color: white;
   width: 100%;
 }
-#search::placeholder{
+
+#search::placeholder {
   color: white;
 }
-#btn{
-    background-color: rgba(240, 248, 255, 0);
+
+#btn {
+  background-color: rgba(240, 248, 255, 0);
   color: white;
   border: none;
   border-bottom: 1px solid white;
@@ -248,11 +280,11 @@ margin-bottom: 30px;
 }
 
 
-.artist-search{
+.artist-search {
   display: flex;
 }
 
-#search-artist{
+#search-artist {
   background-color: rgba(240, 248, 255, 0);
   padding: 10px;
   border: none;
@@ -261,13 +293,62 @@ margin-bottom: 30px;
   color: white;
   width: 100%;
 }
-#search-artist::placeholder{
+
+#search-artist::placeholder {
   color: white;
 }
-#btn-artist{
-    background-color: rgba(240, 248, 255, 0);
+
+#btn-artist {
+  background-color: rgba(240, 248, 255, 0);
   color: white;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.308);
   cursor: pointer;
+}
+
+
+/* POPUP PLAYER */
+#popup-player {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  width: 320px;
+background: rgba(255, 255, 255, 0.1);
+  /* slight white tint */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.popup-content img {
+  width: 200px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+#close-popup {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+.delete-btn{
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: white;
 }
