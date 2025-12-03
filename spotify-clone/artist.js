@@ -1,33 +1,95 @@
-const apiURL = "https://theaudiodb.com/api/v1/json/2/search.php?s=";
+// JSONP helper
+function jsonp(url) {
+    return new Promise((resolve, reject) => {
+        const callbackName = "jsonp_cb_" + Math.round(Math.random() * 999999);
 
-// Get artist name from URL
+        window[callbackName] = function (data) {
+            resolve(data);
+            delete window[callbackName];
+            document.body.removeChild(script);
+        };
+
+        const script = document.createElement("script");
+        script.src = `${url}${url.includes("?") ? "&" : "?"}output=jsonp&callback=${callbackName}`;
+        script.onerror = () => reject("JSONP request failed");
+        document.body.appendChild(script);
+    });
+}
+
+// Get artist ID from URL:   artist.html?id=27
 const params = new URLSearchParams(window.location.search);
-const artistName = params.get("name");
+const artistId = params.get("id");
 
-// if no name, stop
-if (!artistName) {
-    document.body.innerHTML = "<h2>No artist selected.</h2>";
-    throw new Error("Artist name missing");
+// Page elements
+const artistNameEl = document.getElementById("trend-h1");
+const artistImgEl  = document.getElementById("artist-img");
+const artistBioEl  = document.getElementById("artist-bio");
+const albumsGallery = document.getElementById("albums-gallery");
+const otherArtistsContainer = document.getElementById("other-artists");
+
+// ---------- LOAD ARTIST DETAILS ----------
+async function loadArtist() {
+    const data = await jsonp(`https://api.deezer.com/artist/${artistId}`);
+
+    artistNameEl.textContent = data.name;
+    artistImgEl.src = data.picture_big;
+
+    artistBioEl.innerHTML = `
+        <strong>${data.name}</strong> has over <strong>${data.nb_fan.toLocaleString()}</strong> fans.
+        Here are some of their top albums and music from Deezer.
+    `;
+
+    loadAlbums();
+    loadSidebarArtists();
 }
 
-// Load artist info
-async function loadArtist(name) {
-    const res = await fetch(apiURL + encodeURIComponent(name));
-    const data = await res.json();
+// ---------- LOAD ALBUMS ----------
+async function loadAlbums() {
+    const albums = await jsonp(`https://api.deezer.com/artist/${artistId}/albums`);
 
-    if (!data.artists) {
-        document.getElementById("artist-name").textContent = "Artist Not Found";
-        return;
-    }
+    albumsGallery.innerHTML = "";
 
-    const a = data.artists[0];
+    albums.data.slice(0, 4).forEach(album => {
+        const div = document.createElement("div");
+        div.classList.add("gallery-one");
 
-    // Fill page with data
-    document.getElementById("artist-name").textContent = a.strArtist;
-    document.getElementById("artist-img").src =
-        a.strArtistThumb || "images/default.jpg";
-    document.getElementById("artist-bio").textContent =
-        a.strBiographyEN || "No biography available.";
+        div.innerHTML = `
+            <img src="${album.cover_medium}" id="gallery-img">
+            <h3>${album.title}</h3>
+            <p>Release date: ${album.release_date}</p>
+        `;
+
+        albumsGallery.appendChild(div);
+    });
 }
 
-loadArtist(artistName);
+// ---------- SIDEBAR: SHOW OTHER ARTISTS ----------
+async function loadSidebarArtists() {
+    const chart = await jsonp("https://api.deezer.com/chart/0/artists");
+
+    otherArtistsContainer.innerHTML = "";
+
+    chart.data.slice(0, 5).forEach(artist => {
+        const sidebarItem = document.createElement("div");
+        sidebarItem.classList.add("sidebar");
+
+        sidebarItem.innerHTML = `
+            <div class="container">
+                <div class="row1">
+                    <img src="${artist.picture_medium}" id="artist-profile">
+                    <div class="row2">
+                        <h3 id="artist-name">${artist.name}</h3>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        sidebarItem.addEventListener("click", () => {
+            window.location.href = `artist.html?id=${artist.id}`;
+        });
+
+        otherArtistsContainer.appendChild(sidebarItem);
+    });
+}
+
+loadArtist();

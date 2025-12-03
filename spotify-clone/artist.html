@@ -5,100 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="artist.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Artist</title>
 </head>
 
 <body>
     <div class="header">
         <h1>Spotify Clone</h1>
     </div>
+
     <div class="row">
+        <!-- Sidebar -->
         <div class="sidebar-container">
             <h1 id="playlist-h1">Other Artists</h1>
 
+            <!-- Search area -->
             <div class="sidebar">
                 <div class="search">
                     <input type="text" id="search" placeholder="Search...">
                     <button type="button" id="btn">Go</button>
                 </div>
-                <div class="container">
-                    <div class="row1">
-                        <img src="images/profile.jpg" id="artist-profile" alt="Song Image">
-                        <div class="row2">
-                            <h3 id="artist-name">Maher zain</h3>
-                        </div>
-                    </div>
-                </div>
+
+                <!-- Additional artists list -->
+                <div id="other-artists"></div>
             </div>
-
-
-            <div class="sidebar">
-                <div class="container">
-                    <div class="row1">
-                        <img src="images/sami-yusuf.jpg" id="artist-profile" alt="Song Image">
-                        <div class="row2">
-                            <h3 id="artist-name">Sami Yusuf</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Selected Artist Info -->
         <div class="body">
-            <h1 id="trend-h1">Maher Zain</h1>
+            <h1 id="trend-h1">Artist Name</h1>
+
             <div class="artist-img-desc">
                 <div class="img">
-                    <img src="images/profile.jpg" id="artist-img">
+                    <img src="" id="artist-img">
                 </div>
+
                 <div class="artist-desc">
-                    <h4>Maher Zain is a Swedish-Lebanese singer, songwriter, and music producer known for his inspiring
-                        Islamic and spiritual songs. Born on July 16, 1981, in Tripoli, Lebanon, he moved to Sweden with
-                        his family at a young age. Maher Zain gained worldwide fame after releasing his debut album
-                        Thank You Allah in 2009, which blended modern pop and R&B with faith-based themes.</h4>
+                    <h4 id="artist-bio">Loading artist info...</h4>
                 </div>
             </div>
 
+            <!-- Albums Portfolio -->
             <div class="artist-gallery">
                 <h1>Portfolio</h1>
 
-                <div class="gallery">
-                    <div class="gallery-one">
-                    <img src="images/poster-one.jpg" id = "gallery-img">
-                    <h3>Thank You Allah (2009)</h3>
-                    <p>His debut album featuring hits like Insha Allah and For the Rest of My Life, which made him
-                        famous worldwide.</p>
-                        </div>
-                <div class="gallery-two">
-                <img src="images/poster-two.jpg" id = "gallery-img">
-                <h3>Forgive Me (2012)</h3>
-                <p>A powerful album with emotional songs such as Number One for Me and So Soon, focusing on love, forgiveness, and faith.</p>
+                <div class="gallery" id="albums-gallery">
+                    <!-- JS will load albums here -->
+                </div>
             </div>
-
-            <div class="gallery-three">
-            <img src="images/poster-three.jpg" id = "gallery-img">
-            <h3>One (2016)</h3>
-            <p>Includes tracks like The Power and Peace Be Upon You, spreading messages of hope and unity.</p>
         </div>
-
-        <div class="gallery-four">
-        <img src="images/poster-four.jpg_large" id = "gallery-img">
-        <h3>Hürriyet (2021)</h3>
-        <p>A collaboration project that reflects Maher Zain’s continued influence and his mix of modern sounds with spiritual themes.
-        </p>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 
-
-
-
-    <script src="script.js">
-        </script>
-
-            <script src="artist.js">
-    </script>
+    <script src="artist.js"></script>
 </body>
 
 </html>
