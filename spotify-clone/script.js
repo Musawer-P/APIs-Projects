@@ -35,12 +35,12 @@ tracks.slice(0, 8).forEach(track => {
     div.classList.add("trend1");
 
     div.innerHTML = `
-        <div class="img-container">
-            <img src="${track.album.cover_medium}" alt="${track.title}">
+        <div class="trend-song">
+        <div class = "trend1">
+            <img id = "trend-img" src="${track.album.cover_medium}" alt="${track.title}">
+            <h3 class = "trend-title">${track.artist.name}<br>${track.title}</h3>
         </div>
-        <div class="info">
-            <h3>${track.artist.name}<br>${track.title}</h3>
-        </div>
+        
     `;
 
     div.addEventListener("click", () => {
@@ -71,10 +71,12 @@ async function getArtists() {
     div.classList.add("artist1");
 
     div.innerHTML = `
-        <div class="circle">
-            <img src="${artist.picture_medium}" alt="${artist.name}">
+        <div class="artist-row">
+        <div class = "artist1">
+            <img id = "artist-img" src="${artist.picture_medium}" alt="${artist.name}">
+            <h3>${artist.name}</h3>
         </div>
-        <h3>${artist.name}</h3>
+        </div>
     `;
 
     div.addEventListener("click", () => {
@@ -97,30 +99,28 @@ async function searchTracks() {
     trendContainer.innerHTML = "<p>Searching...</p>";
 
     try {
-        const data = await jsonp(`https://api.deezer.com/search?q=${encodeURIComponent(query)}`);
-        const tracks = data.data || [];
-        if (tracks.length === 0) {
-            trendContainer.innerHTML = "<p>No tracks found.</p>";
-            return;
-        }
-        trendContainer.innerHTML = "";
-        tracks.slice(0, 8).forEach(track => {
-            const div = document.createElement("div");
-            div.classList.add("trend1");
-            div.innerHTML = `
-                <img src="${track.album.cover_medium}" alt="${track.title}">
-                <h3>${track.artist.name} <br> ${track.title}</h3>
-            `;
-            div.addEventListener("click", () => {
-                addSongToPlaylist({
-                    artist: track.artist.name,
-                    title: track.title,
-                    cover: track.album.cover_medium
-                });
-                openPopup(track);
-            });
-            trendContainer.appendChild(div);
+       // --- Artist Search ---
+const artistData = await jsonp(`https://api.deezer.com/search/artist?q=${encodeURIComponent(query)}`);
+const artistResults = artistData.data || [];
+
+if (artistResults.length > 0) {
+    trendContainer.innerHTML = "<h2>Artists</h2>";
+    artistResults.slice(0, 8).forEach(artist => {
+        const div = document.createElement("div");
+        div.classList.add("artist1");
+        div.innerHTML = `
+            <img src="${artist.picture_medium}" alt="${artist.name}">
+            <h3>${artist.name}</h3>
+        `;
+        div.addEventListener("click", () => {
+            window.location.href = `artist.html?id=${artist.id}`;
         });
+        trendContainer.appendChild(div);
+    });
+
+    return;  // stop here so tracks do not override artist results
+}
+
     } catch (err) {
         trendContainer.innerHTML = "<p>Error searching tracks.</p>";
     }
@@ -135,32 +135,3 @@ searchInput.addEventListener("keypress", e => {
 // Load trending & artists
 getTrending();
 getArtists();
-
-// --- POPUP ---
-const popup = document.getElementById("popup-player");
-const popupImg = document.getElementById("popup-img");
-const popupTitle = document.getElementById("popup-title");
-const popupArtist = document.getElementById("popup-artist");
-const popupAudio = document.getElementById("popup-audio");
-const closePopup = document.getElementById("close-popup");
-
-function openPopup(track) {
-    popupImg.src = track.album.cover_big;
-    popupTitle.textContent = track.title;
-    popupArtist.textContent = track.artist.name;
-    popupAudio.src = track.preview;
-    popup.style.display = "flex";
-    popupAudio.play();
-}
-
-closePopup.onclick = () => {
-    popup.style.display = "none";
-    popupAudio.pause();
-};
-
-window.onclick = e => {
-    if (e.target === popup) {
-        popup.style.display = "none";
-        popupAudio.pause();
-    }
-};

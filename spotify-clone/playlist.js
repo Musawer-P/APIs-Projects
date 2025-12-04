@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <h3 id="artist-name">${song.artist}</h3>
                             <h3 id="art-name">${song.title}</h3>
                         </div>
+                        </div>
+                        <div class = "delete-btn">
                         <button class="delete-btn" title="Remove">✖</button>
                     </div>
                 </div>

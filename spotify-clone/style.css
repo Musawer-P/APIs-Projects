@@ -83,7 +83,9 @@ body {
 }
 
 .container {
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.336);
 }
 
@@ -188,8 +190,9 @@ body {
 .trend-song {
   border-top: 1px solid rgba(255, 255, 255, 0.315);
   padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
   justify-content: space-between;
   gap: 0px;
 }
@@ -219,10 +222,9 @@ p {
   border-top: 1px solid rgba(255, 255, 255, 0.315);
   padding: 10px;
   display: flex;
-   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 50px;
+  gap: 10px;
 }
 
 .artist1 {
@@ -323,10 +325,11 @@ p {
 
 .popup-content {
   width: 320px;
-background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   /* slight white tint */
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);  padding: 20px;
+  -webkit-backdrop-filter: blur(15px);
+  padding: 20px;
   border-radius: 10px;
   text-align: center;
   color: white;
@@ -347,8 +350,27 @@ background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   color: white;
 }
-.delete-btn{
+
+.delete-btn {
   background-color: rgba(0, 0, 0, 0);
   border: none;
   color: white;
+  cursor: pointer;
+}
+#artist-name , #art-name{
+font-size: clamp(10px, 1.5vw, 15px);
+}
+
+@media (min-width: 481px) and (max-width: 900px) {
+
+   .container{
+    display: flex;
+    flex-direction: ;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+   }
+   .delete-btn{
+    padding-bottom: 10px;
+   }
 }
