@@ -365,7 +365,6 @@ font-size: clamp(10px, 1.5vw, 15px);
 
    .container{
     display: flex;
-    flex-direction: ;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
