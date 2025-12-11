@@ -11,33 +11,37 @@ const teamDivEl = document.getElementById("team-div");
 
 // Base URL for TheSportsDB free API
 const API_BASE = "https://www.thesportsdb.com/api/v1/json/3";
-
 async function fetchPlayer(playerName) {
   try {
     const res = await fetch(`${API_BASE}/searchplayers.php?p=${encodeURIComponent(playerName)}`);
     const data = await res.json();
 
-    if (!data.player) return alert("Player not found!");
+    if (!data.player || data.player.length === 0) {
+      alert("Player not found!");
+      return;
+    }
 
     const player = data.player[0];
 
     // Update Player Info
-    playerNameEl.textContent = player.strPlayer || "N/A";
-    playerNationalityEl.textContent = player.strNationality || "N/A";
+    playerNameEl.textContent = player.strPlayer;
     playerAgeEl.textContent = player.dateBorn
       ? new Date().getFullYear() - new Date(player.dateBorn).getFullYear()
       : "N/A";
-    playerImgEl.src = player.strCutout || "salah.png";
+    playerNationalityEl.textContent = player.strNationality || "N/A";
+    playerImgEl.src = player.strThumb || "salah.png";
 
-    // Update Team info
-    teamDivEl.querySelector(".player-list .list2 #name").textContent = player.strPlayer;
-    teamDivEl.querySelector(".player-list .list2 #position").textContent = player.strPosition || "N/A";
+    const playerTeamEl = document.getElementById("player-team");
+    if (playerTeamEl) {
+      playerTeamEl.textContent = "Team: " + (player.strTeam || "N/A");
+    }
 
   } catch (err) {
     console.error(err);
     alert("Error fetching player data!");
   }
 }
+
 
 
 
@@ -94,8 +98,8 @@ async function fetchTeam(teamName) {
       playerListDiv.innerHTML = "<p>No players found</p>";
     }
 
-    // Step 3: fetch and display future matches (if you want)
     await fetchFutureMatches(team.idTeam);
+await fetchPastMatches(team.idTeam);
 
   } catch (err) {
     console.error(err);
@@ -130,6 +134,40 @@ async function fetchFutureMatches(teamId) {
         <p>Date: ${match.dateEvent || "-"} Time: ${match.strTime || "-"}</p>
       `;
       matchesContainer.appendChild(matchDiv);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
+
+async function fetchPastMatches(teamId) {
+  try {
+    const res = await fetch(`${API_BASE}/eventslast.php?id=${teamId}`);
+    const data = await res.json();
+
+    const pastMatchesDiv = document.querySelector(".view-matches");
+    if (!pastMatchesDiv) return;
+
+    pastMatchesDiv.innerHTML = ""; // clear old matches
+
+    if (!data.results) {
+      pastMatchesDiv.innerHTML = "<p>No recent matches found</p>";
+      return;
+    }
+
+    data.results.forEach(match => {
+      const matchDiv = document.createElement("div");
+      matchDiv.classList.add("one-match");
+      matchDiv.innerHTML = `
+            <h1>Past Matches</h1>
+
+        <p>${match.strEvent}</p>
+        <p>${match.dateEvent} | ${match.intHomeScore}-${match.intAwayScore}</p>
+        <p>League: ${match.strLeague}</p>
+      `;
+      pastMatchesDiv.appendChild(matchDiv);
     });
   } catch (err) {
     console.error(err);
