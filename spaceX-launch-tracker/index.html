@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    <title>SpaceX Lauch Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>SpaceX Lauch Tracker</title>
 </head>
 
 <body>
@@ -16,14 +17,14 @@
                 <h1>Spacex Launch Tracker</h1>
             </div>
             <div class="nav">
-                                <a href = "index.html">
-                <p>Home</p>
+                <a href="index.html">
+                    <p>Home</p>
                 </a>
-                <a href = "rocket.html" target="_blank">
-                <p>Rockets</p>
+                <a href="rocket.html" target="_blank">
+                    <p>Rockets</p>
                 </a>
-                <a href = "mission.html" target="_blank">
-                <p>Missions</p>
+                <a href="mission.html" target="_blank">
+                    <p>Missions</p>
                 </a>
                 <p>About</p>
             </div>
@@ -32,13 +33,23 @@
         <div class="first-section">
             <h2 id="h2-first">Track Every SpaceX Launch <br> in Real Time.</h2>
             <p>Get detailed info on upcoming and past missions, rockets, and launchpads.</p>
-            <section id="search-section">
-            <div class="input-btn">
-                <input type="text" id="search" placeholder="Search Rockets">
-                <button type="button" id="btn">Search</button>
-               <div id="search-results"></div>
-            </div>
-            </section>
+   <section id="search-section">
+    <div class="input-btn">
+        <input type="text" id="search" placeholder="Search Rockets">
+        <button type="button" id="btn">Search</button>
+        <button type="button" id="prev" style="display:none;">Prev</button>
+        <button type="button" id="next" style="display:none;">Next</button>
+        <button type="button" id="close" style="display:none;">Close</button>
+        <span id="search-count"></span>
+    </div>
+    <div id="search-results"></div>
+</section>
+
+
+
+
+
+
         </div>
         <div class="gap">
 
@@ -46,32 +57,31 @@
         <h1 id="cards-h1">Upcoming Launches</h1>
         <div id="upcoming-launches" class="launch-container">
 
-        <div class="cards-row">
-            <div class="cards">
-                <div class="first-card">
-                    <div class="status">
-                        <p id="p1"></p>
-                        <button type="button" id="waiting"></button>
-                    </div>
-                    <div class="row1">
-                        <p id="p2"></p>
-                        <p id="p2"></p>
-                    </div>
-                    <div class="row1">
+            <div class="cards-row">
+                <div class="cards">
+                    <div class="first-card">
+                        <div class="status">
+                            <p id="p1"></p>
+                            <button type="button" id="waiting"></button>
+                        </div>
+                        <div class="row1">
+                            <p id="p2"></p>
+                            <p id="p2"></p>
+                        </div>
+                        <div class="row1">
 
-                        <p id="p3"></p>
-                        <p id="p3"></p>
-                    </div>
-                    <p id="p6"></p>
+                            <p id="p3"></p>
+                            <p id="p3"></p>
+                        </div>
+                        <p id="p6"></p>
 
-                    <p id="p4"></p>
-                    <p id="p5"></p>
-                    <button type="button" id="upcoming-details">View Details</button>
+                        <p id="p4"></p>
+                        <p id="p5"></p>
+                        <button type="button" id="upcoming-details">View Details</button>
+                    </div>
                 </div>
             </div>
-</div>
-</div>
-<button id="upcomingShowMoreBtn">Show More</button>
+        </div>
 
         <div class="gap">
 
@@ -80,37 +90,36 @@
         <h1 id="cards-h1">Past Launches</h1>
         <div id="past-launches" class="launch-container">
 
-        <div class="cards-row">
-            <div class="cards">
-                <div class="first-card">
-                    <div class="status">
-                        <p id="p1"></p>
-                        <button type="button" id="success-fail"></button>
-                    </div>
-                    <div class = "row-main">
-                    <div class="row1">
-                        <p id="p2"></p>
-                        <p id="p2"></p>
-</p>
-                    </div>
-                    <div class="row1">
+            <div class="cards-row">
+                <div class="cards">
+                    <div class="first-card">
+                        <div class="status">
+                            <p id="p1"></p>
+                            <button type="button" id="success-fail"></button>
+                        </div>
+                        <div class="row-main">
+                            <div class="row1">
+                                <p id="p2"></p>
+                                <p id="p2"></p>
+                                </p>
+                            </div>
+                            <div class="row1">
 
-                        <p id="p3"></p>
-                        <p id="p3"></p>
+                                <p id="p3"></p>
+                                <p id="p3"></p>
+                            </div>
+                        </div>
+                        <p id="p6"></p>
+
+                        <p id="p4"></p>
+                        <p id="p5"></p>
+                        <button type="button" id="upcoming-details">View Details</button>
+
                     </div>
                 </div>
-                    <p id="p6"></p>
-                    
-                    <p id="p4"></p>
-                    <p id="p5"></p>
-                    <button type="button" id="upcoming-details">View Details</button>
-                    
-                </div>
+
             </div>
-            
         </div>
-    </div>
-<button id="pastShowMoreBtn">Show More</button>
 
         <div class="gap">
 
@@ -119,10 +128,10 @@
         <div class="rockets-row">
 
 
-             <div class="rockets-information">
+            <div class="rockets-information">
 
-                 <div class="rocket1">
-                    <h2 id = "h2-rockets">FALCON 1</h2>
+                <div class="rocket1">
+                    <h2 id="h2-rockets">FALCON 1</h2>
                     <div class="info">
                         <div class="info-1">
                             <p id="rocket-p-1">First Flight Date</p>
@@ -139,10 +148,12 @@
 
                     </div>
                     <div class="description">
-                        <p id="rocket-p-4">Falcon 1 was SpaceX’s first orbital launch vehicle, designed to carry small payloads into low Earth orbit. It marked the company’s first successful private liquid-fueled rocket to reach orbit.</p>
+                        <p id="rocket-p-4">Falcon 1 was SpaceX’s first orbital launch vehicle, designed to carry small
+                            payloads into low Earth orbit. It marked the company’s first successful private
+                            liquid-fueled rocket to reach orbit.</p>
                     </div>
-                      <div class = "rockets-btn">
-                        <button type = "button" id = "openModal">See Images</button>
+                    <div class="rockets-btn">
+                        <button type="button" id="openModal">See Images</button>
                     </div>
                 </div>
 
@@ -155,7 +166,7 @@
             <div class="rockets-information">
 
                 <div class="rocket1">
-                    <h2 id = "h2-rockets">FALCON 9</h2>
+                    <h2 id="h2-rockets">FALCON 9</h2>
                     <div class="info">
                         <div class="info-1">
                             <p id="rocket-p-1">First Flight Date</p>
@@ -172,10 +183,11 @@
 
                     </div>
                     <div class="description">
-                        <p id="rocket-p-4">Falcon 9 is a two-stage reusable rocket developed by SpaceX to transport satellites, cargo, and crew into orbit.</p>
+                        <p id="rocket-p-4">Falcon 9 is a two-stage reusable rocket developed by SpaceX to transport
+                            satellites, cargo, and crew into orbit.</p>
                     </div>
-                    <div class = "rockets-btn">
-                        <button type = "button" id = "openModal2">See Images</button>
+                    <div class="rockets-btn">
+                        <button type="button" id="openModal2">See Images</button>
                     </div>
                 </div>
 
@@ -187,7 +199,7 @@
             <div class="rockets-information">
 
                 <div class="rocket1">
-                    <h2 id = "h2-rockets" >FALCON HEAVY</h2>
+                    <h2 id="h2-rockets">FALCON HEAVY</h2>
                     <div class="info">
                         <div class="info-1">
                             <p id="rocket-p-1">First Flight Date</p>
@@ -204,10 +216,11 @@
 
                     </div>
                     <div class="description">
-                        <p id="rocket-p-4">Falcon Heavy is the world’s most powerful operational rocket, capable of carrying large payloads to orbit. It combines three Falcon 9 boosters for extra thrust.</p>
+                        <p id="rocket-p-4">Falcon Heavy is the world’s most powerful operational rocket, capable of
+                            carrying large payloads to orbit. It combines three Falcon 9 boosters for extra thrust.</p>
                     </div>
-                      <div class = "rockets-btn">
-                        <button type = "button" id = "openModal3">See Images</button>
+                    <div class="rockets-btn">
+                        <button type="button" id="openModal3">See Images</button>
                     </div>
                 </div>
 
@@ -217,7 +230,7 @@
             <div class="rockets-information">
 
                 <div class="rocket1">
-                    <h2 id = "h2-rockets">STARSHIP</h2>
+                    <h2 id="h2-rockets">STARSHIP</h2>
                     <div class="info">
                         <div class="info-1">
                             <p id="rocket-p-1">First Flight Date</p>
@@ -234,126 +247,135 @@
 
                     </div>
                     <div class="description">
-                        <p id="rocket-p-4">Starship is SpaceX’s next-generation fully reusable spacecraft and rocket system designed for missions to Mars, the Moon, and beyond.</p>
+                        <p id="rocket-p-4">Starship is SpaceX’s next-generation fully reusable spacecraft and rocket
+                            system designed for missions to Mars, the Moon, and beyond.</p>
                     </div>
-                      <div class = "rockets-btn">
-                        <button type = "button" id = "openModal4">See Images</button>
+                    <div class="rockets-btn">
+                        <button type="button" id="openModal4">See Images</button>
                     </div>
                 </div>
 
             </div>
 
 
-                   </div>
-
-<div class = "explore-more">
-    <a href="rocket.html" target="_blank">
-   <button type = "button" id = "explore-more-btn">Explore More</button><i class = "fa fa-arrow-right" id = "first-i"></i> 
-</a>
-</div>
-         </div>
-        <div class="different-background">
-            <h1 id="mission-h1">Mission Details</h1>
-            <div class="mission-details-modal">
-                <div class="mission-detail-1">
-                    <div class="m-row">
-                        <div class="m-name">
-                            <p id="m-name-p">Falcon 9 Flight 20 (Orbcomm-OG2)</p>
-                            <p id="m-name-p">#Flight - 20</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2015/22/12</p>
-                            <p id="m-name-p"> Cape Canaveral, SLC-40</p>
-                        </div>
-                    </div>
-                    <h2>Falcon 9</h2>
-                    <p id="mission-desc"> The Falcon 9 Flight 20 mission successfully launched 11 Orbcomm-OG2 satellites
-                        into orbit. This mission was especially historic because for the first time, the rocket’s first
-                        stage performed a successful vertical landing back on Earth — marking a major milestone in
-                        reusable rocket technology.</p>
-                    <div class="mission-btn">
-                        <button type="button" id="mission-btn-modal">More Details</button>
-                    </div>
-                </div>
-
-
-
-                <div class="mission-detail-1">
-                    <div class="m-row">
-                        <div class="m-name">
-                            <p id="m-name-p">Falcon Heavy Test Flight</p>
-                            <p id="m-name-p">#Flight - 1</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2018/06/02</p>
-                            <p id="m-name-p"> Kennedy Space Center, LC-39A</p>
-                        </div>
-                    </div>
-                    <h2>Falcon Heavy
-</h2>
-                    <p id="mission-desc"> The Falcon Heavy Test Flight carried Elon Musk’s Tesla Roadster into orbit. It demonstrated the rocket’s immense lifting capability, with two side boosters successfully landing simultaneously back on Earth.</p>
-                    <div class="mission-btn">
-                        <button type="button" id="mission-btn-modal2">More Details</button>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-
-
-            <div class="mission-details-modal2">
-                <div class="mission-detail-1">
-                    <div class="m-row">
-                        <div class="m-name">
-                            <p id="m-name-p">Crew Dragon Demo-2</p>
-                            <p id="m-name-p">#Flight - 85</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2020/30/05</p>
-                            <p id="m-name-p">Kennedy Space Center, LC-39A</p>
-                        </div>
-                    </div>
-                    <h2>Crew Dragon</h2>
-                    <p id="mission-desc"> Crew Dragon Demo-2 was SpaceX’s first crewed mission, sending NASA astronauts Doug Hurley and Bob Behnken to the International Space Station, marking the return of human spaceflight from U.S. soil after nearly a decade.</p>
-                    <div class="mission-btn">
-                        <button type="button" id="mission-btn-modal3">More Details</button>
-                    </div>
-                </div>
-
-
-
-                <div class="mission-detail-1">
-                    <div class="m-row">
-                        <div class="m-name">
-                            <p id="m-name-p">Starship Flight Test 3</p>
-                            <p id="m-name-p">#Flight - 3</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2024/14/03</p>
-                            <p id="m-name-p">Starbase, Texas</p>
-                        </div>
-                    </div>
-                    <h2>Starship
-</h2>
-                    <p id="mission-desc"> The third integrated flight test of Starship reached space and reentered Earth’s atmosphere for the first time, showcasing major progress toward a fully reusable spacecraft capable of interplanetary travel.</p>
-                    <div class="mission-btn">
-                        <button type="button" id="mission-btn-modal4">More Details</button>
-                    </div>
-                </div>
-
-
-            </div>
-
-            
-<div class = "explore-more">
-    <a href = "mission.html" target="_blank">
-   <button type = "button" id = "explore-more-btn2">Explore More</button><i class = "fa fa-arrow-right" id = "second-i"></i> 
-</a>
-</div>
         </div>
-       
+
+        <div class="explore-more">
+            <a href="rocket.html" target="_blank">
+                <button type="button" id="explore-more-btn">Explore More</button><i class="fa fa-arrow-right"
+                    id="first-i"></i>
+            </a>
+        </div>
+    </div>
+    <div class="different-background">
+        <h1 id="mission-h1">Mission Details</h1>
+        <div class="mission-details-modal">
+            <div class="mission-detail-1">
+                <div class="m-row">
+                    <div class="m-name">
+                        <p id="m-name-p">Falcon 9 Flight 20 (Orbcomm-OG2)</p>
+                        <p id="m-name-p">#Flight - 20</p>
+                    </div>
+                    <div class="m-date">
+                        <p id="m-name-p">2015/22/12</p>
+                        <p id="m-name-p"> Cape Canaveral, SLC-40</p>
+                    </div>
+                </div>
+                <h2>Falcon 9</h2>
+                <p id="mission-desc"> The Falcon 9 Flight 20 mission successfully launched 11 Orbcomm-OG2 satellites
+                    into orbit. This mission was especially historic because for the first time, the rocket’s first
+                    stage performed a successful vertical landing back on Earth — marking a major milestone in
+                    reusable rocket technology.</p>
+                <div class="mission-btn">
+                    <button type="button" id="mission-btn-modal">More Details</button>
+                </div>
+            </div>
+
+
+
+            <div class="mission-detail-1">
+                <div class="m-row">
+                    <div class="m-name">
+                        <p id="m-name-p">Falcon Heavy Test Flight</p>
+                        <p id="m-name-p">#Flight - 1</p>
+                    </div>
+                    <div class="m-date">
+                        <p id="m-name-p">2018/06/02</p>
+                        <p id="m-name-p"> Kennedy Space Center, LC-39A</p>
+                    </div>
+                </div>
+                <h2>Falcon Heavy
+                </h2>
+                <p id="mission-desc"> The Falcon Heavy Test Flight carried Elon Musk’s Tesla Roadster into orbit. It
+                    demonstrated the rocket’s immense lifting capability, with two side boosters successfully landing
+                    simultaneously back on Earth.</p>
+                <div class="mission-btn">
+                    <button type="button" id="mission-btn-modal2">More Details</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="mission-details-modal2">
+            <div class="mission-detail-1">
+                <div class="m-row">
+                    <div class="m-name">
+                        <p id="m-name-p">Crew Dragon Demo-2</p>
+                        <p id="m-name-p">#Flight - 85</p>
+                    </div>
+                    <div class="m-date">
+                        <p id="m-name-p">2020/30/05</p>
+                        <p id="m-name-p">Kennedy Space Center, LC-39A</p>
+                    </div>
+                </div>
+                <h2>Crew Dragon</h2>
+                <p id="mission-desc"> Crew Dragon Demo-2 was SpaceX’s first crewed mission, sending NASA astronauts Doug
+                    Hurley and Bob Behnken to the International Space Station, marking the return of human spaceflight
+                    from U.S. soil after nearly a decade.</p>
+                <div class="mission-btn">
+                    <button type="button" id="mission-btn-modal3">More Details</button>
+                </div>
+            </div>
+
+
+
+            <div class="mission-detail-1">
+                <div class="m-row">
+                    <div class="m-name">
+                        <p id="m-name-p">Starship Flight Test 3</p>
+                        <p id="m-name-p">#Flight - 3</p>
+                    </div>
+                    <div class="m-date">
+                        <p id="m-name-p">2024/14/03</p>
+                        <p id="m-name-p">Starbase, Texas</p>
+                    </div>
+                </div>
+                <h2>Starship
+                </h2>
+                <p id="mission-desc"> The third integrated flight test of Starship reached space and reentered Earth’s
+                    atmosphere for the first time, showcasing major progress toward a fully reusable spacecraft capable
+                    of interplanetary travel.</p>
+                <div class="mission-btn">
+                    <button type="button" id="mission-btn-modal4">More Details</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="explore-more">
+            <a href="mission.html" target="_blank">
+                <button type="button" id="explore-more-btn2">Explore More</button><i class="fa fa-arrow-right"
+                    id="second-i"></i>
+            </a>
+        </div>
+    </div>
+
 
 
     <div class="footer">
@@ -371,81 +393,80 @@
     <!--Modal-->
     <div id="Modal" class="modal">
         <div class="modal-content">
-          <span class="close">&times;</span>
-          <h3 id = "gallery-h3">Falcon 1</h3>
-          <div class="image-gallery">
-            <img src="images/rockets/falcon1/falcon1.jpg" alt="falcon1">
-            <img src="images/rockets/falcon1/falcon1_2.jpg" alt="falcon1">
-            <img src="images/rockets/falcon1/falcon1_3.jpg" alt="falcon1">
-            <img src="images/rockets/falcon1/falcon1_4.jpg" alt="falcon1">
-          </div>
-          <div class="img-viewer" id="imgViewer">
-            <span id="closeImg">&times;</span>
-            <img id="viewerImg" src="" alt="Large View">
-          </div>
+            <span class="close">&times;</span>
+            <h3 id="gallery-h3">Falcon 1</h3>
+            <div class="image-gallery">
+                <img src="images/rockets/falcon1/falcon1.jpg" alt="falcon1">
+                <img src="images/rockets/falcon1/falcon1_2.jpg" alt="falcon1">
+                <img src="images/rockets/falcon1/falcon1_3.jpg" alt="falcon1">
+                <img src="images/rockets/falcon1/falcon1_4.jpg" alt="falcon1">
+            </div>
+            <div class="img-viewer" id="imgViewer">
+                <span id="closeImg">&times;</span>
+                <img id="viewerImg" src="" alt="Large View">
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      
+
     <!--Modal2-->
     <div id="Modal2" class="modal">
         <div class="modal-content">
-          <span class="close2">&times;</span>
-          <h3 id = "gallery-h3">Falcon 9</h3>
-          <div class="image-gallery2">
-            <img src="images/rockets/falcon9/falon9.jpeg" alt="falcon9">
-            <img src="images/rockets/falcon9/falcon9_2.jpeg" alt="falcon9">
-            <img src="images/rockets/falcon9/falcon9_3.jpg" alt="falcon9">
-            <img src="images/rockets/falcon9/falcon9_4.jpeg" alt="falcon9">
-          </div>
-          <div class="img-viewer2" id="imgViewer2">
-            <span id="closeImg2">&times;</span>
-            <img id="viewerImg2" src="" alt="Large View">
-          </div>
+            <span class="close2">&times;</span>
+            <h3 id="gallery-h3">Falcon 9</h3>
+            <div class="image-gallery2">
+                <img src="images/rockets/falcon9/falon9.jpeg" alt="falcon9">
+                <img src="images/rockets/falcon9/falcon9_2.jpeg" alt="falcon9">
+                <img src="images/rockets/falcon9/falcon9_3.jpg" alt="falcon9">
+                <img src="images/rockets/falcon9/falcon9_4.jpeg" alt="falcon9">
+            </div>
+            <div class="img-viewer2" id="imgViewer2">
+                <span id="closeImg2">&times;</span>
+                <img id="viewerImg2" src="" alt="Large View">
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      
+
     <!--Modal3-->
     <div id="Modal3" class="modal">
         <div class="modal-content">
-          <span class="close3">&times;</span>
-          <h3 id = "gallery-h3">Falcon Heavy</h3>
-          <div class="image-gallery3">
-            <img src="images/rockets/falcon-heavy/falcon-heavy.jpeg" alt="falcon heavy">
-            <img src="images/rockets/starship/starship2.jpg" alt="falcon heavy">
-            <img src="images/rockets/falcon-heavy/falcon-heavy3.jpg" alt="falcon heavy">
-            <img src="images/rockets/falcon-heavy/falcon-heavy4.jpg" alt="falcon heavy">
-          </div>
-          <div class="img-viewer3" id="imgViewer3">
-            <span id="closeImg3">&times;</span>
-            <img id="viewerImg3" src="" alt="Large View">
-          </div>
+            <span class="close3">&times;</span>
+            <h3 id="gallery-h3">Falcon Heavy</h3>
+            <div class="image-gallery3">
+                <img src="images/rockets/falcon-heavy/falcon-heavy.jpeg" alt="falcon heavy">
+                <img src="images/rockets/starship/starship2.jpg" alt="falcon heavy">
+                <img src="images/rockets/falcon-heavy/falcon-heavy3.jpg" alt="falcon heavy">
+                <img src="images/rockets/falcon-heavy/falcon-heavy4.jpg" alt="falcon heavy">
+            </div>
+            <div class="img-viewer3" id="imgViewer3">
+                <span id="closeImg3">&times;</span>
+                <img id="viewerImg3" src="" alt="Large View">
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      
+
     <!--Modal4-->
     <div id="Modal4" class="modal">
         <div class="modal-content">
-          <span class="close4">&times;</span>
-          <h3 id = "gallery-h3">Starship</h3>
-          <div class="image-gallery4">
-            <img src="images/rockets/starship/starship.jpg" alt="Starship">
-            <img src="images/rockets/starship/starship2.jpg" alt="Starship">
-            <img src="images/rockets/starship/starship3.jpeg" alt="Starship">
-            <img src="images/rockets/starship/starship4.jpg" alt="Starship">
-          </div>
-          <div class="img-viewer4" id="imgViewer4">
-            <span id="closeImg4">&times;</span>
-            <img id="viewerImg4" src="" alt="Large View">
-          </div>
+            <span class="close4">&times;</span>
+            <h3 id="gallery-h3">Starship</h3>
+            <div class="image-gallery4">
+                <img src="images/rockets/starship/starship.jpg" alt="Starship">
+                <img src="images/rockets/starship/starship2.jpg" alt="Starship">
+                <img src="images/rockets/starship/starship3.jpeg" alt="Starship">
+                <img src="images/rockets/starship/starship4.jpg" alt="Starship">
+            </div>
+            <div class="img-viewer4" id="imgViewer4">
+                <span id="closeImg4">&times;</span>
+                <img id="viewerImg4" src="" alt="Large View">
+            </div>
         </div>
-      </div>
-      
+    </div>
 
 
 
@@ -454,154 +475,187 @@
 
 
 
-      
+
+
     <!--Mission Modal-->
     <div id="MissionModal" class="modal">
         <div class="modal-content">
-          <span class="Missionclose">&times;</span>
-          <h3 id = "gallery-h3">Falcon 9</h3>
-<div class = "m-modal-row">
-     <div class="m-name">
-                            <p id="m-name-p">Falcon 9 Flight 20 (Orbcomm-OG2)</p>
-                            <p id="m-name-p">#Flight - 20</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2015/22/12</p>
-                            <p id="m-name-p"> Cape Canaveral, SLC-40</p>
-                        </div>
+            <span class="Missionclose">&times;</span>
+            <h3 id="gallery-h3">Falcon 9</h3>
+            <div class="m-modal-row">
+                <div class="m-name">
+                    <p id="m-name-p">Falcon 9 Flight 20 (Orbcomm-OG2)</p>
+                    <p id="m-name-p">#Flight - 20</p>
+                </div>
+                <div class="m-date">
+                    <p id="m-name-p">2015/22/12</p>
+                    <p id="m-name-p"> Cape Canaveral, SLC-40</p>
+                </div>
 
 
-                         <div class="Missionimage-gallery">
-            <img src="images/mission/falcon9.jpg" alt="Car 1">
-          </div>
-</div>
-<div class = "m-desc">
-    <p id = "m-desc">Falcon 9 Flight 20 was a historic mission for SpaceX and a turning point in the history of spaceflight. The rocket carried 11 Orbcomm-OG2 satellites into low Earth orbit for Orbcomm Inc., a company that provides global machine-to-machine communication services. While the payload deployment was successful, what truly made this mission remarkable was the successful return and landing of the Falcon 9 first stage back on solid ground at Cape Canaveral Air Force Station.
+                <div class="Missionimage-gallery">
+                    <img src="images/mission/falcon9.jpg" alt="Car 1">
+                </div>
+            </div>
+            <div class="m-desc">
+                <p id="m-desc">Falcon 9 Flight 20 was a historic mission for SpaceX and a turning point in the history
+                    of spaceflight. The rocket carried 11 Orbcomm-OG2 satellites into low Earth orbit for Orbcomm Inc.,
+                    a company that provides global machine-to-machine communication services. While the payload
+                    deployment was successful, what truly made this mission remarkable was the successful return and
+                    landing of the Falcon 9 first stage back on solid ground at Cape Canaveral Air Force Station.
 
-This achievement marked the first time in history that an orbital-class rocket successfully launched a payload to space and then returned to Earth for a controlled vertical landing. It demonstrated SpaceX’s vision of reusability — reducing the cost of access to space by recovering and reusing rockets. The event was celebrated as one of the most significant milestones in commercial space exploration.</p>
-</div>
-         
+                    This achievement marked the first time in history that an orbital-class rocket successfully launched
+                    a payload to space and then returned to Earth for a controlled vertical landing. It demonstrated
+                    SpaceX’s vision of reusability — reducing the cost of access to space by recovering and reusing
+                    rockets. The event was celebrated as one of the most significant milestones in commercial space
+                    exploration.</p>
+            </div>
 
-          <div class="Missionimg-viewer" id="MissionimgViewer">
-            <span id="MissioncloseImg">&times;</span>
-            <img id="MissionviewerImg" src="" alt="Large View">
-          </div>
+
+            <div class="Missionimg-viewer" id="MissionimgViewer">
+                <span id="MissioncloseImg">&times;</span>
+                <img id="MissionviewerImg" src="" alt="Large View">
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      
+
     <!--Mission Modal2-->
     <div id="MissionModal2" class="modal">
         <div class="modal-content">
-          <span class="Missionclose2">&times;</span>
-          <h3 id = "gallery-h3">Falcon Heavy</h3>
-          <div class = "m-modal-row">
-      <div class="m-name">
-                            <p id="m-name-p">Falcon Heavy Test Flight</p>
-                            <p id="m-name-p">#Flight - 1</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2018/06/02</p>
-                            <p id="m-name-p"> Kennedy Space Center, LC-39A</p>
-                        </div>
+            <span class="Missionclose2">&times;</span>
+            <h3 id="gallery-h3">Falcon Heavy</h3>
+            <div class="m-modal-row">
+                <div class="m-name">
+                    <p id="m-name-p">Falcon Heavy Test Flight</p>
+                    <p id="m-name-p">#Flight - 1</p>
+                </div>
+                <div class="m-date">
+                    <p id="m-name-p">2018/06/02</p>
+                    <p id="m-name-p"> Kennedy Space Center, LC-39A</p>
+                </div>
 
-                         <div class="Missionimage-gallery2">
-            <img src="images/mission/falcon-heavy.jpg" alt="Car 1">
-          </div>
-</div>
-<div class = "m-desc">
-    <p id = "m-desc">The Falcon Heavy Test Flight was one of the most iconic and visually stunning moments in modern space history. This was the maiden launch of the Falcon Heavy rocket — at the time, the most powerful operational rocket in the world. It consisted of three Falcon 9 cores strapped together, giving it 27 Merlin engines and an incredible 5 million pounds of thrust at liftoff.
+                <div class="Missionimage-gallery2">
+                    <img src="images/mission/falcon-heavy.jpg" alt="Car 1">
+                </div>
+            </div>
+            <div class="m-desc">
+                <p id="m-desc">The Falcon Heavy Test Flight was one of the most iconic and visually stunning moments in
+                    modern space history. This was the maiden launch of the Falcon Heavy rocket — at the time, the most
+                    powerful operational rocket in the world. It consisted of three Falcon 9 cores strapped together,
+                    giving it 27 Merlin engines and an incredible 5 million pounds of thrust at liftoff.
 
-For this demonstration mission, SpaceX chose a unique payload: Elon Musk’s personal cherry-red Tesla Roadster, complete with a mannequin nicknamed “Starman” in the driver’s seat. The car was sent into an elliptical orbit around the Sun, crossing the path of Mars.
+                    For this demonstration mission, SpaceX chose a unique payload: Elon Musk’s personal cherry-red Tesla
+                    Roadster, complete with a mannequin nicknamed “Starman” in the driver’s seat. The car was sent into
+                    an elliptical orbit around the Sun, crossing the path of Mars.
 
-Two of the rocket’s side boosters performed synchronized landings back at Cape Canaveral, creating a breathtaking moment broadcast worldwide. Although the central core missed its drone ship landing, the mission was a massive success and proved Falcon Heavy’s capability to carry heavy payloads to space, paving the way for future deep-space missions.</p>
-</div>
-          <div class="Missionimg-viewer2" id="MissionimgViewer2">
-            <span id="MissioncloseImg2">&times;</span>
-            <img id="MissionviewerImg2" src="" alt="Large View">
-          </div>
+                    Two of the rocket’s side boosters performed synchronized landings back at Cape Canaveral, creating a
+                    breathtaking moment broadcast worldwide. Although the central core missed its drone ship landing,
+                    the mission was a massive success and proved Falcon Heavy’s capability to carry heavy payloads to
+                    space, paving the way for future deep-space missions.</p>
+            </div>
+            <div class="Missionimg-viewer2" id="MissionimgViewer2">
+                <span id="MissioncloseImg2">&times;</span>
+                <img id="MissionviewerImg2" src="" alt="Large View">
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      
+
     <!--Mission Modal3-->
     <div id="MissionModal3" class="modal">
         <div class="modal-content">
-          <span class="Missionclose3">&times;</span>
-          <h3 id = "gallery-h3">Crew Dragon</h3>
-          <div class = "m-modal-row">
-      <div class="m-name">
-                            <p id="m-name-p">Crew Dragon Demo-2</p>
-                            <p id="m-name-p">#Flight - 85</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2020/30/05</p>
-                            <p id="m-name-p">Kennedy Space Center, LC-39A</p>
-                        </div>
+            <span class="Missionclose3">&times;</span>
+            <h3 id="gallery-h3">Crew Dragon</h3>
+            <div class="m-modal-row">
+                <div class="m-name">
+                    <p id="m-name-p">Crew Dragon Demo-2</p>
+                    <p id="m-name-p">#Flight - 85</p>
+                </div>
+                <div class="m-date">
+                    <p id="m-name-p">2020/30/05</p>
+                    <p id="m-name-p">Kennedy Space Center, LC-39A</p>
+                </div>
 
 
-                         <div class="Missionimage-gallery3">
-            <img src="images/mission/crew-dragon.jpg" alt="Car 1">
-          </div>
-</div>
-<div class = "m-desc">
-    <p id = "m-desc">Crew Dragon Demo-2 was a landmark mission for both SpaceX and NASA, marking the first crewed launch from American soil since the Space Shuttle program ended in 2011. The mission carried NASA astronauts Robert Behnken and Douglas Hurley aboard the Crew Dragon spacecraft, powered by a Falcon 9 rocket.
+                <div class="Missionimage-gallery3">
+                    <img src="images/mission/crew-dragon.jpg" alt="Car 1">
+                </div>
+            </div>
+            <div class="m-desc">
+                <p id="m-desc">Crew Dragon Demo-2 was a landmark mission for both SpaceX and NASA, marking the first
+                    crewed launch from American soil since the Space Shuttle program ended in 2011. The mission carried
+                    NASA astronauts Robert Behnken and Douglas Hurley aboard the Crew Dragon spacecraft, powered by a
+                    Falcon 9 rocket.
 
-The launch represented the culmination of years of collaboration between NASA and SpaceX under the Commercial Crew Program. After liftoff, Crew Dragon successfully docked with the International Space Station (ISS) about 19 hours later, proving that the spacecraft could safely transport astronauts to orbit and back.
+                    The launch represented the culmination of years of collaboration between NASA and SpaceX under the
+                    Commercial Crew Program. After liftoff, Crew Dragon successfully docked with the International Space
+                    Station (ISS) about 19 hours later, proving that the spacecraft could safely transport astronauts to
+                    orbit and back.
 
-After spending 64 days aboard the ISS, the astronauts returned to Earth, splashing down in the Gulf of Mexico on August 2, 2020. The success of Demo-2 officially certified SpaceX to conduct operational crewed missions to the ISS, restoring the United States’ capability to send humans to space without relying on Russian Soyuz rockets.</p>
-</div>
-          <div class="Missionimg-viewer3" id="MissionimgViewer3">
-            <span id="MissioncloseImg3">&times;</span>
-            <img id="MissionviewerImg3" src="" alt="Large View">
-          </div>
+                    After spending 64 days aboard the ISS, the astronauts returned to Earth, splashing down in the Gulf
+                    of Mexico on August 2, 2020. The success of Demo-2 officially certified SpaceX to conduct
+                    operational crewed missions to the ISS, restoring the United States’ capability to send humans to
+                    space without relying on Russian Soyuz rockets.</p>
+            </div>
+            <div class="Missionimg-viewer3" id="MissionimgViewer3">
+                <span id="MissioncloseImg3">&times;</span>
+                <img id="MissionviewerImg3" src="" alt="Large View">
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      
+
     <!--Mission Modal4-->
     <div id="MissionModal4" class="modal">
         <div class="modal-content">
-          <span class="Missionclose4">&times;</span>
-          <h3 id = "gallery-h3">Starship</h3>
-          <div class = "m-modal-row">
-       <div class="m-name">
-                            <p id="m-name-p">Starship Flight Test 3</p>
-                            <p id="m-name-p">#Flight - 3</p>
-                        </div>
-                        <div class="m-date">
-                            <p id="m-name-p">2024/14/03</p>
-                            <p id="m-name-p">Starbase, Texas</p>
-                        </div>
+            <span class="Missionclose4">&times;</span>
+            <h3 id="gallery-h3">Starship</h3>
+            <div class="m-modal-row">
+                <div class="m-name">
+                    <p id="m-name-p">Starship Flight Test 3</p>
+                    <p id="m-name-p">#Flight - 3</p>
+                </div>
+                <div class="m-date">
+                    <p id="m-name-p">2024/14/03</p>
+                    <p id="m-name-p">Starbase, Texas</p>
+                </div>
 
 
-                         <div class="Missionimage-gallery4">
-            <img src="images/mission/starship.jpg" alt="Car 1">
-          </div>
-</div>
-<div class = "m-desc">
-    <p id = "m-desc">Starship Flight Test 3 was a major step forward in SpaceX’s mission to build a fully reusable, next-generation spacecraft designed for interplanetary travel. The Starship system — composed of the Super Heavy booster and the Starship upper stage — represents SpaceX’s most ambitious engineering project, intended to carry large payloads and humans to the Moon, Mars, and beyond.
+                <div class="Missionimage-gallery4">
+                    <img src="images/mission/starship.jpg" alt="Car 1">
+                </div>
+            </div>
+            <div class="m-desc">
+                <p id="m-desc">Starship Flight Test 3 was a major step forward in SpaceX’s mission to build a fully
+                    reusable, next-generation spacecraft designed for interplanetary travel. The Starship system —
+                    composed of the Super Heavy booster and the Starship upper stage — represents SpaceX’s most
+                    ambitious engineering project, intended to carry large payloads and humans to the Moon, Mars, and
+                    beyond.
 
-The third integrated flight test aimed to demonstrate key systems, including stage separation, in-space engine relight, and controlled re-entry. During the flight, Starship successfully reached near-orbital velocity and conducted several critical tests in space, such as opening and closing the payload door and transferring propellant between tanks.
+                    The third integrated flight test aimed to demonstrate key systems, including stage separation,
+                    in-space engine relight, and controlled re-entry. During the flight, Starship successfully reached
+                    near-orbital velocity and conducted several critical tests in space, such as opening and closing the
+                    payload door and transferring propellant between tanks.
 
-Although both stages were lost before recovery, the mission achieved unprecedented progress in flight performance, data collection, and system validation. Each test brings SpaceX closer to achieving its goal of creating a fully reusable space transportation system capable of supporting long-duration missions to other planets.</p>
-</div>
-          <div class="Missionimg-viewer4" id="MissionimgViewer4">
-            <span id="MissioncloseImg4">&times;</span>
-            <img id="MissionviewerImg4" src="" alt="Large View">
-          </div>
+                    Although both stages were lost before recovery, the mission achieved unprecedented progress in
+                    flight performance, data collection, and system validation. Each test brings SpaceX closer to
+                    achieving its goal of creating a fully reusable space transportation system capable of supporting
+                    long-duration missions to other planets.</p>
+            </div>
+            <div class="Missionimg-viewer4" id="MissionimgViewer4">
+                <span id="MissioncloseImg4">&times;</span>
+                <img id="MissionviewerImg4" src="" alt="Large View">
+            </div>
         </div>
-      </div>
-      
+    </div>
+
     <script src="script.js">
     </script>
 
-
-
 </body>
-
 
 </html>

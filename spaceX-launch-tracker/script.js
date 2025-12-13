@@ -436,6 +436,156 @@ window.addEventListener("click", (event) => {
   });
 });
 
+
+
+(async () => {
+  const searchInput = document.getElementById('search');
+  const searchButton = document.getElementById('btn');
+  const prevButton = document.getElementById('prev');
+  const nextButton = document.getElementById('next');
+  const closeButton = document.getElementById('close');
+  const searchResults = document.getElementById('search-results');
+  const searchCount = document.getElementById('search-count');
+
+  let allLaunches = [];
+  let matches = [];
+  let currentIndex = 0;
+
+  // ===== Fetch launches =====
+  async function fetchLaunches() {
+    const [upcoming, past] = await Promise.all([
+      fetch('https://api.spacexdata.com/v4/launches/upcoming').then(r=>r.json()),
+      fetch('https://api.spacexdata.com/v4/launches/past').then(r=>r.json())
+    ]);
+
+    upcoming.sort((a,b)=> new Date(a.date_utc)-new Date(b.date_utc));
+    past.sort((a,b)=> new Date(b.date_utc)-new Date(a.date_utc));
+    const recentPast = past.slice(0,20);
+
+    return [...upcoming, ...recentPast];
+  }
+
+  async function hydrateLaunch(launch) {
+    const [rocket, pad] = await Promise.all([
+      fetch(`https://api.spacexdata.com/v4/rockets/${launch.rocket}`).then(r=>r.json()),
+      fetch(`https://api.spacexdata.com/v4/launchpads/${launch.launchpad}`).then(r=>r.json())
+    ]);
+
+    let orbit = '—';
+    if (launch.payloads && launch.payloads.length) {
+      try {
+        const p = await fetch(`https://api.spacexdata.com/v4/payloads/${launch.payloads[0]}`).then(r=>r.json());
+        orbit = p.orbit || '—';
+      } catch(e) {}
+    }
+
+    return { launch, rocket, pad, orbit };
+  }
+
+  // ===== Render results =====
+  function renderResults(launches) {
+    searchResults.innerHTML = '';
+    if (launches.length === 0) {
+      searchResults.innerHTML = '<p>No launches found</p>';
+      searchCount.textContent = '';
+      return;
+    }
+
+    launches.forEach(({ launch, rocket, pad, orbit }) => {
+      const div = document.createElement('div');
+      div.classList.add('launch-card');
+      div.innerHTML = `
+        <h3>${launch.name}</h3>
+        <p>Rocket: ${rocket.name}</p>
+        <p>Launchpad: ${pad.name}</p>
+        <p>Date: ${new Date(launch.date_utc).toLocaleString()}</p>
+        <p>Orbit: ${orbit}</p>
+      `;
+      searchResults.appendChild(div);
+    });
+
+    currentIndex = 0;
+    updateHighlight();
+  }
+
+  // ===== Search =====
+  function performSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+    if (!query) return;
+
+    matches = allLaunches.filter(({ launch, rocket, pad }) =>
+      launch.name.toLowerCase().includes(query) ||
+      rocket.name.toLowerCase().includes(query) ||
+      pad.name.toLowerCase().includes(query)
+    );
+
+    renderResults(matches);
+
+    // Show Prev/Next/Close buttons
+    prevButton.style.display = 'inline-block';
+    nextButton.style.display = 'inline-block';
+    closeButton.style.display = 'inline-block';
+  }
+
+  // ===== Highlight current match =====
+  function updateHighlight() {
+    if (matches.length === 0) {
+      searchCount.textContent = '';
+      return;
+    }
+
+    const cards = document.querySelectorAll('.launch-card');
+    cards.forEach(card => card.style.border = 'none');
+
+    const currentCard = cards[currentIndex];
+    if (currentCard) {
+      currentCard.style.border = '2px solid white';
+      currentCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      searchCount.textContent = `${currentIndex + 1}/${matches.length}`;
+    }
+  }
+
+  function nextMatch() {
+    if (matches.length === 0) return;
+    currentIndex = (currentIndex + 1) % matches.length;
+    updateHighlight();
+  }
+
+  function prevMatch() {
+    if (matches.length === 0) return;
+    currentIndex = (currentIndex - 1 + matches.length) % matches.length;
+    updateHighlight();
+  }
+
+  // ===== Close search =====
+  function closeSearch() {
+    searchInput.value = '';
+    searchResults.innerHTML = '';
+    searchCount.textContent = '';
+    matches = [];
+    currentIndex = 0;
+
+    // Hide Prev/Next/Close buttons
+    prevButton.style.display = 'none';
+    nextButton.style.display = 'none';
+    closeButton.style.display = 'none';
+  }
+
+  // ===== Event listeners =====
+  searchButton.addEventListener('click', performSearch);
+  nextButton.addEventListener('click', nextMatch);
+  prevButton.addEventListener('click', prevMatch);
+  closeButton.addEventListener('click', closeSearch);
+
+  // ===== Initialize =====
+  const launches = await fetchLaunches();
+  allLaunches = await Promise.all(launches.map(hydrateLaunch));
+
+})();
+
+
+
+
 window.addEventListener('DOMContentLoaded', async () => {
   // load main card lists
   await loadLaunchData();
