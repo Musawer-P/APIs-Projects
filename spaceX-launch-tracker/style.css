@@ -10,22 +10,37 @@ body {
     padding: 20px;
 
 }
-#search-results {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-  max-height: 500px;
-  overflow-y: auto;
-}
 
+#search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.main-three-d{
+width: 95%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.three-d-model{
+    
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.096);
+}
+#three-d-h1{
+    margin-top: 20px;
+    font-size: 2.5vw;
+}
 .launch-card {
-  background: #111;
-  color: white;
-  padding: 12px;
-  border-radius: 6px;
-  min-width: 250px;
-  transition: all 0.2s;
+    background: #111;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    min-width: 250px;
+    transition: all 0.2s;
 }
 
 .header {
@@ -83,12 +98,13 @@ h1 {
 
 }
 
-#p1 {
+.p1 {
     padding: 5px;
-    height: 50px;
+    height: auto;
     text-align: start;
-    font-size: 30px;
+    font-size: 2vw;
     font-weight: lighter;
+    width: fit-content;
 
 }
 
@@ -98,15 +114,15 @@ h1 {
     align-items: center;
 }
 
-#waiting {
-    height: 10px;
+.waiting {
+    height: auto;
     border-radius: 20px;
     border: 1px solid white;
     background-color: rgba(22, 218, 22, 0);
     padding: 10px;
+    color: white;
 
 }
-
 
 #success-fail {
     height: 10px;
@@ -173,10 +189,37 @@ h1 {
 
 }
 
-.cards-row {
+.launch-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+
+
+.cards-row {
     margin-top: 60px;
+
+}
+
+.show-more-btn-class {
+    text-align: center;
+}
+
+#toggle-upcoming,
+#toggle-past {
+    font-size: 20px;
+    background-color: #e9e2ba00;
+    color: #e9e2ba;
+    padding: 5px;
+    padding-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid #e9e2ba;
+    border-radius: 0px;
+    width: fit-content;
+    cursor: pointer;
+    margin-top: 50px;
+    text-align: center;
+
 
 }
 
@@ -305,6 +348,15 @@ h1 {
 
 }
 
+.completed{
+     height: auto;
+    border-radius: 20px;
+    border: 1px solid white;
+    background-color: rgba(22, 218, 22, 0);
+    padding: 10px;
+    color: white;
+}
+
 .mission-detail-1 {
     padding: 20px 10px;
     border: 1px solid white;
@@ -411,6 +463,7 @@ h1 {
 }
 
 
+
 #explore-more-btn2 {
     border: none;
     padding: 10px 20px;
@@ -435,9 +488,6 @@ h1 {
 .row-main {
     height: 170px;
 }
-
-
-
 
 
 /* Modal container */
@@ -690,18 +740,21 @@ h1 {
     line-height: 1.7;
 }
 
-a{
+a {
     color: white;
     text-decoration: none;
 }
 
-#prev ,#next, #close{
+#prev,
+#next,
+#close {
     padding: 13px 7px;
     background-color: white;
     border: none;
     border-radius: 100px;
 }
-#close{
+
+#close {
     background-color: #11111100;
     color: white;
     cursor: pointer;

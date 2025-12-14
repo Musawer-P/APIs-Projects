@@ -7,32 +7,177 @@ const upcomingList = document.getElementById('upcomingList');
 const latestCard = document.getElementById('latestCard');
 
 
-//show more function 
-function initShowMore(containerId, btnId, initialVisible = 8) {
-    const container = document.querySelector(`#${containerId} .cards-row`);
-    const btn = document.getElementById(btnId);
-    if (!container || !btn) return;
 
-    const cards = Array.from(container.children);
-    let visibleCount = initialVisible;
 
-    // Initially hide extra cards
-    cards.forEach((card, i) => {
-        if (i >= visibleCount) card.style.display = "none";
+
+
+
+
+
+// ===== Enhanced Upcoming Launches with Show More / Show Less =====
+(async () => {
+  const upcomingContainer = document.getElementById('upcoming-launches');
+  const toggleBtn = document.getElementById('toggle-upcoming'); // create this button in HTML
+  let allUpcoming = [];
+  let limited = true;
+  const LIMIT = 5;
+
+  async function fetchUpcomingLaunches() {
+    const res = await fetch('https://api.spacexdata.com/v4/launches/upcoming');
+    const data = await res.json();
+    data.sort((a,b) => new Date(a.date_utc) - new Date(b.date_utc));
+    return data;
+  }
+
+  async function hydrateLaunch(launch) {
+    const [rocket, pad] = await Promise.all([
+      fetch(`${API_BASE}/rockets/${launch.rocket}`).then(r=>r.json()),
+      fetch(`${API_BASE}/launchpads/${launch.launchpad}`).then(r=>r.json())
+    ]);
+
+    let orbit = '—';
+    if (launch.payloads?.length) {
+      try {
+        const p = await fetch(`${API_BASE}/payloads/${launch.payloads[0]}`).then(r=>r.json());
+        orbit = p.orbit || '—';
+      } catch {}
+    }
+
+    return { launch, rocket, pad, orbit };
+  }
+
+  function makeCard({ launch, rocket, pad, orbit }) {
+    return `
+      <div class="cards-row">
+        <div class="cards">
+          <div class="first-card">
+            <div class="status">
+              <p class="p1">${escapeHtml(launch.name)}</p>
+              <button type="button" class="waiting">Waiting</button>
+            </div>
+            <div class="row1">
+              <p class="p2">Rocket: ${escapeHtml(rocket.name)}</p>
+              <p class="p2">Launchpad: ${escapeHtml(pad.name)}</p>
+            </div>
+            <div class="row1" id = "row1-center">
+              <p class="p3">${new Date(launch.date_utc).toLocaleString()}</p>
+              <p class="p3">Orbit: ${escapeHtml(orbit)}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderUpcoming() {
+    if (!upcomingContainer) return;
+    const toShow = limited ? allUpcoming.slice(0, LIMIT) : allUpcoming;
+    upcomingContainer.innerHTML = toShow.map(makeCard).join('');
+    toggleBtn.style.display = allUpcoming.length > LIMIT ? 'inline-block' : 'none';
+    toggleBtn.textContent = limited ? 'Show More' : 'Show Less';
+
+    // Optional: attach "View Details" handlers
+    attachViewDetailsHandlers();
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      limited = !limited;
+      renderUpcoming();
     });
+  }
 
-    btn.onclick = () => {
-        visibleCount += initialVisible;
-        cards.forEach((card, i) => {
-            if (i < visibleCount) card.style.display = "block";
-        });
-        if (visibleCount >= cards.length) btn.style.display = "none"; // hide button if all shown
-    };
-}
+  const launches = await fetchUpcomingLaunches();
+  allUpcoming = await Promise.all(launches.map(hydrateLaunch));
+  renderUpcoming();
+})();
 
-// Call it for both upcoming and past
-initShowMore("upcoming-launches", "upcomingShowMoreBtn", 8);
-initShowMore("past-launches", "pastShowMoreBtn", 8);
+
+// ===== Enhanced Past Launches with Show More / Show Less =====
+(async () => {
+  const pastContainer = document.getElementById('past-launches');
+  const toggleBtn = document.getElementById('toggle-past');
+
+  let allPast = [];
+  let limited = true;
+  const LIMIT = 5;
+
+  async function fetchPastLaunches() {
+    const res = await fetch('https://api.spacexdata.com/v4/launches/past');
+    const data = await res.json();
+    data.sort((a, b) => new Date(b.date_utc) - new Date(a.date_utc)); // latest first
+    return data;
+  }
+
+  async function hydrateLaunch(launch) {
+    const [rocket, pad] = await Promise.all([
+      fetch(`${API_BASE}/rockets/${launch.rocket}`).then(r => r.json()),
+      fetch(`${API_BASE}/launchpads/${launch.launchpad}`).then(r => r.json())
+    ]);
+
+    let orbit = '—';
+    if (launch.payloads?.length) {
+      try {
+        const p = await fetch(`${API_BASE}/payloads/${launch.payloads[0]}`).then(r => r.json());
+        orbit = p.orbit || '—';
+      } catch {}
+    }
+
+    return { launch, rocket, pad, orbit };
+  }
+
+  function makeCard({ launch, rocket, pad, orbit }) {
+    
+    return `
+      <div class="cards-row">
+        <div class="cards">
+          <div class="first-card">
+            <div class="status">
+              <p class="p1">${escapeHtml(launch.name)}</p>
+              <button type="button" class="completed">
+                ${launch.success ? 'Success' : 'Failed'}
+              </button>
+            </div>
+
+            <div class="row1">
+              <p class="p2">Rocket: ${escapeHtml(rocket.name)}</p>
+              <p class="p2">Launchpad: ${escapeHtml(pad.name)}</p>
+            </div>
+
+            <div class="row1" id="row1-center">
+              <p class="p3">${new Date(launch.date_utc).toLocaleString()}</p>
+              <p class="p3">Orbit: ${escapeHtml(orbit)}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderPast() {
+    if (!pastContainer) return;
+
+    const toShow = limited ? allPast.slice(0, LIMIT) : allPast;
+    pastContainer.innerHTML = toShow.map(makeCard).join('');
+
+    toggleBtn.style.display = allPast.length > LIMIT ? 'inline-block' : 'none';
+    toggleBtn.textContent = limited ? 'Show More' : 'Show Less';
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      limited = !limited;
+      renderPast();
+    });
+  }
+
+  const launches = await fetchPastLaunches();
+  allPast = await Promise.all(launches.map(hydrateLaunch));
+  renderPast();
+})();
+
+
+
 
 
 
