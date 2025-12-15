@@ -6,15 +6,7 @@ const countdownEl = document.getElementById('countdown');
 const upcomingList = document.getElementById('upcomingList');
 const latestCard = document.getElementById('latestCard');
 
-
-
-
-
-
-
-
-
-// ===== Enhanced Upcoming Launches with Show More / Show Less =====
+// Enhanced Upcoming Launches with Show More / Show Less
 (async () => {
   const upcomingContainer = document.getElementById('upcoming-launches');
   const toggleBtn = document.getElementById('toggle-upcoming'); // create this button in HTML
@@ -93,7 +85,7 @@ const latestCard = document.getElementById('latestCard');
 })();
 
 
-// ===== Enhanced Past Launches with Show More / Show Less =====
+// Enhanced Past Launches with Show More / Show Less
 (async () => {
   const pastContainer = document.getElementById('past-launches');
   const toggleBtn = document.getElementById('toggle-past');
@@ -197,37 +189,6 @@ async function getRockets() {
   return map;
 }
 
-function makeCard(launch, rocketName, siteName, isUpcoming) {
-  return `
-    <div class="cards">
-      <div class="first-card">
-        <div class="status">
-          <p id="p1">${escapeHtml(launch.name || 'Unknown')}</p>
-          <button type="button" id="${isUpcoming ? "waiting" : (launch.success ? "success-fail" : "fail")}"></button>
-        </div>
-
-        <div class="row-main">
-          <div class="row1">
-            <p id="p2">Rocket Name</p>
-            <p id="p2">${escapeHtml(rocketName)}</p>
-          </div>
-
-          <div class="row1">
-            <p id="p3">Launch site Name</p>
-            <p id="p3">${escapeHtml(siteName)}</p>
-          </div>
-        </div>
-
-        <p id="p6">Countdown</p>
-        <p id="p4">--:--</p>
-
-        <p id="p5">${launch.date_utc ? new Date(launch.date_utc).toLocaleDateString() : 'TBD'}</p>
-
-      </div>
-    </div>
-  `;
-}
-
 function escapeHtml(text) {
   return String(text)
     .replace(/&/g, "&amp;")
@@ -290,11 +251,8 @@ async function loadLaunchData() {
 function attachViewDetailsHandlers() {
   const detailButtons = document.querySelectorAll("#upcoming-launches .upcoming-details, #past-launches .upcoming-details");
   detailButtons.forEach(btn => {
-    // example: open mission modal or show more info — keep empty so we don't break existing behavior
     btn.onclick = () => {
-      // You can fill this to open a modal based on the clicked card
-      // currently left intentionally blank to avoid changing your existing modal logic
-    };
+          };
   });
 }
 
@@ -405,10 +363,6 @@ async function loadLatestLaunch(){
   loadLatestLaunch();
   setInterval(()=>{ loadNextLaunch(); loadLatestLaunch(); }, 60_000);
 })();
-
-
-
-
 
 
 const modal = document.getElementById("Modal");
@@ -596,7 +550,7 @@ window.addEventListener("click", (event) => {
   let matches = [];
   let currentIndex = 0;
 
-  // ===== Fetch launches =====
+  // Fetch launches
   async function fetchLaunches() {
     const [upcoming, past] = await Promise.all([
       fetch('https://api.spacexdata.com/v4/launches/upcoming').then(r=>r.json()),
@@ -627,7 +581,7 @@ window.addEventListener("click", (event) => {
     return { launch, rocket, pad, orbit };
   }
 
-  // ===== Render results =====
+  // Render results
   function renderResults(launches) {
     searchResults.innerHTML = '';
     if (launches.length === 0) {
@@ -672,7 +626,7 @@ window.addEventListener("click", (event) => {
     closeButton.style.display = 'inline-block';
   }
 
-  // ===== Highlight current match =====
+  // Highlight current match 
   function updateHighlight() {
     if (matches.length === 0) {
       searchCount.textContent = '';
@@ -716,7 +670,7 @@ window.addEventListener("click", (event) => {
     closeButton.style.display = 'none';
   }
 
-  // ===== Event listeners =====
+  // Event listeners
   searchButton.addEventListener('click', performSearch);
   nextButton.addEventListener('click', nextMatch);
   prevButton.addEventListener('click', prevMatch);
@@ -735,8 +689,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   // load main card lists
   await loadLaunchData();
 
-  // call other existing init functions (countdown / next/latest already handled separately)
-  // Also ensure next/latest are loaded once at start:
+ 
   loadNextLaunch();
   loadLatestLaunch();
 });
