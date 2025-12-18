@@ -1,67 +1,32 @@
- const resultsDiv = document.getElementById("results");
+ // Project URLs
+const projectPaths = {
+  view1: "https://anime-and-manga-explorer-mp.netlify.app/",
+  view2: "https://spacex-launch-tracker-mp.netlify.app/",
+  view3: "https://frabjous-horse-2113cc.netlify.app/",
+  view4: "https://lucent-chimera-7311b7.netlify.app/",
+  view5: "https://spotify-clone-mp.netlify.app/",
+  view6: "https://crypto-price-tracker-mp.netlify.app/",
+  view7: "https://personal-health-mp.netlify.app/",
+  view8: "https://movie-nest-mp.netlify.app/",
+  view9: "https://recipes-finder-mp.netlify.app/",
+  view10: "https://bus-tracker-mp.netlify.app/",
+  view11: "https://flight-tracker-mp.netlify.app/",
+  view12: "https://global-disaster-mp.netlify.app/",
+  view13: "https://book-search-mp.netlify.app/",
+  view14: "https://personal-health-mp.netlify.app/",
+  view15: "https://country-explorer-mp.netlify.app/",
+  view16: "https://game-recommendation-mp.netlify.app/",
+  view17: "https://github-user-explorer-me.netlify.app/",
+  view18: "https://boredbot",
+  view19: "https://blogapi"
+};
 
-    document.getElementById("runBtn").addEventListener("click", async () => {
-      const project = document.getElementById("projectSelect").value;
-      const query = document.getElementById("queryInput").value.trim();
-      if (!project || !query) {
-        resultsDiv.innerHTML = "<p>Please select a project and enter a query.</p>";
-        return;
-      }
-
-      resultsDiv.innerHTML = "<p>Loading...</p>";
-
-      try {
-        let data;
-
-        // Different API calls depending on project
-        if (project === "games") {
-          // Example: RAWG.io API
-          const res = await fetch(`https://api.rawg.io/api/games?key=YOUR_API_KEY&search=${query}`);
-          data = await res.json();
-          resultsDiv.innerHTML = data.results.map(g => `<p>${g.name}</p>`).join("");
-
-        } else if (project === "weather") {
-          // Example: OpenWeatherMap API
-          const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=YOUR_API_KEY&units=metric`);
-          data = await res.json();
-          resultsDiv.innerHTML = `<p>${data.name}: ${data.main.temp}°C, ${data.weather[0].description}</p>`;
-
-        } else if (project === "news") {
-          // Example: NewsAPI
-          const res = await fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=YOUR_API_KEY`);
-          data = await res.json();
-          resultsDiv.innerHTML = data.articles.map(a => `<p><a href="${a.url}" target="_blank">${a.title}</a></p>`).join("");
-
-        } else if (project === "books") {
-          // Example: Google Books API
-          const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
-          data = await res.json();
-          resultsDiv.innerHTML = data.items.map(b => `<p>${b.volumeInfo.title}</p>`).join("");
-        }
-
-      } catch (err) {
-        resultsDiv.innerHTML = `<p>Error: ${err.message}</p>`;
-      }
+// Attach click events dynamically
+Object.keys(projectPaths).forEach(id => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.addEventListener("click", () => {
+      window.open(projectPaths[id], "_blank");
     });
-
-
-const express = require("express");
-const cors = require("cors");
-const setupLogger = require("./logger");
-const setupStatusRoute = require("./status");
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// ✅ Add reusable features
-setupLogger(app);      // Logs all requests
-setupStatusRoute(app); // API status info
-
-// Example route
-app.get("/", (req, res) => {
-  res.send("Merged API is running with logger and status features!");
+  }
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

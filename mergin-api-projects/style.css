@@ -2,6 +2,7 @@ body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: black;
 }
 
 
@@ -32,7 +33,7 @@ h2{
  
 }
 
-#view{
+#view1,#view2,#view3,#view4,#view5,#view6,#view7,#view8,#view9,#view10,#view11,#view12,#view13,#view14,#view15,#view16,#view17,#view18,#view19{
   font-size: 13px;
   margin-right: 10px;
   cursor: pointer;
@@ -42,120 +43,191 @@ h2{
 
 
 /* 1 */
-.one-m-div { padding: 20px; margin: 0; background-color: #000; }
+.one-m-div { padding: 20px; margin: 0; background-color: black}
 .one-div { 
-  border: 1px solid #fff; border-radius: 15px; height: 300px;
-
-  background-image: url('images/anime-manga.png');
+  border: 1px solid #fff; border-radius: 15px; 
+  overflow-y: auto;   /* enables vertical scroll */
+  height: 400px;
+  background-image: url('images/Capture.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
  }
 
 /* 2 */
-.two-m-div { padding: 20px; margin: 0; background-color: #277eb8; }
+.two-m-div { padding: 20px; margin: 0; background-color: black; }
 .two-div { 
    background-image: url('images/Capture1.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 3 */
-.three-m-div { padding: 20px; margin: 0; background-color: #0ca82e; }
+.three-m-div { padding: 20px; margin: 0; background-color: black; }
 .three-div { 
    background-image: url('images/Capture2.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 4 */
-.four-m-div { padding: 20px; margin: 0; background-color: #d8c51f; }
+.four-m-div { padding: 20px; margin: 0; background-color: black; }
 .four-div { 
    background-image: url('images/Capture3.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 5 */
-.five-m-div { padding: 20px; margin: 0; background-color: #380b57; }
+.five-m-div { padding: 20px; margin: 0; background-color: black; }
 .five-div {
    background-image: url('images/Capture4.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 6 */
-.six-m-div { padding: 20px; margin: 0; background-color: #1d61f3; }
+.six-m-div { padding: 20px; margin: 0; background-color: black; }
 .six-div { 
    background-image: url('images/Capture5.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 7 */
-.seven-m-div { padding: 20px; margin: 0; background-color: #50390f; }
+.seven-m-div { padding: 20px; margin: 0; background-color: black; }
 .seven-div { 
-   background-image: url('images/anime-manga.png');
+   background-image: url('images/Capture6.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 8 */
-.eight-m-div { padding: 20px; margin: 0; background-color: #10424b; }
+.eight-m-div { padding: 20px; margin: 0; background-color: black; }
 .eight-div { 
-   background-image: url('images/anime-manga.png');
+   background-image: url('images/Capture7.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 9 */
-.nine-m-div { padding: 20px; margin: 0; background-color: #15532f; }
+.nine-m-div { padding: 20px; margin: 0; background-color: black; }
 .nine-div { 
-   background-image: url('images/anime-manga.png');
+   background-image: url('images/Capture8.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 10 */
-.ten-m-div { padding: 20px; margin: 0; background-color: #57531c; }
+.ten-m-div { padding: 20px; margin: 0; background-color: black; }
 .ten-div { 
-   background-image: url('images/anime-manga.png');
+   background-image: url('images/Capture9.PNG');
   background-size: cover;       /* fills the div */
   background-position: center;  /* centers the image */
-  border: 1px solid #fff; border-radius: 15px; height: 300px; }
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 11 */
-.eleven-m-div { padding: 20px; margin: 0; background-color: #282f4d; }
-.eleven-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.eleven-m-div { padding: 20px; margin: 0; background-color: black; }
+.eleven-div { 
+  background-image: url('images/Capture10.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 12 */
-.twelve-m-div { padding: 20px; margin: 0; background-color: #30bd7b; }
-.twelve-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.twelve-m-div { padding: 20px; margin: 0; background-color: black; }
+.twelve-div { 
+  background-image: url('images/Capture11.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 13 */
-.thirteen-m-div { padding: 20px; margin: 0; background-color: #91b146; }
-.thirteen-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.thirteen-m-div { padding: 20px; margin: 0; background-color: black; }
+.thirteen-div { 
+  background-image: url('images/Capture12.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 14 */
-.fourteen-m-div { padding: 20px; margin: 0; background-color: #791919; }
-.fourteen-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.fourteen-m-div { padding: 20px; margin: 0; background-color: black; }
+.fourteen-div { 
+  background-image: url('images/Capture13.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 15 */
-.fifteen-m-div { padding: 20px; margin: 0; background-color: #342992; }
-.fifteen-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.fifteen-m-div { padding: 20px; margin: 0; background-color: black; }
+.fifteen-div { 
+  background-image: url('images/Capture14.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 16 */
-.sixteen-m-div { padding: 20px; margin: 0; background-color: #b92020; }
-.sixteen-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.sixteen-m-div { padding: 20px; margin: 0; background-color: black; }
+.sixteen-div { 
+  background-image: url('images/Capture15.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 17 */
-.seventeen-m-div { padding: 20px; margin: 0; background-color: #4856cf; }
-.seventeen-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.seventeen-m-div { padding: 20px; margin: 0; background-color: black; }
+.seventeen-div { 
+  background-image: url('images/Capture16.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 18 */
-.eighteen-m-div { padding: 20px; margin: 0; background-color: #3381ca; }
-.eighteen-div { border: 1px solid #fff; border-radius: 15px; height: 300px; }
+.eighteen-m-div { padding: 20px; margin: 0; background-color: black; }
+.eighteen-div { 
+  background-image: url('images/Capture17.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #fff; border-radius: 15px; height: 400px; }
 
 /* 19 */
-.nineteen-m-div { padding: 20px; margin: 0; background-color: #ffffff; }
-.nineteen-div { border: 1px solid #000000; border-radius: 15px; height: 300px; }
+.nineteen-m-div { padding: 20px; margin: 0; background-color: black; }
+.nineteen-div { 
+  background-image: url('images/Capture18.PNG');
+  background-size: cover;       /* fills the div */
+  background-position: center;  /* centers the image */
+  border: 1px solid #ffffff; border-radius: 15px; height: 400px; }
 
+
+  .gap{
+    
+    height: 1px;
+    background-color: white;
+    text-align: center;
+  }
+
+  .footer{
+    padding: 20px;
+    background-color: black;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  h3{
+    font-size: 24px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+  }
+#h3-1{
+  padding-top: 30px;
+  padding-left: 30px;
+  margin: 0px;
+
+}
+  #h3-2{
+    
+  padding-bottom: 30px;
+      padding-left: 30px;
+
+  margin: 0px;
+font-size: 30px;
+  }
